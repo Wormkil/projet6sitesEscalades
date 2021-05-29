@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <link href="/css/tailwind.css" rel="stylesheet">
+  <title>Amis de l'Escalade</title>
+
+</head>
+
+<body>
+<div class="py-28 md:py-48"> <!-- Quick fix pour la NavBar Fixé -->
+
+  <!-- Insertion du header -->
+  <div th:insert="fragments/header :: header"></div>
+
+  <section class="mx-2 sm:ml-4">
+    <!-- Nom & secteur du Topo -->
+    <div class="sm:mx-24 md:mx-32 2xl:mx-96 mb-4 py-4 bg-yellow-50 rounded shadow-lg">
+      <h1 class="min-w-min font-bold text-center text-2xl sm:text-4xl">RAVINE CLAUDE</h1>
+      <h2 class="min-w-min font-bold text-center text-xl sm:text-4xl">Secteur : Charlie & les Claudettes</h2>
+    </div>
+    <!-- Informations du Topo -->
+    <div class="sm:mx-24 md:mx-32 2xl:mx-96 bg-green-50 max-w-full rounded shadow-lg">
+      <!-- Descriptif -->
+      <div class="mb-2">
+        <h3 class="text-center text-lg mx-1 sm:ml-4 underline">Descriptif :</h3>
+        <p class="text-left md:text-center">Un petit secteur avec quelques beaux passages. Idéal pour ceux qui habitent
+          dans le coin ! Il n’y a pas de marche d’approche et vous pouvez y aller en
+          famille. Des secteurs à l’ombre pour grimper tout au long de la journée.
+        </p>
+      </div>
+      <!-- Profile de Difficulté -->
+      <div class="my-2">
+        <h3 class="text-center text-lg mx-1 sm:ml-4 underline">Profil de Difficulté :</h3>
+        <p class="text-left md:text-center">- 2 à 3 (orange) : 29 blocs<br>
+          - 4 à 5a (bleu) : 34 blocs<br>
+          - 5b à 6a (rouge) : 21 blocs<br>
+          - 6b à 7a : 17 blocs<br>
+          - 7b et plus (blanc) : 3 blocs<br>
+        </p>
+      </div>
+      <!-- Accès -->
+      <div class="mb-4">
+        <h3 class="text-center text-lg mx-1 sm:ml-4 underline">Accès :</h3>
+        <p class="text-left md:text-center">Il faut gagner la D13 qui parcours les hauts de St Leu. La ravine se trouve
+          juste au nord du quartier “L’étang St Leu”, cf la carte. Aire de stationnement
+          au niveau du panneau indiquant “Etang St Leu”.
+        </p>
+      </div>
+    </div>
+
+    <!-- Cartes du secteur et de ses environs -->
+    <div class="flex justify-center sm:mx-24 md:mx-32 2xl:mx-96 mt-4">
+      <img alt="Carte Ravine Claude" class="rounded shadow-lg" src="../images/carte_ravine_claude.png">
+    </div>
+
+    <!-- Cartes et tableaux des voies -->
+    <div class="flex flex-col xl:flex-row mt-4 xl:mx-10">
+      <div class="flex">
+        <img alt="Carte Ravine Claude" class="rounded shadow-lg" src="../images/carte_voies_claudeRavine.png">
+      </div>
+      <table class="flex table w-full xl:w-3/5">
+        <div class="table-header-group">
+          <caption class="table-caption font-bold bg-gray-300">RAVINE CLAUDE</caption>
+          <tr class="table-row">
+            <th class="table-cell border">N° du bloc</th>
+            <th class="table-cell border">Cotation</th>
+            <th class="table-cell border">Nom, remarques...</th>
+          </tr>
+        </div>
+        <div class="table-row-group">
+          <tr class="table-row bg-gray-300">
+            <td class="table-cell border text-center font-bold">1</td>
+            <td class="table-cell border text-center">4b</td>
+            <td class="table-cell border text-center">@</td>
+          </tr>
+          <tr class="table-row">
+            <td class="table-cell border text-center font-bold">2</td>
+            <td class="table-cell border text-center">4b</td>
+            <td class="table-cell border text-center"></td>
+          </tr>
+          <tr class="table-row bg-gray-300">
+            <td class="table-cell border text-center font-bold">3</td>
+            <td class="table-cell border text-center">5a</td>
+            <td class="table-cell border text-center"></td>
+          </tr>
+          <tr class="table-row">
+            <td class="table-cell border text-center font-bold">4</td>
+            <td class="table-cell border text-center">7b</td>
+            <td class="table-cell border text-center">"La flemme de l'énergumène"</td>
+          </tr>
+          <tr class="table-row bg-gray-300">
+            <td class="table-cell border text-center font-bold">5</td>
+            <td class="table-cell border text-center">6a</td>
+            <td class="table-cell border text-center">"Talons sous les Chtis"</td>
+          </tr>
+          <tr class="table-row">
+            <td class="table-cell border text-center font-bold">6</td>
+            <td class="table-cell border text-center">4b</td>
+            <td class="table-cell border text-center"></td>
+          </tr>
+          <tr class="table-row bg-gray-300">
+            <td class="table-cell border text-center font-bold">6 bis</td>
+            <td class="table-cell border text-center">5b</td>
+            <td class="table-cell border text-center">pied imposé</td>
+          </tr>
+          <tr class="table-row">
+            <td class="table-cell border text-center font-bold">6 ter</td>
+            <td class="table-cell border text-center">3a</td>
+            <td class="table-cell border text-center"></td>
+          </tr>
+          <tr class="table-row bg-gray-300">
+            <td class="table-cell border text-center font-bold">7</td>
+            <td class="table-cell border text-center">3b</td>
+            <td class="table-cell border text-center">@</td>
+          </tr>
+          <tr class="table-row">
+            <td class="table-cell border text-center font-bold">8</td>
+            <td class="table-cell border text-center">3b</td>
+            <td class="table-cell border text-center"></td>
+          </tr>
+          <tr class="table-row bg-gray-300">
+            <td class="table-cell border text-center font-bold">8 bis</td>
+            <td class="table-cell border text-center">6a+</td>
+            <td class="table-cell border text-center">assis</td>
+          </tr>
+          <tr class="table-row">
+            <td class="table-cell border text-center font-bold">9</td>
+            <td class="table-cell border text-center">3c</td>
+            <td class="table-cell border text-center">pied imposé</td>
+          </tr>
+          <tr class="table-row bg-gray-300">
+            <td class="table-cell border text-center font-bold">10</td>
+            <td class="table-cell border text-center">4a</td>
+            <td class="table-cell border text-center">pied imposé</td>
+          </tr>
+          <tr class="table-row">
+            <td class="table-cell border text-center font-bold">10 bis</td>
+            <td class="table-cell border text-center">6a+</td>
+            <td class="table-cell border text-center">assis</td>
+          </tr>
+        </div>
+      </table>
+    </div>
+
+
+
+  </section>
+</div>
+  <!-- Insertion du header -->
+  <div th:insert="fragments/footer :: footer"></div>
+
+</body>
+</html>

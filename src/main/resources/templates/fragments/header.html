@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="/css/tailwind.css" rel="stylesheet">
+    <title>Amis de l'Escalade</title>
+
+</head>
+<body>
+<header th:fragment="header">
+    <!-- Barre de navigation -->
+    <div class="items-center justify-between flex bg-green-700 bg-opacity-95 px-8 sm:px-12 py-4 mb-4 shadow-2xl w-screen fixed top-0">
+        <!-- Brand -->
+        <div class="hover:border hover:border-black hover:rounded">
+            <a class="items-center flex text-base sm:text-2xl md:text-4xl text-grey-800 font-bold" href="/">
+                <img alt="logo-brand" class="flex-1 w-0.5 md:w-1 " src="../images/logos/montagne_logo.png">
+                <span class="flex-1 pl-4">AMIS DE L'ESCALADE</span>
+            </a>
+        </div>
+
+        <button class="inline-block lg:hidden h-16 text-black px-1">
+            <svg height="40" viewBox="0 0 100 80" width="40">
+                <rect height="18" rx="10" width="100"></rect>
+                <rect height="18" rx="10" width="100" y="35"></rect>
+                <rect height="18" rx="10" width="100"y="70"></rect>
+            </svg>
+        </button>
+
+        <!-- Menu -->
+        <div class="hidden lg:block">
+            <ul class="flex text-black font-semibold text-2xl no-underline " id="mobilemenu">
+                <li class="ml-5 px-2 py-1 hover:underline"><a href="/SitesEscalades">Sites d'Escalades</a></li>
+                <!--
+                <li class="ml-5 px-2 py-1 hover:underline"><a href="topo_ravine_claude.html">Topos</a></li> -->
+                <div th:if="${#session.getAttribute('user') == null}">
+                    <li class="ml-5 px-2 py-1 hover:underline inline-block text-2xl leading-none border rounded text-black
+                border-black hover:border-transparent hover:bg-purple-700">
+                        <a href="/login">Connection</a></li>
+                </div>
+                <div th:unless="${#session.getAttribute('user') == null}">
+                    <li class="ml-5 px-2 py-1 hover:underline inline-block text-2xl leading-none border rounded text-black
+                border-black hover:border-transparent hover:bg-purple-700">
+                        <a href="/logOut">Déconnection</a></li>
+                </div>
+
+
+            </ul>
+        </div>
+    </div>
+</header>
+</body>
+</html>

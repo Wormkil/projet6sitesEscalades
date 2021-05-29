@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <link href="/css/tailwind.css" rel="stylesheet">
+  <title>Amis de l'Escalade</title>
+
+</head>
+
+<body>
+  <!-- Inclusion du header -->
+  <div th:insert="fragments/header :: header"></div>
+
+  <div class="min-h-screen flex items-center justify-center bg-gray-50 pt-16 md:pt-36 px-4 sm:px-6 lg:px-8">
+    <!-- Petite section intro/description montagne_logo.png-->
+    <div class="max-w-md w-full space-y-8">
+      <div>
+        <img alt="logo_brand" class="mx-auto h-12 w-auto" src="../images/logos/montagne_logo.png">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          Connectez vous avec votre compte
+        </h2>
+      </div>
+
+      <!-- Affichage d'un message d'erreur si l'adresse email est déjà existante dans la base de donnée -->
+      <div th:if="${#session.getAttribute('errorMail') != null}">
+        <div class="flex justify-center items-center mb-2 font-medium py-1 px-2 bg-white rounded-md text-red-700
+                      bg-red-100 border border-red-300 ">
+          <div slot="avatar">
+            <svg class="feather feather-alert-octagon w-5 h-5 mx-2" fill="none" height="100%" stroke="currentColor" stroke-linecap="round"
+                 stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="100%"
+                 xmlns="http://www.w3.org/2000/svg">
+              <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+              <line x1="12" x2="12" y1="8" y2="12"></line>
+              <line x1="12" x2="12.01" y1="16" y2="16"></line>
+            </svg>
+          </div>
+          <div class="font-normal  max-w-full flex-initial">
+            <span th:text="${#session.getAttribute('errorMail')} ?: 'Error on message error'"/>
+          </div>
+        </div>
+      </div>
+      <div th:unless="${#session.getAttribute('errorMail') != null}">
+      </div>
+
+      <!-- Formulaire pour l'adresse Email et le mot de passe -->
+      <form class="mt-8 space-y-6" method="post" th:action="@{/login}" th:object="${user}">
+        <div class="rounded-md shadow-sm -space-y-px">
+          <div>
+            <label class="sr-only" th:for="email_address">Adresse Email</label>
+            <input autocomplete="email" class="appearance-none
+                  rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900
+                  rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Adresse Email" required th:attr="value=${defaultEmail}"
+                   th:id="email_address"
+                   th:name="email"
+                   title="Lettres de A à Z (a à z) avec ou sans accent, les chiffres et les tirets courts. Un @ doit être présent" type="email" value="">
+          </div>
+
+          <!-- Affichage d'un message d'erreur si le mot de passe ne correspond pas à l'adresse mail -->
+          <div th:if="${#session.getAttribute('errorPass') != null}">
+            <div class="flex justify-center items-center my-2 font-medium py-1 px-2 bg-white rounded-md text-red-700
+                      bg-red-100 border border-red-300 ">
+              <div slot="avatar">
+                <svg class="feather feather-alert-octagon w-5 h-5 mx-2" fill="none" height="100%" stroke="currentColor" stroke-linecap="round"
+                     stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="100%"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                  <line x1="12" x2="12" y1="8" y2="12"></line>
+                  <line x1="12" x2="12.01" y1="16" y2="16"></line>
+                </svg>
+              </div>
+              <div class="font-normal  max-w-full flex-initial">
+                <span th:text="${#session.getAttribute('errorPass')} ?: 'Error on message error'"/>
+              </div>
+            </div>
+          </div>
+          <div th:unless="${#session.getAttribute('errorPass') != null}">
+          </div>
+          <div>
+            <!-- Input pour avoir le password de l'utilisateur, sécurisé par un pattern, un maxlength et un required -->
+            <label class="sr-only" th:for="password">password</label>
+            <input autocomplete="new-password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300
+                   placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500
+                   focus:border-indigo-500 focus:z-10 sm:text-sm" maxlength = "40" minlength="8"
+                   pattern="^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸåÅæÆœŒçÇðÐøØß '\-]+$"
+                   placeholder="Mot de passe"
+                   required th:attr="value=${defaultPassword}" th:id="password"
+                   th:name="password"
+                   title="Au moins 8 :
+  - lettres de A à Z (a à z) avec ou sans accent
+  - chiffres
+  - apostrophes
+  - tirets courts" type="password" value="">
+          </div>
+
+        </div>
+        <!-- CheckBox-Se souvenir de moi + Lien vers mot de passe oublié -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input class="h-4 w-4 text-indigo-600
+            focus:ring-indigo-500 border-gray-300 rounded" id="remember_me" name="remember_me" type="checkbox">
+            <label class="ml-2 block text-sm text-gray-900" for="remember_me">
+              Se souvenir de moi
+            </label>
+          </div>
+          <div class="text-sm">
+            <a class="font-medium text-indigo-600 hover:text-indigo-500" href="#">
+              Mot de passe oublié ?
+            </a>
+          </div>
+        </div>
+        <!-- Bouton de submit du formulaire de login -->
+        <div>
+          <button class="group relative w-full flex justify-center py-2 px-4 border border-transparent
+          text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2
+          focus:ring-offset-2 focus:ring-indigo-500" type="submit">
+          <!-- Petit icone de cadenas -->
+          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <svg aria-hidden="true" class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                 fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path clip-rule="evenodd"
+                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0
+                    01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" fill-rule="evenodd" />
+            </svg>
+          </span>
+            Se connecter
+          </button>
+        </div>
+        <div class="text-center mt-2">
+          <a class="font-medium text-indigo-600 hover:text-indigo-500" href="/createAccount">
+            Vous n'avez pas de compte ? Créez en un !
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Inclusion du footer -->
+  <div th:insert="fragments/footer :: footer"></div>
+
+</body>
+</html>
