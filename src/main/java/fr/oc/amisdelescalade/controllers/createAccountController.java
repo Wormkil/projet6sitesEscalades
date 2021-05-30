@@ -3,18 +3,20 @@ package fr.oc.amisdelescalade.controllers;
 
 import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.User;
+import fr.oc.amisdelescalade.repository.user.UserRepository;
+import fr.oc.amisdelescalade.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 public class createAccountController {
@@ -22,7 +24,9 @@ public class createAccountController {
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
 
     @Autowired
-    private UserController userController;
+    private UserRepository userRepository;
+    @Autowired
+    private AccountService accService;// A changer pour le service qui va
 
     @GetMapping("/createAccount")
     public String createAccountForm(HttpServletRequest request, Model model) {
@@ -37,14 +41,56 @@ public class createAccountController {
         return "createAccount";
     }
 
-    @PostMapping("/createAccount")
-    public String createAccountSubmit(HttpServletRequest request, Model model) {
+    //Est-ce il a le droit de faire la requete (par exemple il est bien connecté)
+    //Est-ce il a le droit de faire sa (la requete) ?
+    // Si oui j'execute le service
 
+
+
+
+    @PostMapping(value = "/createAccount", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String createAccountSubmit( Model model, @ModelAttribute User user) {
+        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        model.addAttribute("user", new User());
+        //Est-ce il a le droit de faire la requete (par exemple il est bien connecté)
+        //Est-ce il a le droit de faire sa (la requete) ?
+        accService.connectUser(user.getEmail(),user.getPassword());
+
+        return "createAccount";
+
+
+        // Si oui j'execute le service
+
+        // Je veut savoir si une adresse mail contenu dans une variable existe ou pas dans ma base.
+
+
+        /*
+        try {
+
+            userRepository.save(user);
+        }catch(IllegalArgumentException e){
+            var maybeUser = userRepository.findByEmail(user.getEmail());
+
+
+        } */
+
+
+
+        //model.addAttribute( "errorMail", "L'adresse email est déjà prises par un de nos utilisateur. Veuillez" +
+                    //" en choisir une autre.");
+
+
+
+
+
+
+
+        /*
         // On récupère les données entré dans le formulaire de création de compte
         String pFullName = request.getParameter("fullName");
         String pUserName = request.getParameter("userName");
         String pCountry = request.getParameter("country");
-        String pEmail = request.getParameter("email");
+        pEmail = request.getParameter("email");
         String pPassword = request.getParameter("password");
         String pPasswordConfirm = request.getParameter("passwordConfirm");
         String pLocalDate = (LocalDate.now()).format(DateTimeFormatter.ofPattern("uuuu-MM-dd"));
@@ -71,7 +117,10 @@ public class createAccountController {
         model.addAttribute( "errorConfirmPass", null);
 
         Boolean haveErrors = false;
-        Iterable<User> users = userController.getUsers();
+        //Iterable<User> users = userController.getUsers();
+
+        Optionnal<User> user = userController.getUsers();
+
         for (User u : users){
             if (u.getEmail().equals(pEmail)) {
                 model.addAttribute( "errorMail", "L'adresse email est déjà prises par un de nos utilisateur. Veuillez" +
@@ -92,7 +141,7 @@ public class createAccountController {
 
 
 
-        }
+        }*/
 
        /* String pFullName = request.getParameter("fullName");
         String pUserName = request.getParameter("userName");
@@ -177,6 +226,5 @@ public class createAccountController {
                     " en choisir un autre.");
             return "createAccount";
         }*/
-        return "createAccount";
     }
 }

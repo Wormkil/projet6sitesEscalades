@@ -42,7 +42,6 @@ public class Projet6Application implements CommandLineRunner {
 		user.setFullName("Armand Poireau");
 
 		userController.createUser(user);
-		userController.createUser(user);
 
 		/*jdbcTemplate.execute("DROP TABLE IF EXISTS Users");
 		log.info("Destruction de la TABLE Users si elle existe");

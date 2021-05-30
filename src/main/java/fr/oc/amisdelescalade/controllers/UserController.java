@@ -32,13 +32,19 @@ public class UserController {
         return userService.getUsers();
     }
 
+
+    @GetMapping("/users")
+    public Optional<User> getUser(@PathVariable("email") final String email) {
+        return userService.getUser(email);
+    }
+
     /**
      * Read - Get one user
      * @param id The id of the user
      * @return An User object full filled
      */
     @GetMapping("/employee/{id}")
-    public User getEmployee(@PathVariable("id") final Long id) {
+    public User getUser(@PathVariable("id") final Long id) {
         Optional<User> user = userService.getUser(id);
         if(user.isPresent()) {
             return user.get();
