@@ -49,7 +49,7 @@ public class createAccountController {
 
 
     @PostMapping(value = "/createAccount", consumes= MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String createAccountSubmit( Model model, @ModelAttribute User user) {
+    public String createAccountSubmit(HttpServletRequest request, Model model, @ModelAttribute User user) {
         HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
         model.addAttribute("user", new User());
         //Est-ce il a le droit de faire la requete (par exemple il est bien connecté)
