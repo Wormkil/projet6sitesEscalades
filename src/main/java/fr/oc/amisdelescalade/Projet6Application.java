@@ -1,7 +1,6 @@
 package fr.oc.amisdelescalade;
 
 import fr.oc.amisdelescalade.controllers.UserController;
-import fr.oc.amisdelescalade.model.User;
 import fr.oc.amisdelescalade.utils.SessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,17 +30,8 @@ public class Projet6Application implements CommandLineRunner {
 	@Override
 	public void run(String...args) {
 
-		User user = new User();
-		user.setOfficialMember("false");
-		user.setCountry("France");
-		user.setUserName("Ammande");
-		user.setCreationAccount("2021-05-29");
-		user.setPasswordConfirm("123456789");
-		user.setPassword("123456789");
-		user.setEmail("aze@aze.com");
-		user.setFullName("Armand Poireau");
-
-		userController.createUser(user);
+		log.info("Lancement de Projet6application.run");
+		userController.initUsersBD();
 
 		/*jdbcTemplate.execute("DROP TABLE IF EXISTS Users");
 		log.info("Destruction de la TABLE Users si elle existe");

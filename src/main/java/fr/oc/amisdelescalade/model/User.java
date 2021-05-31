@@ -33,7 +33,7 @@ public class User {
     @Column(name="creation_account")
     private String creationAccount;
 
-    private String officialMember;
+    private String officialMember = "false";
 
 
 }

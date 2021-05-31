@@ -1,7 +1,10 @@
 package fr.oc.amisdelescalade.controllers;
 
+import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.User;
 import fr.oc.amisdelescalade.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +16,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
     /**
      * Create - Add a new user
      * @param user An object user
@@ -32,11 +36,26 @@ public class UserController {
         return userService.getUsers();
     }
 
+    /**
+     * Read - Get one user
+     * @param email The email of the user
+     * @return An User object full filled
+     */
+    @GetMapping("/userbyEmail")
+    public Optional<User> getUserByEmail(@PathVariable("email") final String email) {
+        return userService.getUserByEmail(email);
 
-    @GetMapping("/users")
-    public Optional<User> getUser(@PathVariable("email") final String email) {
-        return userService.getUser(email);
     }
+    /**
+     * Read - Get one user
+     * @param user_name The user_name of the user
+     * @return An User object full filled
+     */
+    /*@GetMapping("/userbyUser_name")
+    public Optional<User> getUserByUser_name(@PathVariable("user_name") final String user_name) {
+        return userService.getUserByUser_name(user_name);
+
+    }*/
 
     /**
      * Read - Get one user
@@ -44,8 +63,8 @@ public class UserController {
      * @return An User object full filled
      */
     @GetMapping("/employee/{id}")
-    public User getUser(@PathVariable("id") final Long id) {
-        Optional<User> user = userService.getUser(id);
+    public User getUserById(@PathVariable("id") final Long id) {
+        Optional<User> user = userService.getUserById(id);
         if(user.isPresent()) {
             return user.get();
         } else {
@@ -59,9 +78,9 @@ public class UserController {
      * @param user - The user object updated
      * @return
      */
-    @PutMapping("/employee/{id}")
-    public User updateEmployee(@PathVariable("id") final Long id, @RequestBody User user) {
-        Optional<User> u = userService.getUser(id);
+    @PutMapping("/user/{id}")
+    public User updateUser(@PathVariable("id") final Long id, @RequestBody User user) {
+        Optional<User> u = userService.getUserById(id);
         if(u.isPresent()) {
             User currentUser = u.get();
 
@@ -97,6 +116,7 @@ public class UserController {
             if(officialMember != null){
                 currentUser.setOfficialMember(officialMember);
             }
+            log.info(currentUser.toString());
             userService.saveUser(currentUser);
             return currentUser;
 
@@ -112,6 +132,49 @@ public class UserController {
     @DeleteMapping("/user/{id}")
     public void deleteUser(@PathVariable("id") final Long id) {
         userService.deleteUser(id);
+    }
+
+   @RequestMapping("/initUsersBD")
+    public Iterable<User> initUsersBD() {
+        User user = new User();
+
+        user.setId(1);
+        user.setOfficialMember("false");
+        user.setCountry("France");
+        user.setUserName("Aze");
+        user.setCreationAccount("2021-05-29");
+        user.setPasswordConfirm("123456789");
+        user.setPassword("123456789");
+        user.setEmail("aze@aze.com");
+        user.setFullName("A ze");
+        log.info(user.toString());
+        userService.saveUser(user);
+
+        user.setId(2);
+        user.setOfficialMember("false");
+        user.setCountry("France");
+        user.setUserName("Qsd");
+        user.setCreationAccount("2021-05-29");
+        user.setPasswordConfirm("123456789");
+        user.setPassword("123456789");
+        user.setEmail("qsd@qsd.com");
+        user.setFullName("Q sd");
+        log.info(user.toString());
+        userService.saveUser(user);
+
+        user.setId(3);
+        user.setOfficialMember("false");
+        user.setCountry("France");
+        user.setUserName("Wxc");
+        user.setCreationAccount("2021-05-29");
+        user.setPasswordConfirm("123456789");
+        user.setPassword("123456789");
+        user.setEmail("wxc@wxc.com");
+        user.setFullName("W xc");
+        log.info(user.toString());
+        userService.saveUser(user);
+
+        return userService.getUsers();
     }
 
 

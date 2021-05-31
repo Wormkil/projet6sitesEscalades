@@ -2,12 +2,18 @@ package fr.oc.amisdelescalade.service;
 
 import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.User;
-import fr.oc.amisdelescalade.repository.user.UserRepository;
 import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @Service
@@ -16,17 +22,60 @@ public class AccountService {
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-    public User connectUser(String email, String password) {
-        var user = userRepository.findByEmail(email);
-        //User u = new User();
-        if (user.isPresent()) {
+    public User registerUser(User user) {
+        //Ajoute la date actuel au nouveau utilisateur enregistré
+        user.setCreationAccount(LocalDate.now().format(DateTimeFormatter.ofPattern("uuuu-MM-dd")));
+        return userService.saveUser(user);
 
-            log.info(user.get().toString());
+    }
 
-            return user.get();
+    public Map<String, String> canRegister(User user){
+        Map<String,String> mapError = new HashMap<String,String>();
+
+        // On check la correspondance des mot de passe
+        if (!user.getPassword().equals(user.getPasswordConfirm())){
+            mapError.put("errorConfirmPass", "Les mots de passes ne correspondent pas. Veuillez" +
+                    " verifier leurs orthographes.");
+            log.info("Erreur mdp - Difference between Mdp/mdpconfirm");
         }
-        return user.get();
+
+        // On check l'existence de l'email
+        if (userService.getUserByEmail(user.getEmail()).isPresent()) {
+            mapError.put( "errorMail", "L'adresse email est déjà prises par un de nos utilisateur. Veuillez" +
+                    " en choisir une autre.");
+            log.info("Erreur email - Same email");
+        }
+
+        // On check l'existence de l'userName
+        if (userService.getUserByUserName(user.getUserName()).isPresent()) {
+            mapError.put( "errorUserName", "Le pseudo est déjà pris par un de nos utilisateur. Veuillez" +
+                    " en choisir un autre.");
+            log.info("Erreur userName - Same userName");
+        }
+
+        return mapError;
+    }
+    public Map<String, String> canConnect(String email, String password) {
+        Map<String, String> mapError = new HashMap<String, String>();
+
+        if (!userService.getUserByEmail(email).isEmpty()) {
+            if (!userService.getUserByEmail(email).get().getPassword().equals(password)) {
+                log.info("Erreur pass");
+                mapError.put("errorPass", "Le mot de passe ne correspond avec l'adresse mail.");
+            }
+            return mapError;
+        } else {
+            mapError.put("errorEmail", "L'adresse Email n'est pas présente dans la base de donnée des utilisateurs");
+            log.info("Erreur mail");
+            return mapError;
+        }
+    }
+
+    public void connectUser(HttpServletRequest request, User user){
+        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        session.setAttribute("user", user);
+        session.setAttribute("userName", user.getUserName());
     }
 }

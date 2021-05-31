@@ -23,7 +23,7 @@
       </div>
 
       <!-- Affichage d'un message d'erreur si l'adresse email est déjà existante dans la base de donnée -->
-      <div th:if="${#session.getAttribute('errorMail') != null}">
+      <div th:if="${errorMail != null}">
         <div class="flex justify-center items-center mb-2 font-medium py-1 px-2 bg-white rounded-md text-red-700
                       bg-red-100 border border-red-300 ">
           <div slot="avatar">
@@ -36,11 +36,11 @@
             </svg>
           </div>
           <div class="font-normal  max-w-full flex-initial">
-            <span th:text="${#session.getAttribute('errorMail')} ?: 'Error on message error'"/>
+            <span th:text="${errorMail} ?: 'Error on message error'"/>
           </div>
         </div>
       </div>
-      <div th:unless="${#session.getAttribute('errorMail') != null}">
+      <div th:unless="${errorMail != null}">
       </div>
 
       <!-- Formulaire pour l'adresse Email et le mot de passe -->
@@ -57,7 +57,7 @@
           </div>
 
           <!-- Affichage d'un message d'erreur si le mot de passe ne correspond pas à l'adresse mail -->
-          <div th:if="${#session.getAttribute('errorPass') != null}">
+          <div th:if="${errorPass != null}">
             <div class="flex justify-center items-center my-2 font-medium py-1 px-2 bg-white rounded-md text-red-700
                       bg-red-100 border border-red-300 ">
               <div slot="avatar">
@@ -70,11 +70,11 @@
                 </svg>
               </div>
               <div class="font-normal  max-w-full flex-initial">
-                <span th:text="${#session.getAttribute('errorPass')} ?: 'Error on message error'"/>
+                <span th:text="${errorPass} ?: 'Error on message error'"/>
               </div>
             </div>
           </div>
-          <div th:unless="${#session.getAttribute('errorPass') != null}">
+          <div th:unless="${errorPass!= null}">
           </div>
           <div>
             <!-- Input pour avoir le password de l'utilisateur, sécurisé par un pattern, un maxlength et un required -->

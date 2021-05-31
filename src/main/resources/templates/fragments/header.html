@@ -39,10 +39,11 @@
                 border-black hover:border-transparent hover:bg-purple-700">
                         <a href="/login">Connection</a></li>
                 </div>
-                <div th:unless="${#session.getAttribute('user') == null}">
+                <div class="flex flex-col items-end" th:unless="${#session.getAttribute('user') == null}">
                     <li class="ml-5 px-2 py-1 hover:underline inline-block text-2xl leading-none border rounded text-black
                 border-black hover:border-transparent hover:bg-purple-700">
                         <a href="/logOut">Déconnection</a></li>
+                    <span class="font-bold text-gray-100" th:text="${#session.getAttribute('userName')} ?: 'Error on message error'"/>
                 </div>
 
 

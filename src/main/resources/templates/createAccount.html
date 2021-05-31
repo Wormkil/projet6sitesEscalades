@@ -23,7 +23,7 @@
     </div>
 
     <!-- Formulaire pour créer un compte -->
-    <form class="mt-8 space-y-6" method="post" th:action="@{/createAccount}" th:object="${user}">
+    <form class="mt-8 space-y-6" method="post" modelAttribute="user" th:action="@{/createAccount}"  th:object="${user}">
       <div class="rounded-md shadow-sm -space-y-px">
         <div>
           <!-- Input pour avoir le nom/prenom de l'utilisateur, sécurisé par un pattern, un maxlength et un required -->
@@ -39,7 +39,7 @@
         </div>
 
         <!-- Affichage d'un message d'erreur si l'userName est déjà existant dans la base de donnée -->
-        <div th:if="${#session.getAttribute('errorUserName') != null}">
+        <div th:if="${errorUserName != null}">
           <div class="flex justify-center items-center my-2 font-medium py-1 px-2 bg-white rounded-md text-red-700
                       bg-red-100 border border-red-300 ">
             <div slot="avatar">
@@ -52,11 +52,11 @@
               </svg>
             </div>
             <div class="font-normal  max-w-full flex-initial">
-              <span th:text="${#session.getAttribute('errorUserName')} ?: 'Error on message error'"/>
+              <span th:text="${errorUserName} ?: 'Error on message error'"/>
             </div>
           </div>
         </div>
-        <div th:unless="${#session.getAttribute('errorUserName') != null}">
+        <div th:unless="${errorUserName != null}">
         </div>
         <div>
           <!-- Input pour avoir le pseudo de l'utilisateur, sécurisé par un pattern, un maxlength et un required -->
@@ -327,7 +327,7 @@
         </div>
 
         <!-- Affichage d'un message d'erreur si l'adresse email est déjà existante dans la base de donnée -->
-        <div th:if="${#session.getAttribute('errorMail') != null}">
+        <div th:if="${errorMail != null}">
           <div class="flex justify-center items-center mb-2 font-medium py-1 px-2 bg-white rounded-md text-red-700
                       bg-red-100 border border-red-300 ">
             <div slot="avatar">
@@ -340,11 +340,11 @@
               </svg>
             </div>
             <div class="font-normal  max-w-full flex-initial">
-              <span th:text="${#session.getAttribute('errorMail')} ?: 'Error on message error'"/>
+              <span th:text="${errorMail} ?: 'Error on message error'"/>
             </div>
           </div>
         </div>
-        <div th:unless="${#session.getAttribute('errorMail') != null}">
+        <div th:unless="${errorMail != null}">
         </div>
         <div>
           <!-- Input pour avoir l'adresse email de l'utilisateur, sécurisé par le type email, un maxlength et un required -->

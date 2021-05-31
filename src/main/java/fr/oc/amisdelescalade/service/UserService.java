@@ -17,11 +17,14 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Optional<User> getUser(final Long id) {
+    public Optional<User> getUserById(final Long id) {
         return userRepository.findById(id);
     }
-    public Optional<User> getUser(String email) {
+    public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+    public Optional<User> getUserByUserName(String user_name) {
+        return userRepository.findByUserName(user_name);
     }
 
     public Iterable<User> getUsers() {
@@ -31,6 +34,7 @@ public class UserService {
     public void deleteUser(final Long id) {
         userRepository.deleteById(id);
     }
+
     public User saveUser(User user) {
         User savedUser = userRepository.save(user);
         return savedUser;
