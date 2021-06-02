@@ -17,36 +17,25 @@
   <section class="mx-2 sm:ml-4">
     <!-- Nom & secteur du Topo -->
     <div class="sm:mx-24 md:mx-32 2xl:mx-96 mb-4 py-4 bg-yellow-50 rounded shadow-lg">
-      <h1 class="min-w-min font-bold text-center text-2xl sm:text-4xl">RAVINE CLAUDE</h1>
-      <h2 class="min-w-min font-bold text-center text-xl sm:text-4xl">Secteur : Charlie & les Claudettes</h2>
+      <h1 class="min-w-min font-bold text-center text-2xl sm:text-4xl"><span th:text="${nameCS}"/></h1>
+      <h2 class="min-w-min font-bold text-center text-xl sm:text-4xl"><span th:text="${sectorCS}"/></h2>
     </div>
     <!-- Informations du Topo -->
     <div class="sm:mx-24 md:mx-32 2xl:mx-96 bg-green-50 max-w-full rounded shadow-lg">
       <!-- Descriptif -->
       <div class="mb-2">
         <h3 class="text-center text-lg mx-1 sm:ml-4 underline">Descriptif :</h3>
-        <p class="text-left md:text-center">Un petit secteur avec quelques beaux passages. Idéal pour ceux qui habitent
-          dans le coin ! Il n’y a pas de marche d’approche et vous pouvez y aller en
-          famille. Des secteurs à l’ombre pour grimper tout au long de la journée.
-        </p>
+        <p class="text-left md:text-center"><span th:text="${descriptifCS}"/></p>
       </div>
       <!-- Profile de Difficulté -->
       <div class="my-2">
         <h3 class="text-center text-lg mx-1 sm:ml-4 underline">Profil de Difficulté :</h3>
-        <p class="text-left md:text-center">- 2 à 3 (orange) : 29 blocs<br>
-          - 4 à 5a (bleu) : 34 blocs<br>
-          - 5b à 6a (rouge) : 21 blocs<br>
-          - 6b à 7a : 17 blocs<br>
-          - 7b et plus (blanc) : 3 blocs<br>
-        </p>
+        <p class="text-left md:text-center"><span th:text="${difficultyCS}"/></p>
       </div>
       <!-- Accès -->
       <div class="mb-4">
         <h3 class="text-center text-lg mx-1 sm:ml-4 underline">Accès :</h3>
-        <p class="text-left md:text-center">Il faut gagner la D13 qui parcours les hauts de St Leu. La ravine se trouve
-          juste au nord du quartier “L’étang St Leu”, cf la carte. Aire de stationnement
-          au niveau du panneau indiquant “Etang St Leu”.
-        </p>
+        <p class="text-left md:text-center"><span th:text="${accessCS}"/></p>
       </div>
     </div>
 

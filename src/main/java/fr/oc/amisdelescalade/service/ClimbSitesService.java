@@ -5,11 +5,12 @@ import fr.oc.amisdelescalade.model.Blocs;
 import fr.oc.amisdelescalade.model.ClimbSites;
 import fr.oc.amisdelescalade.repository.BlocRepository;
 import fr.oc.amisdelescalade.repository.BlocsRepository;
-import fr.oc.amisdelescalade.repository.ClimbSitesRepository;
+import fr.oc.amisdelescalade.repository.CSRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -17,23 +18,25 @@ import java.util.Optional;
 public class ClimbSitesService {
 
     @Autowired
-    private ClimbSitesRepository climbSitesRepository;
+    private CSRepository cSRepository;
     @Autowired
     private BlocsRepository blocsRepository;
     @Autowired
     private BlocRepository blocRepository;
 
+
+
     public Optional<ClimbSites> getCSById(final Long id) {
-        return climbSitesRepository.findById(id);
+        return cSRepository.findById(id);
     }
     public Iterable<ClimbSites> getCSs() {
-        return climbSitesRepository.findAll();
+        return cSRepository.findAll();
     }
     public void deleteCS(final Long id) {
-        climbSitesRepository.deleteById(id);
+        cSRepository.deleteById(id);
     }
     public ClimbSites saveCS(ClimbSites cs) {
-        ClimbSites savedCS = climbSitesRepository.save(cs);
+        ClimbSites savedCS = cSRepository.save(cs);
         return savedCS;
     }
 
@@ -64,5 +67,7 @@ public class ClimbSitesService {
         Bloc savedBl = blocRepository.save(bl);
         return savedBl;
     }
-
+    public List<ClimbSites> findAllBloc(Long id){
+        return cSRepository.findAllBloc(id);
+    }
 }

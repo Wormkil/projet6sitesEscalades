@@ -51,7 +51,9 @@ public class createAccountController {
         model.addAttribute("defaultPassword", user.getPassword());
         model.addAttribute("defaultPasswordConfirm", user.getPasswordConfirm());
 
+        //Est-ce il a le droit de faire la requete (par exemple il est bien connecté)
         //Est-ce il a le droit de faire sa (la requete) ?
+
         Map<String,String> mapError = accService.canRegister(user);
         if (!mapError.isEmpty()) {
             if (mapError.containsKey("errorConfirmPass")){
