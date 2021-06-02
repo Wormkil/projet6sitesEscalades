@@ -134,7 +134,7 @@ public class UserController {
         userService.deleteUser(id);
     }
 
-   @RequestMapping("/initUsersBD")
+   /*@RequestMapping("/initUsersBD")
     public Iterable<User> initUsersBD() {
         User user = new User();
 
@@ -175,7 +175,7 @@ public class UserController {
         userService.saveUser(user);
 
         return userService.getUsers();
-    }
+    }*/
 
 
 }

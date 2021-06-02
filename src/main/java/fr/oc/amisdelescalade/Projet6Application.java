@@ -1,6 +1,6 @@
 package fr.oc.amisdelescalade;
 
-import fr.oc.amisdelescalade.controllers.UserController;
+import fr.oc.amisdelescalade.service.InitBDService;
 import fr.oc.amisdelescalade.utils.SessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ public class Projet6Application implements CommandLineRunner {
 	public static SessionManager sessionManager = new SessionManager();
 
 	@Autowired
-	private UserController userController;
+	private InitBDService idbs;
 
 	public static void main(String[] args) {
 		log.info("Lancement du main de Projet6application");
@@ -31,7 +31,7 @@ public class Projet6Application implements CommandLineRunner {
 	public void run(String...args) {
 
 		log.info("Lancement de Projet6application.run");
-		userController.initUsersBD();
+		idbs.initBD();
 
 		/*jdbcTemplate.execute("DROP TABLE IF EXISTS Users");
 		log.info("Destruction de la TABLE Users si elle existe");

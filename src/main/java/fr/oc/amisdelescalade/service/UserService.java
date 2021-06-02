@@ -1,7 +1,7 @@
 package fr.oc.amisdelescalade.service;
 
 import fr.oc.amisdelescalade.model.User;
-import fr.oc.amisdelescalade.repository.user.UserRepository;
+import fr.oc.amisdelescalade.repository.UserRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

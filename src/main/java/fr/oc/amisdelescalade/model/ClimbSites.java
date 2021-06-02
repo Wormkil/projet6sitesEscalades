@@ -20,6 +20,9 @@ public class ClimbSites {
     private String difficulty;
     private String access;
 
+    @Column(name = "path_map_acess")
+    private String pathMapAcess;
+
     private long blocs_id;
 
 

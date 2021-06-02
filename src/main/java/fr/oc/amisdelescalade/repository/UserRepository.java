@@ -1,4 +1,4 @@
-package fr.oc.amisdelescalade.repository.user;
+package fr.oc.amisdelescalade.repository;
 
 import fr.oc.amisdelescalade.model.User;
 import org.springframework.data.repository.CrudRepository;

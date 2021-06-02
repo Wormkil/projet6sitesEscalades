@@ -14,4 +14,6 @@ public class Blocs {
 
     @Column(unique = true)
     private String name;
+    @Column(name = "path_map_blocs")
+    private String pathMapBlocs;
 }
