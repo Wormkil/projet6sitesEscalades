@@ -41,98 +41,41 @@
 
     <!-- Cartes du secteur et de ses environs -->
     <div class="flex justify-center sm:mx-24 md:mx-32 2xl:mx-96 mt-4">
-      <img alt="Carte Ravine Claude" class="rounded shadow-lg" src="../images/carte_ravine_claude.png">
+      <img alt="Carte Access" class="rounded shadow-lg" th:src="${pathAccess}">
     </div>
 
     <!-- Cartes et tableaux des voies -->
     <div class="flex flex-col xl:flex-row mt-4 xl:mx-10">
       <div class="flex">
-        <img alt="Carte Ravine Claude" class="rounded shadow-lg" src="../images/carte_voies_claudeRavine.png">
+        <img alt="Carte Blocs" class="rounded shadow-lg" th:src="${pathBlocs}">
       </div>
-      <table class="flex table w-full xl:w-3/5">
-        <div class="table-header-group">
-          <caption class="table-caption font-bold bg-gray-300">RAVINE CLAUDE</caption>
+
+      <table class="table table w-full xl:w-3/5">
+        <thead class = "table-header-group">
+          <caption class="table-caption font-bold bg-gray-300" th:text="${blocsName}"></caption>
           <tr class="table-row">
             <th class="table-cell border">N° du bloc</th>
             <th class="table-cell border">Cotation</th>
             <th class="table-cell border">Nom, remarques...</th>
           </tr>
-        </div>
-        <div class="table-row-group">
-          <tr class="table-row bg-gray-300">
-            <td class="table-cell border text-center font-bold">1</td>
-            <td class="table-cell border text-center">4b</td>
-            <td class="table-cell border text-center">@</td>
+        </thead>
+
+        <tbody class="table-row-group">
+          <tr class="table-row items-start" th:each="watchlistItem : ${blocList}">
+            <div class="flex items-start" th:if="${watchlistItem.id % 2 == 0}">
+              <td class="table-cell border text-center font-bold" th:text="${watchlistItem.number}">1</td>
+              <td class="table-cell border text-center" th:text="${watchlistItem.quotes}">4b</td>
+              <td class="table-cell border text-center" th:text="${watchlistItem.notes}">@</td>
+            </div>
+            <div class="flex items-start" th:if="${( watchlistItem.id) % 2 == 1}">
+              <td class="table-cell bg-gray-300 border text-center font-bold" th:text="${watchlistItem.number}">1</td>
+              <td class="table-cell bg-gray-300 border text-center" th:text="${watchlistItem.quotes}">4b</td>
+              <td class="table-cell bg-gray-300 border text-center" th:text="${watchlistItem.notes}">@</td>
+            </div>
           </tr>
-          <tr class="table-row">
-            <td class="table-cell border text-center font-bold">2</td>
-            <td class="table-cell border text-center">4b</td>
-            <td class="table-cell border text-center"></td>
-          </tr>
-          <tr class="table-row bg-gray-300">
-            <td class="table-cell border text-center font-bold">3</td>
-            <td class="table-cell border text-center">5a</td>
-            <td class="table-cell border text-center"></td>
-          </tr>
-          <tr class="table-row">
-            <td class="table-cell border text-center font-bold">4</td>
-            <td class="table-cell border text-center">7b</td>
-            <td class="table-cell border text-center">"La flemme de l'énergumène"</td>
-          </tr>
-          <tr class="table-row bg-gray-300">
-            <td class="table-cell border text-center font-bold">5</td>
-            <td class="table-cell border text-center">6a</td>
-            <td class="table-cell border text-center">"Talons sous les Chtis"</td>
-          </tr>
-          <tr class="table-row">
-            <td class="table-cell border text-center font-bold">6</td>
-            <td class="table-cell border text-center">4b</td>
-            <td class="table-cell border text-center"></td>
-          </tr>
-          <tr class="table-row bg-gray-300">
-            <td class="table-cell border text-center font-bold">6 bis</td>
-            <td class="table-cell border text-center">5b</td>
-            <td class="table-cell border text-center">pied imposé</td>
-          </tr>
-          <tr class="table-row">
-            <td class="table-cell border text-center font-bold">6 ter</td>
-            <td class="table-cell border text-center">3a</td>
-            <td class="table-cell border text-center"></td>
-          </tr>
-          <tr class="table-row bg-gray-300">
-            <td class="table-cell border text-center font-bold">7</td>
-            <td class="table-cell border text-center">3b</td>
-            <td class="table-cell border text-center">@</td>
-          </tr>
-          <tr class="table-row">
-            <td class="table-cell border text-center font-bold">8</td>
-            <td class="table-cell border text-center">3b</td>
-            <td class="table-cell border text-center"></td>
-          </tr>
-          <tr class="table-row bg-gray-300">
-            <td class="table-cell border text-center font-bold">8 bis</td>
-            <td class="table-cell border text-center">6a+</td>
-            <td class="table-cell border text-center">assis</td>
-          </tr>
-          <tr class="table-row">
-            <td class="table-cell border text-center font-bold">9</td>
-            <td class="table-cell border text-center">3c</td>
-            <td class="table-cell border text-center">pied imposé</td>
-          </tr>
-          <tr class="table-row bg-gray-300">
-            <td class="table-cell border text-center font-bold">10</td>
-            <td class="table-cell border text-center">4a</td>
-            <td class="table-cell border text-center">pied imposé</td>
-          </tr>
-          <tr class="table-row">
-            <td class="table-cell border text-center font-bold">10 bis</td>
-            <td class="table-cell border text-center">6a+</td>
-            <td class="table-cell border text-center">assis</td>
-          </tr>
-        </div>
+        </tbody>
       </table>
     </div>
-
 
 
   </section>

@@ -1,16 +1,18 @@
 package fr.oc.amisdelescalade.repository;
 
-import fr.oc.amisdelescalade.model.Bloc;
-import fr.oc.amisdelescalade.model.ClimbSites;
+import fr.oc.amisdelescalade.Projet6Application;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
 
 public interface CSOwnRepository {
-    List<ClimbSites> findAllBloc(Long id);
+    //List<Bloc> findBlocsById(Long id);
+
+    static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
 
     @Repository
     @Transactional(readOnly = true)
@@ -19,19 +21,19 @@ public interface CSOwnRepository {
         @PersistenceContext
         EntityManager entityManager;
 
-        @Override
-        public List<ClimbSites> findAllBloc(Long id){
+        /*@Override
+        public List<Bloc> findBlocsById(Long id){
 
             var query = entityManager.createNativeQuery("""
-                SELECT id, number, quotes, notes
+                SELECT number, quotes, notes
                 FROM bloc 
                 WHERE blocs_id = ?
             """, Bloc.class);
             query.setParameter(1, id); //Si bug essayé 0
+            log.info("query : "+query.toString());
+            return query.getResultList();
 
-            //return query.getResultList();
-            return null;
-        }
+        }*/
 
       /*  @Override
         public Optional<User> findByEmail(String email) {

@@ -16,6 +16,6 @@ public class Bloc {
     private String quotes;
     private String notes;
 
-    private long blocs_id;
+    private long blocsId;
 }
 
