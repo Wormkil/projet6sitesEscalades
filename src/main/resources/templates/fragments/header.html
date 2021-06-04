@@ -9,7 +9,7 @@
 
 </head>
 <body>
-<header class="fixed top-0 shadow-2xl mb-4" th:fragment="header">
+<header class="fixed top-0 mb-4" th:fragment="header">
     <!-- Barre de navigation -->
     <div class="items-center justify-between flex bg-green-700 bg-opacity-95 px-8 sm:px-12 py-4 w-screen ">
         <!-- Brand -->
@@ -30,10 +30,8 @@
 
         <!-- Menu -->
         <div class="hidden lg:block">
-            <ul class="flex text-black font-semibold text-2xl no-underline " id="mobilemenu">
-                <li class="ml-5 px-2 py-1 hover:underline"><a href="/sitesEscalades">Sites d'Escalades</a></li>
-                <!--
-                <li class="ml-5 px-2 py-1 hover:underline"><a href="topo_ravine_claude.html">Topos</a></li> -->
+            <ul class="flex text-black items-center font-semibold text-2xl no-underline " id="mobilemenu">
+                <li class="ml-2 px-2 py-1 hover:underline"><a href="/sitesEscalades">Sites d'Escalades</a></li>
                 <div th:if="${#session.getAttribute('user') == null}">
                     <li class="ml-5 px-2 py-1 hover:underline inline-block text-2xl leading-none border rounded text-black
                 border-black hover:border-transparent active:bg-purple-700">
@@ -44,13 +42,9 @@
                 border-black hover:border-transparent hover:bg-purple-700">
                         <a href="/logOut"><span th:text="'Déconnection de '+${#session.getAttribute('userName')} ?: 'error user'"/></span></a></li>
                 </div>
-
-
             </ul>
         </div>
     </div>
-
-
 </header>
 </body>
 </html>
