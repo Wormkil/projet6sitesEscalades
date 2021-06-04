@@ -25,16 +25,14 @@ public interface BlocOwnRepository {
 
         @Override
         public List<Bloc> findBlocByBlocsId(Long id) {
-            log.info("je suis ici");
             var query = entityManager.createNativeQuery("""
                 SELECT number, quotes, notes
                 FROM bloc 
                 WHERE blocs_id = ?
             """, Bloc.class);
             query.setParameter(1, id); //Si bug essayé 0
-            log.info("je suis ici");
-            return query.getResultList();
 
+            return query.getResultList();
         }
     }
 }

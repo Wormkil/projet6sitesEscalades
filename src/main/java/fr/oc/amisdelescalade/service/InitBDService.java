@@ -1,8 +1,6 @@
 package fr.oc.amisdelescalade.service;
 
 import fr.oc.amisdelescalade.Projet6Application;
-import fr.oc.amisdelescalade.model.Bloc;
-import fr.oc.amisdelescalade.model.Blocs;
 import fr.oc.amisdelescalade.model.ClimbSites;
 import fr.oc.amisdelescalade.model.User;
 import lombok.Data;
@@ -30,7 +28,7 @@ public class InitBDService {
     public void initBD() {
         fillSomeUsers();
         fillSomeClimbingSites();
-        fillSomeGhotClimbingSites();
+        //fillSomeGhotClimbingSites();
     }
 
     private void fillSomeUsers(){
@@ -76,6 +74,29 @@ public class InitBDService {
     private void fillSomeClimbingSites() {
         ClimbSites cs = new ClimbSites();
         cs.setId(1);
+        cs.setName("Connelles");
+        cs.setDescription("Site de voies d'une longueur intéressante pour ses voies jusqu'au 5c, du 6a au 6c et du 7a au 7c.");
+        cs.setAccess("5 min en montée facile depuis la Rue des Falaises où vous trouverez un parking");
+        cs.setRegion("Normandie");
+        cs.setCountry("France");
+        cs.setBestSeason("Automne / Hivers / Printemps");
+        cs.setOrientations("W");
+        cs.setCotationsRange("du 3c au 7c");
+        cs.setNbRoute("+300");
+        cs.setEquipment("Engagé");
+        cs.setMaxHeight("35m");
+        cs.setStoneType("Craie");
+        cs.setProfile("Dévers, Vertical, Dalle");
+        cs.setPlugType("Trous, Réglettes, Aplats");
+        cs.setInfoSup("Un utilisateur a rapporté :\"Suite à un éboulement en avril 2013, les secteurs 4 et 5 sont interdit d'accès jusqu'à nouvel ordre.\"");
+        cs.setPathImages("../images/Connelles/");
+        cs.setBlocsId(1L);
+        log.info(cs.toString());
+        climbSitesService.saveCS(cs);
+
+
+       /* ClimbSites cs = new ClimbSites();
+        cs.setId(1);
         cs.setAccess("Il faut gagner la D13 qui parcours les hauts de St Leu. La ravine se trouve juste au nord du quartier “L’étang St Leu”, cf la carte. Aire de stationnement au niveau du panneau indiquant “Etang St Leu”.");
         cs.setBlocsId(1);
         cs.setDescription("Un petit secteur avec quelques beaux passages. Idéal pour ceux qui habitent dans le coin ! Il n’y a pas de marche d’approche et vous pouvez y aller en famille. Des secteurs à l’ombre pour grimper tout au long de la journée.");
@@ -83,6 +104,7 @@ public class InitBDService {
         cs.setSector("Charlie & les Claudettes");
         cs.setDifficulty(" 2 à 3 (orange) : 29 blocs / 4 à 5a (bleu) : 34 blocs / 5b à 6a (rouge) : 21 blocs / 6b à 7a : 17 blocs / 7b et plus (blanc) : 3 blocs");
         cs.setPathMapAcess("../images/mapAcess/ravineClaudeAcess.png");
+        cs.setRegion("La Réunion");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -165,7 +187,7 @@ public class InitBDService {
         log.info(bl.toString());
         blocService.saveBl(bl);
 
-        /*-----------------------------------------------------------*/
+        *//*-----------------------------------------------------------*//*
 
         cs.setId(2);
         cs.setAccess("""
@@ -181,6 +203,7 @@ public class InitBDService {
         cs.setSector("Miguel Ange");
         cs.setDifficulty(" Default : 2 à 3 (orange) : 29 blocs / 4 à 5a (bleu) : 34 blocs / 5b à 6a (rouge) : 21 blocs / 6b à 7a : 17 blocs / 7b et plus (blanc) : 3 blocs");
         cs.setPathMapAcess("../images/mapAcess/ravineBernicaAccess.jpg");
+        cs.setRegion("La Réunion");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -261,7 +284,7 @@ public class InitBDService {
         log.info(bl.toString());
         blocService.saveBl(bl);
 
-        /*-----------------------------------------------------------*/
+        *//*-----------------------------------------------------------*//*
 
         cs.setId(3);
         cs.setAccess("""
@@ -276,6 +299,7 @@ public class InitBDService {
         cs.setSector("");
         cs.setDifficulty(" Default : 2 à 3 (orange) : 29 blocs / 4 à 5a (bleu) : 34 blocs / 5b à 6a (rouge) : 21 blocs / 6b à 7a : 17 blocs / 7b et plus (blanc) : 3 blocs");
         cs.setPathMapAcess("../images/mapAcess/rochePateAccess.jpg");
+        cs.setRegion("La Réunion");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -354,12 +378,12 @@ public class InitBDService {
         bl.setQuotes("");
         bl.setNotes("");
         log.info(bl.toString());
-        blocService.saveBl(bl);
+        blocService.saveBl(bl);*/
     }
 
     private void fillSomeGhotClimbingSites() {
 
-        ClimbSites cs = new ClimbSites();
+       /* ClimbSites cs = new ClimbSites();
         cs.setId(4);
         cs.setAccess("Il faut gagner la D13 qui parcours les hauts de St Leu. La ravine se trouve juste au nord du quartier “L’étang St Leu”, cf la carte. Aire de stationnement au niveau du panneau indiquant “Etang St Leu”.");
         cs.setBlocsId(1);
@@ -368,6 +392,7 @@ public class InitBDService {
         cs.setSector("Charlie & les Claudettes2");
         cs.setDifficulty(" 2 à 3 (orange) : 29 blocs / 4 à 5a (bleu) : 34 blocs / 5b à 6a (rouge) : 21 blocs / 6b à 7a : 17 blocs / 7b et plus (blanc) : 3 blocs");
         cs.setPathMapAcess("../images/mapAcess/ravineClaudeAcess.png");
+        cs.setRegion("La Réunion");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -378,7 +403,7 @@ public class InitBDService {
         log.info(bls.toString());
         blocsService.saveBlocs(bls);
 
-        /*-----------------------------------------------------------*/
+        *//*-----------------------------------------------------------*//*
 
         cs.setId(5);
         cs.setAccess("""
@@ -394,6 +419,7 @@ public class InitBDService {
         cs.setSector("Miguel Ange2");
         cs.setDifficulty(" Default : 2 à 3 (orange) : 29 blocs / 4 à 5a (bleu) : 34 blocs / 5b à 6a (rouge) : 21 blocs / 6b à 7a : 17 blocs / 7b et plus (blanc) : 3 blocs");
         cs.setPathMapAcess("../images/mapAcess/ravineBernicaAccess.jpg");
+        cs.setRegion("La Réunion");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -404,7 +430,7 @@ public class InitBDService {
         blocsService.saveBlocs(bls);
 
 
-        /*-----------------------------------------------------------*/
+        *//*-----------------------------------------------------------*//*
 
         cs.setId(6);
         cs.setAccess("""
@@ -419,6 +445,7 @@ public class InitBDService {
         cs.setSector("2");
         cs.setDifficulty(" Default : 2 à 3 (orange) : 29 blocs / 4 à 5a (bleu) : 34 blocs / 5b à 6a (rouge) : 21 blocs / 6b à 7a : 17 blocs / 7b et plus (blanc) : 3 blocs");
         cs.setPathMapAcess("../images/mapAcess/rochePateAccess.jpg");
+        cs.setRegion("La Réunion");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -428,7 +455,7 @@ public class InitBDService {
         log.info(bls.toString());
         blocsService.saveBlocs(bls);
 
-        /*-----------------------------------------------------------*/
+        *//*-----------------------------------------------------------*//*
 
         cs.setId(7);
         cs.setAccess("Il faut gagner la D13 qui parcours les hauts de St Leu. La ravine se trouve juste au nord du quartier “L’étang St Leu”, cf la carte. Aire de stationnement au niveau du panneau indiquant “Etang St Leu”.");
@@ -438,6 +465,7 @@ public class InitBDService {
         cs.setSector("Charlie & les Claudettes3");
         cs.setDifficulty(" 2 à 3 (orange) : 29 blocs / 4 à 5a (bleu) : 34 blocs / 5b à 6a (rouge) : 21 blocs / 6b à 7a : 17 blocs / 7b et plus (blanc) : 3 blocs");
         cs.setPathMapAcess("../images/mapAcess/ravineClaudeAcess.png");
+        cs.setRegion("La Réunion");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -447,7 +475,7 @@ public class InitBDService {
         log.info(bls.toString());
         blocsService.saveBlocs(bls);
 
-        /*-----------------------------------------------------------*/
+        *//*-----------------------------------------------------------*//*
 
         cs.setId(8);
         cs.setAccess("""
@@ -463,6 +491,7 @@ public class InitBDService {
         cs.setSector("Miguel Ange3");
         cs.setDifficulty(" Default : 2 à 3 (orange) : 29 blocs / 4 à 5a (bleu) : 34 blocs / 5b à 6a (rouge) : 21 blocs / 6b à 7a : 17 blocs / 7b et plus (blanc) : 3 blocs");
         cs.setPathMapAcess("../images/mapAcess/ravineBernicaAccess.jpg");
+        cs.setRegion("La Réunion");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -473,7 +502,7 @@ public class InitBDService {
         blocsService.saveBlocs(bls);
 
 
-        /*-----------------------------------------------------------*/
+        *//*-----------------------------------------------------------*//*
 
         cs.setId(9);
         cs.setAccess("""
@@ -488,6 +517,7 @@ public class InitBDService {
         cs.setSector("3");
         cs.setDifficulty(" Default : 2 à 3 (orange) : 29 blocs / 4 à 5a (bleu) : 34 blocs / 5b à 6a (rouge) : 21 blocs / 6b à 7a : 17 blocs / 7b et plus (blanc) : 3 blocs");
         cs.setPathMapAcess("../images/mapAcess/rochePateAccess.jpg");
+        cs.setRegion("La Réunion");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -495,7 +525,7 @@ public class InitBDService {
         bls.setId(9);
         bls.setPathMapBlocs("../images/mapBlocs/rochePateBlocs.jpg");
         log.info(bls.toString());
-        blocsService.saveBlocs(bls);
+        blocsService.saveBlocs(bls);*/
 
 
     }

@@ -1,8 +1,6 @@
 package fr.oc.amisdelescalade.controllers;
 
 import fr.oc.amisdelescalade.Projet6Application;
-import fr.oc.amisdelescalade.model.Bloc;
-import fr.oc.amisdelescalade.model.Blocs;
 import fr.oc.amisdelescalade.model.ClimbSites;
 import fr.oc.amisdelescalade.service.BlocService;
 import fr.oc.amisdelescalade.service.BlocsService;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 public class sitesEscaladesController {
@@ -30,13 +27,34 @@ public class sitesEscaladesController {
     @Autowired
     private BlocService blocService;
 
-    @GetMapping("/sitesEscalades")
+    @GetMapping("/site-escalade")
     public String index(Model model, HttpServletRequest request) {
         HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
         session.setAttribute("user", null);
 
-        ClimbSites cs = csService.getCSById(7L).get();
-        Blocs bls = blocsService.getBlocsById(cs.getBlocsId()).get();
+        ClimbSites cs = csService.getCSById(1L).get();
+        model.addAttribute("name", cs.getName());
+        model.addAttribute("description", cs.getDescription());
+        model.addAttribute("access", cs.getAccess());
+        model.addAttribute("region", cs.getRegion());
+        model.addAttribute("country", cs.getCountry());
+        model.addAttribute("orientations", cs.getOrientations());
+        model.addAttribute("bestSeason", cs.getBestSeason());
+        model.addAttribute("cotationRange", cs.getCotationsRange());
+        model.addAttribute("nbRoute", cs.getNbRoute());
+        model.addAttribute("equipement", cs.getEquipment());
+        model.addAttribute("maxHeight", cs.getMaxHeight());
+        model.addAttribute("stoneType", cs.getStoneType());
+        model.addAttribute("profile", cs.getProfile());
+        model.addAttribute("plugType", cs.getPlugType());
+        model.addAttribute("infosSup", cs.getInfoSup());
+        model.addAttribute("pathImages", cs.getPathImages());
+
+
+
+
+
+        /*Blocs bls = blocsService.getBlocsById(cs.getBlocsId()).get();
         //List<Bloc> lBl = blocService.findAllBlocs(bls.getId()); //<- Corect
         List<Bloc> lBl = blocService.findAllBlocs(cs.getBlocsId()); //<- Use for ghost climbing sites
 
@@ -50,8 +68,8 @@ public class sitesEscaladesController {
         model.addAttribute("blocList", lBl);
 
         model.addAttribute("pathAccess", cs.getPathMapAcess());
-        model.addAttribute("pathBlocs", bls.getPathMapBlocs());
+        model.addAttribute("pathBlocs", bls.getPathMapBlocs());*/
 
-        return "sitesEscalades";
+        return "site-escalade";
     }
 }
