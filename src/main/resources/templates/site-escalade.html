@@ -34,9 +34,9 @@
                         </svg>
       </button>
     </div>
-    <hr class="mb-8">
   </section>
 
+  <!-- Section qui décrits les informations principaux du sites d'escalades -->
   <section class="block lg:hidden flex justify-center mt-20 mb-6">
     <div class="bg-green-700 rounded shadow-lg w-4/5 h-full p-2
                 flex">
@@ -46,7 +46,7 @@
 
   <section class="lg:mt-20 flex justify-center gap-x-4 mb-6">
     <div class="flex flex-col h-full w-4/5 lg:w-1/3 p-2 bg-green-700 rounded shadow-lg space-y-2">
-      <div class="flex flex-col bg-green-200 rounded shadow-md place-items-center text-center p-2">
+      <div class="flex flex-col bg-red-50 rounded shadow-md place-items-center text-center p-2">
         <h3  class="text-lg"
              th:text="${'Grimper en '+region+' ('+country+') à (aux)'}"></h3>
         <h1  class="font-bold text-3xl"
@@ -73,15 +73,16 @@
         <h3 class="font-bold text-lg" th:text="${bestSeason}"></h3>
         <h3  class="text-lg">Orientation(s) : <span class="font-bold" th:text="${orientations}"></span></h3>
       </div>
-
     </div>
 
+    <!-- Petite photos du sites d'escalades -->
     <div class="bg-green-700 rounded shadow-lg w-1/3 h-full p-2
                 flex hidden lg:block ">
       <img alt="Photo du secteur" th:src="${pathImages+'/sector.jpg'}">
     </div>
   </section>
 
+  <!-- Section pour des informations supplémentaires facultatives -->
   <section class="flex justify-center mb-6" th:if="${infosSup != ''}">
     <div class="bg-green-700 rounded shadow-lg w-4/5 lg:w-2/3 p-2">
       <div class="bg-green-200 rounded shadow-lg w-full p-2">
@@ -91,6 +92,7 @@
     </div>
   </section>
 
+  <!-- Section accès au sites avec un ifram ggmaps -->
   <section class="flex flex-col justify-center place-items-center mb-6">
     <div class="bg-green-700 rounded rounded-b-none w-4/5 lg:w-2/3 p-2">
       <div class="bg-green-200 rounded shadow-lg w-full p-2">
@@ -101,14 +103,42 @@
 
     <div class="flex justify-center bg-green-700 rounded rounded-t-none shadow-lg w-4/5 lg:w-2/3 p-2">
       <iframe allowfullscreen="true"
-              class="rounded" height="450" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d1251.3133625089833!2d1.2708611700125734!3d49.27635533304012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e2!4m0!4m3!3m2!1d49.2763497!2d1.2717794999999998!5e1!3m2!1sen!2sfr!4v1622822413165!5m2!1sen!2sfr" style="border:0;"
+              class="rounded" height="450" loading="lazy" style="border:0;" th:src="${urlIframe}"
               width="650" ></iframe>
     </div>
+  </section>
+
+  <!-- Section des commentaires -->
+  <section class="flex justify-center mb-6">
+    <div class="rounded-b-lg  mt-4 ">
+      <div th:if="${user != null}">
+        <form accept-charset="UTF-8" action="/" method="post"><input type="hidden" >
+          <textarea class="w-full shadow-inner p-4 border-0 mb-4 rounded-lg focus:shadow-outline text-2xl" cols="6" id="comment_content" placeholder="Laissez un commentaires sur ce sites d'escalades pour la communauté" rows="6" spellcheck="false"></textarea>
+          <button class="font-bold py-2 px-4 w-full bg-green-700 text-lg text-white shadow-md rounded-lg ">Comment </button>
+        </form>
+      </div>
+
+      <div class="pt-4">
+        <div class="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-lg mb-4" th:each="com, iStat : ${coms}"
+             th:if="${iStat.index <= 9}">
+          <div class="flex flex-row justify-center mr-2">
+            <img alt="avatar" class="rounded-full w-10 h-10 mr-4 shadow-lg mb-4" height="48" src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" width="48">
+            <div>
+              <h3 class="text-purple-600 font-semibold text-lg text-center md:text-left " th:text="${'@'+users.get(iStat.index).userName}"></h3>
+              <p class="text-gray-600 text-xs text-center md:text-left" th:text="${com.creationDate}"></p>
+            </div>
+          </div>
+          <p class="text-gray-600 text-lg text-center md:text-left " style="width: 90%" th:text="${com.content}"></p>
+        </div>
+
+      </div>
+    </div>
+
 
   </section>
 
-
 </div>
+
 <!-- Insertion du header -->
 <div th:insert="fragments/footer :: footer"></div>
 

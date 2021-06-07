@@ -2,9 +2,10 @@ package fr.oc.amisdelescalade.controllers;
 
 import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.ClimbSites;
-import fr.oc.amisdelescalade.service.BlocService;
-import fr.oc.amisdelescalade.service.BlocsService;
+import fr.oc.amisdelescalade.model.Comment;
+import fr.oc.amisdelescalade.model.User;
 import fr.oc.amisdelescalade.service.ClimbSitesService;
+import fr.oc.amisdelescalade.service.CommentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class sitesEscaladesController {
@@ -23,9 +25,8 @@ public class sitesEscaladesController {
     @Autowired
     private ClimbSitesService csService;
     @Autowired
-    private BlocsService blocsService;
-    @Autowired
-    private BlocService blocService;
+    private CommentService comService;
+
 
     @GetMapping("/site-escalade")
     public String index(Model model, HttpServletRequest request) {
@@ -49,8 +50,12 @@ public class sitesEscaladesController {
         model.addAttribute("plugType", cs.getPlugType());
         model.addAttribute("infosSup", cs.getInfoSup());
         model.addAttribute("pathImages", cs.getPathImages());
+        model.addAttribute("urlIframe", cs.getUrlggmaps());
 
-
+        Iterable<Comment> coms = comService.findCommentByCsId(cs.getId());
+        model.addAttribute("coms", coms);
+        List<User> usersName = comService.getUserOfComment(coms);
+        model.addAttribute("users", usersName);
 
 
 

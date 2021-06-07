@@ -31,10 +31,7 @@ public class ClimbSites {
     private String plugType; //Ex : trous, réglettes, aplats
     @Size(max = 1200)
     private String infoSup; // N'importe quelle information suplémentaire ou temporaire
-
     private String pathImages; // Le chemin d'accès vers les photos du sites
-    private long blocsId; //L'id du blocs qui contiendra tous les bloc de sites d'escalades
+    private String urlggmaps; // L'url pour le ifram de ggmaps
 
-    @Column(name = "path_map_acess")
-    private String pathMapAcess; // A supprimé <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }

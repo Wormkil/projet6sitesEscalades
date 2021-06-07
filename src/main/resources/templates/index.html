@@ -1,63 +1,61 @@
 <!doctype html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <link href="/css/tailwind.css" rel="stylesheet">
-  <title>Amis de l'Escalade</title>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="/css/tailwind.css" rel="stylesheet">
+    <title>Amis de l'Escalade</title>
 
 </head>
 
 <body>
-  <div class="py-28 md:py-48"> <!-- Quick fix pour la NavBar Fixé -->
+    <div class="mb-40"> <!-- Quick fix pour la NavBar Fixé -->
+        <!-- Insertion du header -->
+        <div th:insert="fragments/header :: header"></div>
+    </div>
 
-    <!-- Insertion du header -->
-    <div th:insert="fragments/header :: header"></div>
-
-
-
-    <!-- Main de la page d'accueil -->
     <main>
-      <!-- Section d'accueil / presentation du site -->
-      <section class="flex h-80 py-4">
-        <!--Le style est moche-->
-        <div class="flex mx-auto bg-cover shadow-xl h-full rounded"
-             style="background-image: url('http://localhost:8080/images/photos_escalade/escalade_foret.jpeg');">
-          <div class="flex items-center justify-center bg-black bg-opacity-20 mx-4">
-            <span class="flex inline-block text-white text-4xl font-bold align-middle">
-              Bienvenue sur le site communautaire des Amis de l'Escalade !
-            </span>
-          </div>
-        </div>
-      </section>
+        <!-- Accueil et introduction -->
+        <section class="w-screen"
+                 style="background-image: url('/images/photos_escalade/homepage.jpg');background-size:100% 100%;">
+            <div class="grid gap-4 place-items-center">
+                <div class="bg-yellow-200 p-4 rounded-lg shadow mt-16 mr-24 w-2/5">
+                    <h1 class="font-bold text-4xl text-center">Bienvenue sur le site des Amis de l'escalade !</h1>
+                </div>
+                <div class="bg-blue-300 p-4 rounded-lg shadow w-2/5 ml-24">
+                    <h2 class="font-bold text-lg text-center">Un sites communautaire pour les passionnées comme les amateurs</h2>
+                </div>
+                <div class="bg-yellow-200 p-4 rounded-lg shadow mb-16 mr-24 w-2/5">
+                    <h2 class="font-bold text-lg text-center">Trouvez les meilleurs spots pour escalader et venez partager votre expériences !</h2>
+                </div>
+            </div>
+        </section>
+        <section class="w-screen"
+                 style="background-image: url('/images/photos_escalade/homepage2.jpg');background-size:100% 100%;">
 
-      <!-- Debuggin section
-      <div class="ml-4">
-        <span th:text="'Email : '+${#session.getAttribute('email')} ?: 'error mail'"/>
-        <span th:text="'Mot de passe : '+${#session.getAttribute('motDePasse')} ?: 'error motdepasse'"/>
-      </div>-->
+            <div></div>
 
-      <div class="ml-4">
-        <span th:text="'User : '+${#session.getAttribute('user')} ?: 'error user'"/>
-      </div>
-
-      <!-- Inclusion des cards sites Escalades -->
-      <div th:insert="fragments/card_sitesEsca :: card_sitesEsca"></div>
-
-      <section>
-        <!-- Titre de la section des topos -->
-        <h1 class="font-bold text-center sm:text-left text-2xl sm:text-4xl mx-1 sm:ml-4 underline">Dernier Topos publiés :</h1>
-
-      </section>
+            <div class="flex flex-row mx-8 py-2 my-2 bg-purple-100 rounded-md ">
+                <input autocomplete="off" class="py-2 pl-4 px-2 mr-2 text-sm text-black bg-purple-100 rounded-md flex-grow
+                    focus:outline-none focus:ring-4 focus:ring-purple-500 "
+                       name="q"
+                       placeholder="Cherchez un site d'escalade..." type="search">
+                <button class=" focus:outline-none rounded-md focus:ring-4 focus:ring-purple-500 flex-grow-0 mr-2" type="submit">
+                    <svg class="text-black h-8 w-8 fill-current"
+                         height="512px"
+                         id="Capa_1" style="enable-background:new 0 0 56.966 56.966;" version="1.1" viewBox="0 0 56.966 56.966"
+                         width="512px" x="0px" xml:space="preserve"
+                         xmlns="http://www.w3.org/2000/svg" y="0px">
+                         <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,
+                                10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,
+                                0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,
+                                6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+                        </svg>
+                </button>
+            </div>
+        </section>
 
     </main>
-  </div>
-
-  <!-- Inclusion du footer -->
-  <div th:insert="fragments/footer :: footer"></div>
 
 </body>
 </html>
-
-
-

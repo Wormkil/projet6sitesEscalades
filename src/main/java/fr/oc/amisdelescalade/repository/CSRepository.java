@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface CSRepository extends CrudRepository<ClimbSites, Long>, CSOwnRepository {
+public interface CSRepository extends CrudRepository<ClimbSites, Long>{
 
 }
