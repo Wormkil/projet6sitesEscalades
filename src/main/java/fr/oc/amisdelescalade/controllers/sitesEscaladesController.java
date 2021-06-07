@@ -57,24 +57,6 @@ public class sitesEscaladesController {
         List<User> usersName = comService.getUserOfComment(coms);
         model.addAttribute("users", usersName);
 
-
-
-        /*Blocs bls = blocsService.getBlocsById(cs.getBlocsId()).get();
-        //List<Bloc> lBl = blocService.findAllBlocs(bls.getId()); //<- Corect
-        List<Bloc> lBl = blocService.findAllBlocs(cs.getBlocsId()); //<- Use for ghost climbing sites
-
-        model.addAttribute("nameCS", cs.getName());
-        model.addAttribute("sectorCS", cs.getSector());
-        model.addAttribute("descriptifCS", cs.getDescription());
-        model.addAttribute("difficultyCS", cs.getDifficulty());
-        model.addAttribute("accessCS", cs.getAccess());
-
-        model.addAttribute("blocsName", bls.getName());
-        model.addAttribute("blocList", lBl);
-
-        model.addAttribute("pathAccess", cs.getPathMapAcess());
-        model.addAttribute("pathBlocs", bls.getPathMapBlocs());*/
-
         return "site-escalade";
     }
 }
