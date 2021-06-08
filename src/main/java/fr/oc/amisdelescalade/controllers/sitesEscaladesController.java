@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -28,12 +28,14 @@ public class sitesEscaladesController {
     private CommentService comService;
 
 
-    @GetMapping("/site-escalade")
+    @PostMapping("/site-escalade")
     public String index(Model model, HttpServletRequest request) {
         HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
         session.setAttribute("user", null);
 
-        ClimbSites cs = csService.getCSById(1L).get();
+        Long csId = Long.parseLong(request.getParameter("cs_id"));
+
+        ClimbSites cs = csService.getCSById(csId).get();
         model.addAttribute("name", cs.getName());
         model.addAttribute("description", cs.getDescription());
         model.addAttribute("access", cs.getAccess());
