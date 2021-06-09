@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<div class="py-28 md:py-40"> <!-- Quick fix pour la NavBar Fixé -->
+<div class="py-28 md:py-40 bg-gray-100"> <!-- Quick fix pour la NavBar Fixé -->
 
   <!-- Insertion du header -->
   <div th:insert="fragments/header :: header"></div>
@@ -25,9 +25,9 @@
   </section>
 
   <!-- Card sites Escalades -->
-  <section class="mt-20">
+  <main class="mt-20">
     <div class="content">
-      <div class=" mt-8 gap-8"
+      <section class=" mt-8 gap-8"
            th:each="cs, iStat : ${css}">
         <div class="flex flex-col card">
           <div class="bg-white shadow-md  rounded-3xl p-4">
@@ -64,7 +64,7 @@
                   </div>
                   <form action="/site-escalade" method="post">
                     <button
-                            aria-label="like" class="ml-2 mb-2 md:mb-0 bg-gray-900 p-4 shadow-sm tracking-wider text-white rounded-full hover:bg-gray-800" name="cs_id" th:value="${cs.id}"
+                            aria-label="like" class="ml-2 mb-2 md:mb-0 bg-red-600 hover:bg-red-700 p-4 shadow-sm tracking-wider text-white rounded-full" name="cs_id" th:value="${cs.id}"
                             type="submit">En savoir plus...</button>
                   </form>
 
@@ -73,9 +73,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </div>
-  </section>
+  </main>
 </div>
 
 <!-- Insertion du footer -->

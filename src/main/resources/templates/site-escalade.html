@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<div class="py-28 md:py-40"> <!-- Quick fix pour la NavBar Fixé -->
+<div class="py-28 md:py-40 bg-gray-100"> <!-- Quick fix pour la NavBar Fixé -->
 
   <!-- Insertion du header -->
   <div th:insert="fragments/header :: header"></div>
@@ -124,7 +124,7 @@
       <div class="flex justify-center items-center" th:if="${#session.getAttribute('user') == null}">
         <h1 class="text-2xl text-center md:text-left font-bold ml-2 ">Connectez vous pour écrire un commentaire :</h1>
         <form method="get" th:action="@{/login}">
-          <button class="font-bold ml-4 py-2 px-4 bg-green-700 text-lg text-white shadow-md rounded-lg ">Se connecter</button>
+          <button class="font-bold ml-4 py-2 px-4 bg-red-600 hover:bg-red-700 text-lg text-white shadow-md rounded-lg ">Se connecter</button>
         </form>
       </div>
 
