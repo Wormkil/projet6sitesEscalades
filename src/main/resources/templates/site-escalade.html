@@ -20,7 +20,7 @@
       <input autocomplete="off" class="py-2 pl-4 px-2 mr-2 text-sm text-black bg-purple-100 rounded-md flex-grow
                     focus:outline-none focus:ring-4 focus:ring-purple-500 "
              name="q"
-             placeholder="Cherchez un site d'escalade..." type="search">
+             placeholder="Cherchez un autre site d'escalade..." type="search">
       <button class=" focus:outline-none rounded-md focus:ring-4 focus:ring-purple-500 flex-grow-0 mr-2" type="submit">
         <svg class="text-black h-8 w-8 fill-current"
              height="512px"
@@ -38,15 +38,15 @@
 
   <!-- Section qui décrits les informations principaux du sites d'escalades -->
   <section class="block lg:hidden flex justify-center mt-20 mb-6">
-    <div class="bg-green-700 rounded shadow-lg w-4/5 h-full p-2
+    <div class="bg-white rounded shadow-lg w-4/5 h-full p-2
                 flex">
       <img alt="Photo du secteur" th:src="${pathImages+'/sector.jpg'}">
     </div>
   </section>
 
   <section class="lg:mt-20 flex justify-center gap-x-4 mb-6">
-    <div class="flex flex-col h-full w-4/5 lg:w-1/3 p-2 bg-green-700 rounded shadow-lg space-y-2">
-      <div class="flex flex-col bg-red-50 rounded shadow-md place-items-center text-center p-2">
+    <div class="flex flex-col h-full w-4/5 lg:w-1/3 p-2 bg-white rounded shadow space-y-2">
+      <div class="flex flex-col bg-white rounded shadow-lg place-items-center text-center p-2">
         <h3  class="text-lg"
              th:text="${'Grimper en '+region+' ('+country+') à (aux)'}"></h3>
         <h1  class="font-bold text-3xl"
@@ -55,7 +55,7 @@
              th:text="${description}"></h3>
       </div>
 
-      <div class="flex flex-col bg-green-200 rounded shadow-md place-items-center text-center text-lg p-2">
+      <div class="flex flex-col bg-white rounded shadow-lg place-items-center text-center text-lg p-2">
         <h3 class="text-lg">Nombre de voies : <span class="font-bold" th:text="${nbRoute}"></span></h3>
         <h3 class="text-lg">Hauteur max : <span class="font-bold" th:text="${maxHeight}"></span></h3>
         <h3 class="text-lg">Profil(s) :</h3>
@@ -68,7 +68,7 @@
         <h3 class="font-bold" th:text="${cotationRange}"></h3>
       </div>
 
-      <div class="flex flex-col bg-green-200 rounded shadow-md place-items-center text-center text-lg p-2">
+      <div class="flex flex-col bg-white rounded shadow-lg place-items-center text-center text-lg p-2">
         <h3 class="text-lg">Meilleurs saison(s) :</h3>
         <h3 class="font-bold text-lg" th:text="${bestSeason}"></h3>
         <h3  class="text-lg">Orientation(s) : <span class="font-bold" th:text="${orientations}"></span></h3>
@@ -76,7 +76,7 @@
     </div>
 
     <!-- Petite photos du sites d'escalades -->
-    <div class="bg-green-700 rounded shadow-lg w-1/3 h-full p-2
+    <div class="bg-white rounded shadow-lg w-1/3 h-full p-2
                 flex hidden lg:block ">
       <img alt="Photo du secteur" th:src="${pathImages+'/sector.jpg'}">
     </div>
@@ -84,8 +84,8 @@
 
   <!-- Section pour des informations supplémentaires facultatives -->
   <section class="flex justify-center mb-6" th:if="${infosSup != ''}">
-    <div class="bg-green-700 rounded shadow-lg w-4/5 lg:w-2/3 p-2">
-      <div class="bg-green-200 rounded shadow-lg w-full p-2">
+    <div class="bg-white rounded shadow w-4/5 lg:w-2/3 p-2">
+      <div class="bg-white rounded shadow-lg w-full p-2">
         <h3 class="text-lg">Informations supplémentaires :</h3>
         <h3 class="font-bold text-lg" th:text="${infosSup}"></h3>
       </div>
@@ -94,14 +94,14 @@
 
   <!-- Section accès au sites avec un ifram ggmaps -->
   <section class="flex flex-col justify-center place-items-center mb-6">
-    <div class="bg-green-700 rounded rounded-b-none w-4/5 lg:w-2/3 p-2">
-      <div class="bg-green-200 rounded shadow-lg w-full p-2">
+    <div class="bg-white rounded shadow rounded-b-none w-4/5 lg:w-2/3 p-2">
+      <div class="bg-white rounded shadow-lg w-full p-2">
         <h3 class="text-lg">Accès :</h3>
         <h3 class="font-bold text-lg" th:text="${access}"></h3>
       </div>
     </div>
 
-    <div class="flex justify-center bg-green-700 rounded rounded-t-none shadow-lg w-4/5 lg:w-2/3 p-2">
+    <div class="flex justify-center bg-white rounded rounded-t-none shadow-lg w-4/5 lg:w-2/3 p-2">
       <iframe allowfullscreen="true"
               class="rounded" height="450" loading="lazy" style="border:0;" th:src="${urlIframe}"
               width="650" ></iframe>
@@ -110,21 +110,31 @@
 
   <!-- Section des commentaires -->
   <section class="flex justify-center mb-6">
-    <div class="rounded-b-lg  mt-4 ">
-      <div th:if="${user != null}">
-        <form accept-charset="UTF-8" action="/" method="post"><input type="hidden" >
-          <textarea class="w-full shadow-inner p-4 border-0 mb-4 rounded-lg focus:shadow-outline text-2xl" cols="6" id="comment_content" placeholder="Laissez un commentaires sur ce sites d'escalades pour la communauté" rows="6" spellcheck="false"></textarea>
-          <button class="font-bold py-2 px-4 w-full bg-green-700 text-lg text-white shadow-md rounded-lg ">Comment </button>
+    <div class="rounded-b-lg mt-4 ">
+      <div class="flex justify-center" th:if="${#session.getAttribute('user') != null}">
+        <form class="flex w-screen my-4 flex-col items-center justify-center" method="post" modelAttribute="com" th:action="@{/site-escalade-commentaire-ajouté}" th:object="${com}">
+          <label class="sr-only" th:for="content">content</label>
+          <textarea class="w-4/5 shadow-inner p-4 border-0 mb-4 rounded-lg focus:shadow-outline text-lg"
+                    placeholder="Laissez un commentaires sur ce sites d'escalades pour la communauté"
+                    spellcheck="false" th:id="content" th:name="content"></textarea>
+          <button class="font-bold w-2/5 mt-2 mb-4 py-2 px-4 bg-green-700 text-lg text-white shadow-md rounded-lg ">Commentez</button>
         </form>
       </div>
 
-      <div class="pt-4">
-        <div class="bg-white rounded-lg p-3 flex flex-col justify-center items-center md:items-start shadow-lg mb-4" th:each="com, iStat : ${coms}"
-             th:if="${iStat.index <= 9}">
+      <div class="flex justify-center items-center" th:if="${#session.getAttribute('user') == null}">
+        <h1 class="text-2xl text-center md:text-left font-bold ml-2 ">Connectez vous pour écrire un commentaire :</h1>
+        <form method="get" th:action="@{/login}">
+          <button class="font-bold ml-4 py-2 px-4 bg-green-700 text-lg text-white shadow-md rounded-lg ">Se connecter</button>
+        </form>
+      </div>
+
+      <div class="pt-4 flex flex-col place-items-center items-center justify-center">
+        <div class="w-4/5 bg-white rounded-lg p-3 flex flex-col place-items-center items-center justify-center md:items-start shadow-lg mb-4"
+             th:each="com, iStat : ${coms}" th:if="${iStat.index <= 9}">
           <div class="flex flex-row justify-center mr-2">
             <img alt="avatar" class="rounded-full w-10 h-10 mr-4 shadow-lg mb-4" height="48" src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" width="48">
             <div>
-              <h3 class="text-purple-600 font-semibold text-lg text-center md:text-left " th:text="${'@'+users.get(iStat.index).userName}"></h3>
+              <h3 class="text-purple-600 font-semibold text-lg text-center md:text-left " th:text="${'@'+comsUsers.get(iStat.index).userName}"></h3>
               <p class="text-gray-600 text-xs text-center md:text-left" th:text="${com.creationDate}"></p>
             </div>
           </div>

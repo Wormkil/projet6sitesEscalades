@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
-public class createAccountController {
+public class CreateAccountController {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
 
@@ -72,7 +72,6 @@ public class createAccountController {
         }
 
         // Si oui j'execute le service
-        log.info(user.toString());
         accService.registerUser(user);
         accService.connectUser(request, user);
         return "index";

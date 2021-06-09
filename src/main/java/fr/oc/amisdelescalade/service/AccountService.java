@@ -10,8 +10,9 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +27,9 @@ public class AccountService {
 
     public User registerUser(User user) {
         //Ajoute la date actuel au nouveau utilisateur enregistré
-        user.setCreationAccount(LocalDate.now().format(DateTimeFormatter.ofPattern("uuuu-MM-dd")));
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        user.setCreationAccount(dateFormat.format(date));
         return userService.saveUser(user);
 
     }
@@ -77,5 +80,6 @@ public class AccountService {
         HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
         session.setAttribute("user", user);
         session.setAttribute("userName", user.getUserName());
+        session.setAttribute("userId", user.getId());
     }
 }

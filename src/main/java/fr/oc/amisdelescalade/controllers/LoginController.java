@@ -36,7 +36,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginSubmit(HttpServletRequest request, Model model) {
+    public String loginSubmit(HttpServletRequest request, Model model, HttpSession session) {
 
 
         //Est-ce il a le droit de faire la requete (par exemple il est bien connecté)

@@ -20,7 +20,7 @@
       <input autocomplete="off" class="py-2 pl-4 px-2 mr-2 text-sm text-black bg-purple-100 rounded-md flex-grow
                     focus:outline-none focus:ring-4 focus:ring-purple-500 "
              id="searchInput"
-             placeholder="Filtrer les sites d'escalade..." type="search">
+             placeholder="Filtrer les sites en écrivant une région, un pays, un nom, un nombre de voie(s), une hauteur maximale, une orientation" type="search">
     </div>
   </section>
 
@@ -53,14 +53,14 @@
                   </div>
                 </div>
                 <div class="my-4 ">
-                  <p th:text="${acs.description}"></p>
+                  <p th:text="${cs.description}"></p>
                 </div>
                 <div class="flex p-4 pb-2 border-t border-gray-200 "></div>
                 <div class="flex justify-between text-sm font-medium">
                   <div>
                     <p th:text="${'Nombre de voie(s) : '+cs.nbRoute}"></p>
-                    <p th:text="${'Hauteur maximal : '+cs.maxHeight}"></p>
-                    <p th:text="${'Orientations : '+cs.orientations}"></p>
+                    <p th:text="${'Hauteur maximale : '+cs.maxHeight}"></p>
+                    <p th:text="${'Orientation(s) : '+cs.orientations}"></p>
                   </div>
                   <form action="/site-escalade" method="post">
                     <button
