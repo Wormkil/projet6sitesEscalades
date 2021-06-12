@@ -38,7 +38,6 @@ public class InitBDService {
         User user = new User();
 
         user.setId(1);
-        user.setOfficialMember("false");
         user.setCountry("France");
         user.setUserName("Aze");
         user.setCreationAccount("2021-05-29");
@@ -46,11 +45,11 @@ public class InitBDService {
         user.setPassword("123456789");
         user.setEmail("aze@aze.com");
         user.setFullName("A ze");
+        user.setOfficialMember("true");
         log.info(user.toString());
         userService.saveUser(user);
 
         user.setId(2);
-        user.setOfficialMember("false");
         user.setCountry("France");
         user.setUserName("Qsd");
         user.setCreationAccount("2021-05-29");
@@ -62,7 +61,6 @@ public class InitBDService {
         userService.saveUser(user);
 
         user.setId(3);
-        user.setOfficialMember("false");
         user.setCountry("France");
         user.setUserName("Wxc");
         user.setCreationAccount("2021-05-29");
@@ -242,6 +240,7 @@ public class InitBDService {
         cs.setInfoSup("Un utilisateur a rapporté :\"Suite à un éboulement en avril 2013, les secteurs 4 et 5 sont interdit d'accès jusqu'à nouvel ordre.\"");
         cs.setPathImages("../images/Connelles/");
         cs.setUrlggmaps("https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d1251.3133625089833!2d1.2708611700125734!3d49.27635533304012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e2!4m0!4m3!3m2!1d49.2763497!2d1.2717794999999998!5e1!3m2!1sen!2sfr!4v1622822413165!5m2!1sen!2sfr");
+        cs.setOfficial("true");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -263,6 +262,7 @@ public class InitBDService {
         cs.setInfoSup("Sites internet : http://Https://www.orelle.net/fiche-escalade-627635 ou https://static.apidae-tourisme.com/filestore/objets-touristiques/documents/89/68/1721433.pdf");
         cs.setPathImages("../images/Orelle/");
         cs.setUrlggmaps("https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d2928.5113945590356!2d6.570911052309172!3d45.21025449183142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e2!4m0!4m3!3m2!1d45.210454899999995!2d6.5726641!5e1!3m2!1sen!2sfr!4v1623059645192!5m2!1sen!2sfr");
+        cs.setOfficial("false");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -284,6 +284,7 @@ public class InitBDService {
         cs.setInfoSup("Site(s) internet : http://www.ffme.fr/site/falaise-fiche/313.html");
         cs.setPathImages("../images/Thore/");
         cs.setUrlggmaps("https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d6133.491013215771!2d0.9598856298332028!3d47.77506548130712!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e2!4m0!4m3!3m2!1d47.7757444!2d0.9632643999999999!5e1!3m2!1sen!2sfr!4v1623060010818!5m2!1sen!2sfr");
+        cs.setOfficial("false");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 

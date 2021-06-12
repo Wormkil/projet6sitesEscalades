@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,24 +42,7 @@ public class SitesEscaladesController {
         session.setAttribute("currentCsId", csId);
 
         ClimbSites cs = csService.getCSById(csId).get();
-        model.addAttribute("name", cs.getName());
-        model.addAttribute("description", cs.getDescription());
-        model.addAttribute("access", cs.getAccess());
-        model.addAttribute("region", cs.getRegion());
-        model.addAttribute("country", cs.getCountry());
-        model.addAttribute("orientations", cs.getOrientations());
-        model.addAttribute("bestSeason", cs.getBestSeason());
-        model.addAttribute("cotationRange", cs.getCotationsRange());
-        model.addAttribute("nbRoute", cs.getNbRoute());
-        model.addAttribute("equipement", cs.getEquipment());
-        model.addAttribute("maxHeight", cs.getMaxHeight());
-        model.addAttribute("stoneType", cs.getStoneType());
-        model.addAttribute("profile", cs.getProfile());
-        model.addAttribute("plugType", cs.getPlugType());
-        model.addAttribute("infosSup", cs.getInfoSup());
-        model.addAttribute("pathImages", cs.getPathImages());
-        model.addAttribute("urlIframe", cs.getUrlggmaps());
-
+        model.addAttribute("cs", cs);
         Iterable<Comment> coms = comService.findCommentByCsId(cs.getId());
         model.addAttribute("coms", coms);
         List<User> usersName = comService.getUserOfComment(coms);
@@ -66,41 +51,66 @@ public class SitesEscaladesController {
         return "site-escalade";
     }
 
-    @PostMapping("/site-escalade-commentaire-ajouté")
+    @PostMapping("/site-escalade/commentaire-ajouté")
     public String addComment(Model model, HttpServletRequest request, @ModelAttribute Comment com) {
         HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
 
-        com.setCsId(Long.parseLong(session.getAttribute("currentCsId").toString()));
-        com.setUserId(Long.parseLong(session.getAttribute("userId").toString()));
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = new Date();
         com.setCreationDate(dateFormat.format(date));
+        com.setCsId(Long.parseLong(session.getAttribute("currentCsId").toString()));
+        com.setUserId(Long.parseLong(session.getAttribute("userId").toString()));
         comService.saveCom(com);
 
-        ClimbSites cs = csService.getCSById(com.getCsId()).get();
-        model.addAttribute("name", cs.getName());
-        model.addAttribute("description", cs.getDescription());
-        model.addAttribute("access", cs.getAccess());
-        model.addAttribute("region", cs.getRegion());
-        model.addAttribute("country", cs.getCountry());
-        model.addAttribute("orientations", cs.getOrientations());
-        model.addAttribute("bestSeason", cs.getBestSeason());
-        model.addAttribute("cotationRange", cs.getCotationsRange());
-        model.addAttribute("nbRoute", cs.getNbRoute());
-        model.addAttribute("equipement", cs.getEquipment());
-        model.addAttribute("maxHeight", cs.getMaxHeight());
-        model.addAttribute("stoneType", cs.getStoneType());
-        model.addAttribute("profile", cs.getProfile());
-        model.addAttribute("plugType", cs.getPlugType());
-        model.addAttribute("infosSup", cs.getInfoSup());
-        model.addAttribute("pathImages", cs.getPathImages());
-        model.addAttribute("urlIframe", cs.getUrlggmaps());
-
+        ClimbSites cs = csService.getCSById(Long.parseLong(session.getAttribute("currentCsId").toString())).get();
+        model.addAttribute("cs", cs);
         Iterable<Comment> coms = comService.findCommentByCsId(cs.getId());
         model.addAttribute("coms", coms);
         List<User> usersName = comService.getUserOfComment(coms);
         model.addAttribute("comsUsers", usersName);
+
+        return "site-escalade";
+    }
+
+    @RequestMapping("/site-escalade-commentaire-supprimé{idCom}")
+    public String supprComment(Model model, HttpServletRequest request, @ModelAttribute Comment com, @RequestParam(value = "id", required = false) Long id) {
+        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+
+        //
+        log.info(id.toString());
+        comService.deleteCom(id);
+        //
+
+        ClimbSites cs = csService.getCSById(Long.parseLong(session.getAttribute("currentCsId").toString())).get();
+        model.addAttribute("cs", cs);
+        Iterable<Comment> coms = comService.findCommentByCsId(cs.getId());
+        model.addAttribute("coms", coms);
+        List<User> usersName = comService.getUserOfComment(coms);
+        model.addAttribute("comsUsers", usersName);
+
+        return "site-escalade";
+    }
+
+    @PostMapping("/site-escalade-commentaire-modifié{idCom}")
+    public String changeComment(Model model, HttpServletRequest request, @ModelAttribute Comment com, @RequestParam(value = "id", required = false) Long id){
+        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        Comment comTmp = comService.getComById(id).get();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        comTmp.setContent(com.getContent()+" (Commentaire modifié par "+session.getAttribute("userName")+" le "+dateFormat.format(date)+")");
+
+        log.info(com.toString());
+        comService.saveCom(comTmp);
+
+        ClimbSites cs = csService.getCSById(Long.parseLong(session.getAttribute("currentCsId").toString())).get();
+        model.addAttribute("cs", cs);
+        Iterable<Comment> coms = comService.findCommentByCsId(cs.getId());
+        model.addAttribute("coms", coms);
+        List<User> usersName = comService.getUserOfComment(coms);
+        model.addAttribute("comsUsers", usersName);
+
 
         return "site-escalade";
     }
 }
+

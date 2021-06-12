@@ -61,6 +61,7 @@
                     <p th:text="${'Nombre de voie(s) : '+cs.nbRoute}"></p>
                     <p th:text="${'Hauteur maximale : '+cs.maxHeight}"></p>
                     <p th:text="${'Orientation(s) : '+cs.orientations}"></p>
+                    <p class="font-bold text-red-600 text-lg" th:if="${cs.official == 'true'}">Officiel Amis de L'Escalade</p>
                   </div>
                   <form action="/site-escalade" method="post">
                     <button

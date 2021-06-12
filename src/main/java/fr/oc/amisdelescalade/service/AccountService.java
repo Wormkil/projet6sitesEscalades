@@ -81,5 +81,6 @@ public class AccountService {
         session.setAttribute("user", user);
         session.setAttribute("userName", user.getUserName());
         session.setAttribute("userId", user.getId());
+        session.setAttribute("userOfficial", user.getOfficialMember());
     }
 }
