@@ -228,8 +228,8 @@ public class InitBDService {
         cs.setAccess("5 min en montée facile depuis la Rue des Falaises où vous trouverez un parking");
         cs.setRegion("Normandie");
         cs.setCountry("France");
-        cs.setBestSeason("Automne / Hivers / Printemps");
-        cs.setOrientations("W");
+        cs.setBestSeason("Automne, Hivers, Printemps");
+        cs.setOrientations("O");
         cs.setCotationsRange("du 3c au 7c");
         cs.setNbRoute("+300");
         cs.setEquipment("Engagé");
@@ -250,7 +250,7 @@ public class InitBDService {
         cs.setAccess("Entre 25 et 30 minute en montant depuis le parking. La petite randonné est belle et sympathique");
         cs.setRegion("Auvergne-Rhône-Alpes");
         cs.setCountry("France");
-        cs.setBestSeason("Automne / Printemps");
+        cs.setBestSeason("Automne, Printemps");
         cs.setOrientations("S");
         cs.setCotationsRange("du 3b au 7b");
         cs.setNbRoute("entre 25 et 30");
@@ -272,8 +272,8 @@ public class InitBDService {
         cs.setAccess("EA 9 km à l'ouest de Vendôme, près de la gare du train touristique de la vallée du Loir (Maison du vin). De Vendôme prendre direction Montoire (D917) sur 6 km puis à droite la D62 (nord, la 3ème route à droite après le passage à niveau) vers Thoré-la-Rochette. Le site est indiqué 500 m à droite vers un chemin de terre longeant la voie ferrée.");
         cs.setRegion("Centre-Val de Loire");
         cs.setCountry("France");
-        cs.setBestSeason("Automne / Été / Printemps");
-        cs.setOrientations("W");
+        cs.setBestSeason("Automne, Été, Printemps");
+        cs.setOrientations("O");
         cs.setCotationsRange("du 3a au 6c");
         cs.setNbRoute("+100");
         cs.setEquipment("Sportif");

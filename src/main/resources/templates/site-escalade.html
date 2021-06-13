@@ -52,18 +52,8 @@
              th:text="${cs.name}"></h1>
         <h3  class="text-lg"
              th:text="${cs.description}"></h3>
-        <h3 class="font-bold text-red-600 text-lg" th:if="${tagOfficiel == 'true'}">Site Officiel des amis de l'escalade !</h3>
+        <h3 class="font-bold text-red-600 text-lg" th:if="${cs.official == 'true'}">Site Officiel des amis de l'escalade !</h3>
       </div>
-
-
-      <!-- Un bouton toggle Me plutot jolie https://tailwindcomponents.com/component/toggle-switch
-      <div th:if="${#session.getAttribute('userOfficial') == 'true'}">
-        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
-          <input type="checkbox" name="toggle" id="toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-          <label for="toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
-        </div>
-        <label for="toggle" class="text-xs text-gray-700">Toggle me.</label>
-      </div> -->
 
       <div class="flex flex-col bg-white rounded shadow-lg place-items-center text-center text-lg p-2">
         <h3 class="text-lg">Nombre de voies : <span class="font-bold" th:text="${cs.nbRoute}"></span></h3>
@@ -89,7 +79,6 @@
     <div class="bg-white rounded shadow-lg w-1/3 h-full p-2 flex hidden lg:block ">
       <img alt="Photo du secteur" th:src="${cs.pathImages+'/sector.jpg'}">
     </div>
-
   </section>
 
   <!-- Section pour des informations supplémentaires facultatives -->
@@ -118,6 +107,13 @@
     </div>
   </section>
 
+  <div class="flex justify-center mt-4" th:if="${#session.getAttribute('userOfficial') == 'true'}">
+    <h1 class="text-2xl text-center md:text-left font-bold ml-2 ">Modifier les informations du sites d'escalades :</h1>
+    <form method="post" th:action="@{/modifié-site-escalade(csId=${cs.id})}">
+      <button class="font-bold ml-4 py-2 px-4 bg-red-600 hover:bg-red-700 text-lg text-white shadow-md rounded-lg ">Modifier</button>
+    </form>
+  </div>
+
   <!-- Section des commentaires -->
   <section class="flex justify-center mb-6">
     <div class="rounded-b-lg mt-4 ">
@@ -132,7 +128,7 @@
         </form>
       </div>
       <div class="flex justify-center items-center" th:if="${#session.getAttribute('user') == null}">
-        <h1 class="text-2xl text-center md:text-left font-bold ml-2 ">Connectez vous pour écrire un commentaire :</h1>
+        <h1 class="text-2xl text-center md:text-left font-bold ml-2 ">Connectez-vous pour écrire un commentaire :</h1>
         <form method="get" th:action="@{/login}">
           <button class="font-bold ml-4 py-2 px-4 bg-red-600 hover:bg-red-700 text-lg text-white shadow-md rounded-lg ">Se connecter</button>
         </form>
@@ -150,7 +146,8 @@
             </div>
           </div>
           <p class="text-gray-600 text-lg text-center md:text-left " style="width: 90%" th:text="${com.content}"></p>
-          <div class="flex flex-row gap-4 absolute top-0 right-0 mt-3 mr-4" th:if="${#session.getAttribute('userOfficial') == 'true'}">
+          <div class="flex flex-row gap-4 absolute top-0 right-0 mt-3 mr-4"
+               th:if="${#session.getAttribute('userOfficial') == 'true'}">
             <a th:href="@{~/modifié-un-commentaire(id=${com.id})}" title="Modifier le commentaire">
               <img alt="Logo modifier" class="place-self-end justify-self-end self-start mt-1" height="16" src="images/logos/logo_modifier.svg" width="16"/>
             </a>
@@ -175,3 +172,5 @@
 </body>
 
 </html>
+
+
