@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class changeComController {
+public class ChangeComController {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
 

@@ -8,24 +8,35 @@
 
 </head>
 
-<body>
-<div class="py-28 md:py-40 bg-gray-100"> <!-- Quick fix pour la NavBar Fixé -->
+<body class="bg-gray-100">
+  <div class="pt-28 md:pt-40 bg-gray-100"> <!-- Quick fix pour la NavBar Fixé -->
 
-  <!-- Insertion du header -->
-  <div th:insert="fragments/header :: header"></div>
+    <!-- Insertion du header -->
+    <div th:insert="fragments/header :: header"></div>
 
-  <!-- Barre de recherche -->
-  <section class="fixed w-screen">
-    <div class="flex flex-row mx-8 py-2 my-2 bg-purple-100 rounded-md ">
-      <input autocomplete="off" class="py-2 pl-4 px-2 mr-2 text-sm text-black bg-purple-100 rounded-md flex-grow
-                    focus:outline-none focus:ring-4 focus:ring-purple-500 "
-             id="searchInput"
-             placeholder="Filtrer les sites en écrivant une région, un pays, un nom, un nombre de voie(s), une hauteur maximale, une orientation" type="search">
-    </div>
+    <!-- Barre de filtrage -->
+    <section class="fixed w-screen">
+      <div class="flex flex-row mx-8 py-2 my-2 bg-purple-100 rounded-md ">
+        <input autocomplete="off" class="py-2 pl-4 px-2 mr-2 text-sm text-black bg-purple-100 rounded-md flex-grow
+                      focus:outline-none focus:ring-4 focus:ring-purple-500 "
+               id="searchInput"
+               placeholder="Filtrer les sites en écrivant une région, un pays, un nom, un nombre de voie(s), une hauteur maximale, une orientation" type="search">
+      </div>
+    </section>
+  </div>
+
+  <!-- Bouton ajouté un site si l'utilisateur est connecté -->
+  <section class="mt-10 md:mt-20 md:mr-4 flex justify-center md:justify-end" th:if="${#session.getAttribute('user') != null}">
+    <a th:href="@{/modifié-site-escalade(csId=0)}">
+      <button class="p-2 border border-transparent
+            text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2
+            focus:ring-offset-2 focus:ring-indigo-500 mt-10 md:mt-0" >Partager un nouveau site d'escalades
+      </button>
+    </a>
   </section>
 
   <!-- Card sites Escalades -->
-  <main class="mt-20">
+  <main class="">
     <div class="content">
       <section class=" mt-8 gap-8"
            th:each="cs, iStat : ${css}">
@@ -77,13 +88,14 @@
       </section>
     </div>
   </main>
-</div>
+
 
 <!-- Insertion du footer -->
-<div th:insert="fragments/footer :: footer"></div>
+<div class="mt-4" th:insert="fragments/footer :: footer"></div>
 
 </body>
 
+<!-- Script de filtrage pour la barre de filtre -->
 <script crossorigin="anonymous" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script>
    $(document).ready(function(){

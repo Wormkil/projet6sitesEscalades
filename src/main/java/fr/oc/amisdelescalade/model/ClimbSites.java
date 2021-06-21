@@ -34,5 +34,6 @@ public class ClimbSites {
     private String pathImages; // Le chemin d'accès vers les photos du sites
     private String urlggmaps; // L'url pour le ifram de ggmaps
     private String official = "false"; // Tag pour savoir si le sites est 'officiel Les amis de l'escalade'
+    private String authorId; // String contenant l'id de l'auteur du site d'escalade
 
 }

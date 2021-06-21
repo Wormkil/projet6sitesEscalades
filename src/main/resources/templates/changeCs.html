@@ -15,7 +15,8 @@
 </div>
 
 <main class="flex flex-col items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8 mb-1">
-  <h1 class="font-bold text-4xl mb-6">Modifié un site d'escalades</h1>
+  <h1 class="font-bold text-4xl mb-6" th:if="${csID == 0}">Partager les informations d'un nouveau site d'escalade</h1>
+  <h1 class="font-bold text-4xl mb-6" th:unless="${csID == 0}">Modifier un site d'escalades</h1>
   <form class="w-screen flex items-center justify-center"
         method="post" modelAttribute="cs" th:action="@{/changement-site-escalade-sauvegardé}"  th:object="${cs}">
     <div class="w-4/5 flex flex-col items-center justify-center gap-2 rounded-md shadow-sm">
@@ -782,7 +783,7 @@
           <textarea autocomplete="access" class="appearance-none col-span-2
                     block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900
                     rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    cols="1200" maxlength = "40" placeholder="Description du site" required rows="3"
+                    cols="1200" maxlength = "40" placeholder="Accès vers le site" required rows="3"
                  th:field="${cs.access}" th:id="access"
                  th:name="access"
                  title="Lettres de A à Z (a à z) avec ou sans accent, les chiffres, les espaces, apostrophes et les tirets courts." type="text"></textarea>
@@ -794,7 +795,7 @@
           <textarea class="appearance-none col-span-2
                     block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900
                     rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    cols="1200" maxlength = "40" placeholder="Description du site" required rows="5"
+                    cols="1200" maxlength = "40" placeholder="L'url de l'iframe de google maps qui pointe vers la localisation du site" required rows="5"
                  th:field="${cs.urlggmaps}" th:id="urlggmaps"
                  th:name="urlggmaps"
                  title="Lettres de A à Z (a à z) avec ou sans accent, les chiffres, les espaces, apostrophes et les tirets courts." type="text"></textarea>
@@ -835,10 +836,14 @@
         </div>
       </section>
 
-      <!-- Bouton de submit du formulaire de login -->
+      <!-- Bouton de submit du formulaire de modification de sites d'escalades -->
       <button class="group relative w-2/4 flex justify-center py-2 px-4 border border-transparent
             text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2
-            focus:ring-offset-2 focus:ring-indigo-500 my-10" type="submit">Enregistrer les modifications
+            focus:ring-offset-2 focus:ring-indigo-500 my-10" th:if="${csID == 0}" type="submit">Enregistrer le nouveau site d'escalade
+      </button>
+      <button class="group relative w-2/4 flex justify-center py-2 px-4 border border-transparent
+            text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2
+            focus:ring-offset-2 focus:ring-indigo-500 my-10" th:unless="${csID == 0}" type="submit">Enregistrer les modifications
       </button>
 
     </div>

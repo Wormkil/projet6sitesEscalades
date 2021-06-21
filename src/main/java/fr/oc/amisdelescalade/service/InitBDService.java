@@ -57,6 +57,7 @@ public class InitBDService {
         user.setPassword("123456789");
         user.setEmail("qsd@qsd.com");
         user.setFullName("Q sd");
+        user.setOfficialMember("false");
         log.info(user.toString());
         userService.saveUser(user);
 
@@ -67,6 +68,7 @@ public class InitBDService {
         user.setPasswordConfirm("123456789");
         user.setPassword("123456789");
         user.setEmail("wxc@wxc.com");
+        user.setOfficialMember("false");
         user.setFullName("W xc");
         log.info(user.toString());
         userService.saveUser(user);
@@ -241,6 +243,7 @@ public class InitBDService {
         cs.setPathImages("../images/Connelles/");
         cs.setUrlggmaps("https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d1251.3133625089833!2d1.2708611700125734!3d49.27635533304012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e2!4m0!4m3!3m2!1d49.2763497!2d1.2717794999999998!5e1!3m2!1sen!2sfr!4v1622822413165!5m2!1sen!2sfr");
         cs.setOfficial("true");
+        cs.setAuthorId("1");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -263,6 +266,7 @@ public class InitBDService {
         cs.setPathImages("../images/Orelle/");
         cs.setUrlggmaps("https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d2928.5113945590356!2d6.570911052309172!3d45.21025449183142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e2!4m0!4m3!3m2!1d45.210454899999995!2d6.5726641!5e1!3m2!1sen!2sfr!4v1623059645192!5m2!1sen!2sfr");
         cs.setOfficial("false");
+        cs.setAuthorId("2");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 
@@ -285,6 +289,7 @@ public class InitBDService {
         cs.setPathImages("../images/Thore/");
         cs.setUrlggmaps("https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d6133.491013215771!2d0.9598856298332028!3d47.77506548130712!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e2!4m0!4m3!3m2!1d47.7757444!2d0.9632643999999999!5e1!3m2!1sen!2sfr!4v1623060010818!5m2!1sen!2sfr");
         cs.setOfficial("false");
+        cs.setAuthorId("3");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
 

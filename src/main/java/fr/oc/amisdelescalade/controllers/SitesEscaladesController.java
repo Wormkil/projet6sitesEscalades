@@ -37,12 +37,19 @@ public class SitesEscaladesController {
     public String index(Model model, HttpServletRequest request, @ModelAttribute Comment com) {
         HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
 
-        //if(session.getAttribute("user") != null) currentUserId = session.getAttribute("user");
         Long csId = Long.parseLong(request.getParameter("cs_id"));
         session.setAttribute("currentCsId", csId);
 
         ClimbSites cs = csService.getCSById(csId).get();
         model.addAttribute("cs", cs);
+
+        model.addAttribute("canChange", "false");
+        if (session.getAttribute("user").toString().contains("id="+cs.getAuthorId()) || session.getAttribute("user").toString().contains("officialMember=true")){
+            model.addAttribute("canChange", "true");
+        }
+
+
+
         Iterable<Comment> coms = comService.findCommentByCsId(cs.getId());
         model.addAttribute("coms", coms);
         List<User> usersName = comService.getUserOfComment(coms);
