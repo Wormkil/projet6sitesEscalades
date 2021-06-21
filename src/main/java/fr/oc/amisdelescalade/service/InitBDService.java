@@ -3,6 +3,7 @@ package fr.oc.amisdelescalade.service;
 import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.ClimbSites;
 import fr.oc.amisdelescalade.model.Comment;
+import fr.oc.amisdelescalade.model.Topo;
 import fr.oc.amisdelescalade.model.User;
 import lombok.Data;
 import org.slf4j.Logger;
@@ -25,12 +26,15 @@ public class InitBDService {
     private BlocService blocService;
     @Autowired
     private CommentService comService;
+    @Autowired
+    private TopoService topoService;
 
 
     public void initBD() {
         fillSomeUsers();
         fillSomeClimbingSites();
         fillSomeComment();
+        fillSomeTopo();
         //fillSomeGhotClimbingSites();
     }
 
@@ -222,6 +226,46 @@ public class InitBDService {
         comService.saveCom(com);
     }
 
+    private void fillSomeTopo(){
+        Topo topo = new Topo();
+
+        topo.setId(1);
+        topo.setName("La courgette");
+        topo.setDescription("Je suis la description de la courgette, je suis verte, longue ou rounde et plein de nutriments ! Vive les courgette ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
+        topo.setLocalisation("Haute-Normandie");
+        topo.setAuthorId("1");
+        topo.setAvailable("true");
+        log.info(topo.toString());
+        topoService.saveTopo(topo);
+
+        topo.setId(2);
+        topo.setName("La banna");
+        topo.setDescription("Je suis la description de la bannane, je suis jaune, souvent longue et plein de nutriments ! Vive les Bananne ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
+        topo.setLocalisation("Limousins");
+        topo.setAuthorId("1");
+        topo.setAvailable("false");
+        log.info(topo.toString());
+        topoService.saveTopo(topo);
+
+        topo.setId(3);
+        topo.setName("La tomate");
+        topo.setDescription("Je suis la description de la tomate, je suis rouge, longue ou rounde et plein de nutriments ! Vive les tomate ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
+        topo.setLocalisation("Seine et marne");
+        topo.setAuthorId("1");
+        topo.setAvailable("true");
+        log.info(topo.toString());
+        topoService.saveTopo(topo);
+
+        topo.setId(4);
+        topo.setName("La cerise");
+        topo.setDescription("Je suis la description de la cerise, je suis rouge, longue ou rounde et plein de nutriments ! Vive les tomate ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
+        topo.setLocalisation("Isère");
+        topo.setAuthorId("2");
+        topo.setAvailable("true");
+        log.info(topo.toString());
+        topoService.saveTopo(topo);
+    }
+
     private void fillSomeClimbingSites() {
         ClimbSites cs = new ClimbSites();
         cs.setId(1);
@@ -394,7 +438,7 @@ public class InitBDService {
                 """);
         cs.setBlocsId(2);
         cs.setDescription("""
-                La ravine Bernica recèle de nombreux passages dans tout les niveaux, plutôt dans le 5 et le 6 pour le moment. Attention toutefois les réceptions sont souvent chaotiques et nécessitent un bon agencement de crashpad ainsi que de bons 
+                La ravine Bernica recèle de nombreux passages dans tout les niveaux, plutôt dans le 5 et le 6 pour le moment. Attention toutefois les réceptions sont souvent chaotiques et nécessitent un bon agencement de crashpad ainsi que de bons
                 L’accès peut être assez difficile à trouver dans les premiers mètres tant de nombreuses sentes parcours le plateau bordant la ravine. Il n’est pas facile d’accès pour des enfants (main courante et désescalade).
                 """);
         cs.setName("RAVINE BERNICA");
@@ -579,7 +623,7 @@ public class InitBDService {
         blocService.saveBl(bl);*/
     }
 
-    private void fillSomeGhotClimbingSites() {
+    /*private void fillSomeGhotClimbingSites() {
 
        /* ClimbSites cs = new ClimbSites();
         cs.setId(4);
@@ -610,7 +654,7 @@ public class InitBDService {
                 """);
         cs.setBlocsId(2);
         cs.setDescription("""
-                La ravine Bernica recèle de nombreux passages dans tout les niveaux, plutôt dans le 5 et le 6 pour le moment. Attention toutefois les réceptions sont souvent chaotiques et nécessitent un bon agencement de crashpad ainsi que de bons 
+                La ravine Bernica recèle de nombreux passages dans tout les niveaux, plutôt dans le 5 et le 6 pour le moment. Attention toutefois les réceptions sont souvent chaotiques et nécessitent un bon agencement de crashpad ainsi que de bons
                 L’accès peut être assez difficile à trouver dans les premiers mètres tant de nombreuses sentes parcours le plateau bordant la ravine. Il n’est pas facile d’accès pour des enfants (main courante et désescalade).
                 """);
         cs.setName("RAVINE BERNICA2");
@@ -682,7 +726,7 @@ public class InitBDService {
                 """);
         cs.setBlocsId(2);
         cs.setDescription("""
-                La ravine Bernica recèle de nombreux passages dans tout les niveaux, plutôt dans le 5 et le 6 pour le moment. Attention toutefois les réceptions sont souvent chaotiques et nécessitent un bon agencement de crashpad ainsi que de bons 
+                La ravine Bernica recèle de nombreux passages dans tout les niveaux, plutôt dans le 5 et le 6 pour le moment. Attention toutefois les réceptions sont souvent chaotiques et nécessitent un bon agencement de crashpad ainsi que de bons
                 L’accès peut être assez difficile à trouver dans les premiers mètres tant de nombreuses sentes parcours le plateau bordant la ravine. Il n’est pas facile d’accès pour des enfants (main courante et désescalade).
                 """);
         cs.setName("RAVINE BERNICA3");
@@ -723,8 +767,9 @@ public class InitBDService {
         bls.setId(9);
         bls.setPathMapBlocs("../images/mapBlocs/rochePateBlocs.jpg");
         log.info(bls.toString());
-        blocsService.saveBlocs(bls);*/
+        blocsService.saveBlocs(bls);
+
+        }*/
 
 
     }
-}

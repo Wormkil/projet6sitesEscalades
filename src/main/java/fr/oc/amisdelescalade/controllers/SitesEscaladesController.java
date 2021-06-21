@@ -6,6 +6,7 @@ import fr.oc.amisdelescalade.model.Comment;
 import fr.oc.amisdelescalade.model.User;
 import fr.oc.amisdelescalade.service.ClimbSitesService;
 import fr.oc.amisdelescalade.service.CommentService;
+import fr.oc.amisdelescalade.service.SessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,12 @@ public class SitesEscaladesController {
     private ClimbSitesService csService;
     @Autowired
     private CommentService comService;
+    @Autowired
+    private SessionService sesService;
 
     @PostMapping("/site-escalade")
     public String index(Model model, HttpServletRequest request, @ModelAttribute Comment com) {
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sesService.OpenOrGetSession(request);
 
         Long csId = Long.parseLong(request.getParameter("cs_id"));
         session.setAttribute("currentCsId", csId);
@@ -60,7 +63,7 @@ public class SitesEscaladesController {
 
     @PostMapping("/site-escalade/commentaire-ajouté")
     public String addComment(Model model, HttpServletRequest request, @ModelAttribute Comment com) {
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sesService.OpenOrGetSession(request);
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date date = new Date();
@@ -81,7 +84,7 @@ public class SitesEscaladesController {
 
     @RequestMapping("/site-escalade-commentaire-supprimé{idCom}")
     public String supprComment(Model model, HttpServletRequest request, @ModelAttribute Comment com, @RequestParam(value = "id", required = false) Long id) {
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sesService.OpenOrGetSession(request);
 
         //
         log.info(id.toString());
@@ -100,7 +103,7 @@ public class SitesEscaladesController {
 
     @PostMapping("/site-escalade-commentaire-modifié{idCom}")
     public String changeComment(Model model, HttpServletRequest request, @ModelAttribute Comment com, @RequestParam(value = "id", required = false) Long id){
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sesService.OpenOrGetSession(request);
         Comment comTmp = comService.getComById(id).get();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();

@@ -3,6 +3,7 @@ package fr.oc.amisdelescalade.controllers;
 import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.ClimbSites;
 import fr.oc.amisdelescalade.service.ClimbSitesService;
+import fr.oc.amisdelescalade.service.SessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,12 @@ public class SearchController {
 
     @Autowired
     private ClimbSitesService csService;
+    @Autowired
+    private SessionService sesService;
 
     @GetMapping("/trouver-un-site-descalade")
     public String get(Model model, HttpServletRequest request) {
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sesService.OpenOrGetSession(request);
 
         Iterable<ClimbSites> css = csService.getCSs();
         model.addAttribute("css", css);
@@ -36,7 +39,7 @@ public class SearchController {
 
     @PostMapping("/trouver-un-site-descalade")
     public String post(Model model, HttpServletRequest request) {
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sesService.OpenOrGetSession(request);
 
         String csId = request.getParameter("cs_id");
         log.info("csId : "+csId);

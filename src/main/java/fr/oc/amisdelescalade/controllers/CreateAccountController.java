@@ -4,6 +4,7 @@ package fr.oc.amisdelescalade.controllers;
 import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.User;
 import fr.oc.amisdelescalade.service.AccountService;
+import fr.oc.amisdelescalade.service.SessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,12 @@ public class CreateAccountController {
 
     @Autowired
     private AccountService accService;
+    @Autowired
+    private SessionService sesService;
 
     @GetMapping("/createAccount")
     public String createAccountForm(HttpServletRequest request) {
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sesService.OpenOrGetSession(request);
         if (session.getAttribute("user") != null) return "createAccount";
         else {
             session.setAttribute("user", null);

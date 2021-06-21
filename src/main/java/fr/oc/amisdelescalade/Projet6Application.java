@@ -1,7 +1,6 @@
 package fr.oc.amisdelescalade;
 
 import fr.oc.amisdelescalade.service.InitBDService;
-import fr.oc.amisdelescalade.utils.SessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,24 +14,18 @@ public class Projet6Application implements CommandLineRunner {
 
 	private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
 
-	public static SessionManager sessionManager = new SessionManager();
-
 	@Autowired
 	private InitBDService idbs;
 
 	public static void main(String[] args) {
 		log.info("Lancement du main de Projet6application");
 		SpringApplication.run(Projet6Application.class, args);
-
 	}
-
 
 	@Override
 	public void run(String...args) {
-
 		log.info("Lancement de Projet6application.run");
 		idbs.initBD();
-
 	}
 
 

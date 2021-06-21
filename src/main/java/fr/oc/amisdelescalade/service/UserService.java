@@ -26,15 +26,12 @@ public class UserService {
     public Optional<User> getUserByUserName(String user_name) {
         return userRepository.findByUserName(user_name);
     }
-
     public Iterable<User> getUsers() {
         return userRepository.findAll();
     }
-
     public void deleteUser(final Long id) {
         userRepository.deleteById(id);
     }
-
     public User saveUser(User user) {
         User savedUser = userRepository.save(user);
         return savedUser;

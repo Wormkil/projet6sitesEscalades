@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <link href="/css/tailwind.css" rel="stylesheet">
+  <title>Amis de l'Escalade</title>
+
+</head>
+
+<body>
+<div class="bg-gray-100 w-full">
+    <section class="mb-40"> <!-- Quick fix pour la NavBar Fixé -->
+        <!-- Insertion du header -->
+        <div th:insert="fragments/header :: header"></div>
+    </section>
+
+    <section class="mt-4 grid grid-cols-2 gap-4 items-center bg-white shadow-md rounded-3xl p-4">
+        <h1 class="text-2xl font-bold col-span-2 border-b-2 border-black">Vos informations de connexion :</h1>
+        <h3 class="text-lg font-semibold text-right">Adresse Email :</h3>
+        <h3 class="text-lg font-semibold bg-gray-200 rounded-md p-2 truncate" th:text="${user.email}"></h3>
+        <h3 class="text-lg font-semibold text-right">Mot de passe :</h3>
+        <h3 class="text-lg font-semibold bg-gray-200 rounded-md p-2" th:text="${user.password}"></h3>
+    </section>
+
+    <section class="mt-4 grid grid-cols-2 gap-4 items-center bg-white shadow-md rounded-3xl p-4">
+        <h1 class="text-2xl font-bold col-span-2 border-b-2 border-black">Vos informations personnelles :</h1>
+        <h3 class="text-lg font-semibold text-right">Nom d'utilisateur (pseudo) :</h3>
+        <h3 class="text-lg font-semibold bg-gray-200 rounded-md p-2" th:text="${user.userName}"></h3>
+        <h3 class="text-lg font-semibold text-right">Nom/Prénom :</h3>
+        <h3 class="text-lg font-semibold bg-gray-200 rounded-md p-2" th:text="${user.fullName}"></h3>
+        <h3 class="text-lg font-semibold text-right">Pays :</h3>
+        <h3 class="text-lg font-semibold bg-gray-200 rounded-md p-2" th:text="${user.country}"></h3>
+        <h3 class="text-lg font-semibold text-right">Date de création du compte :</h3>
+        <h3 class="text-lg font-semibold bg-gray-200 rounded-md p-2" th:text="${user.creationAccount}"></h3>
+    </section>
+
+    <section class="mt-4 bg-white shadow-md rounded-3xl p-4">
+        <div class="grid grid-cols-5 md:grid-cols-9 gap-4 mb-2">
+            <h1 class="text-2xl font-bold col-span-5 md:col-span-9 border-b-2 border-black">Vos Topos :</h1>
+            <h3 class="text-lg font-semibold col-span-2 text-center border-b-2">Nom</h3>
+            <h3 class="text-lg font-semibold col-span-4 text-center border-b-2 hidden md:block">Description</h3>
+            <h3 class="text-lg font-semibold col-span-2 text-center border-b-2">Localisation</h3>
+            <h3 class="text-lg font-semibold col-span-1 text-center border-b-2">Disponible</h3>
+        </div>
+        <div    class="grid grid-cols-5 md:grid-cols-9 gap-4 mb-2 items-center" th:each="topo, iStat : ${topos}"
+                th:if="${iStat.index <= 9}">
+            <h3 class="text-lg font-semibold bg-gray-200 rounded-md p-2 col-span-2 text-center self-start"
+                th:text="${topo.name}"></h3>
+            <h3 class="text-lg font-semibold bg-gray-200 rounded-md p-2 col-span-4 text-center hidden md:block"
+                th:text="${topo.description}"></h3>
+            <h3 class="text-lg font-semibold bg-gray-200 rounded-md p-2 col-span-2 text-center self-start"
+                th:text="${topo.localisation}"></h3>
+            <h3 class="text-lg font-semibold bg-green-100 rounded-md p-2 col-span-1 text-center truncate self-start"
+                th:if="${topo.available == 'true'}">Oui</h3>
+            <h3 class="text-lg font-semibold bg-red-100 rounded-md p-2 col-span-1 text-center truncate self-start"
+                th:unless="${topo.available == 'true'}">Non</h3>
+
+        </div>
+
+
+    </section>
+
+
+
+
+
+
+  <section>
+    <!-- Insertion du footer -->
+    <div class="mt-4" th:insert="fragments/footer :: footer"></div>
+  </section>
+
+
+</div>
+</body>
+</html>

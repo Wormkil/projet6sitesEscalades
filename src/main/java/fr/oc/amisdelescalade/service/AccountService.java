@@ -24,6 +24,8 @@ public class AccountService {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private SessionService sesService;
 
     public User registerUser(User user) {
         //Ajoute la date actuel au nouveau utilisateur enregistré
@@ -77,10 +79,15 @@ public class AccountService {
     }
 
     public void connectUser(HttpServletRequest request, User user){
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sesService.OpenOrGetSession(request);
         session.setAttribute("user", user);
-        session.setAttribute("userName", user.getUserName());
+        /*session.setAttribute("userName", user.getUserName());
         session.setAttribute("userId", user.getId());
-        session.setAttribute("userOfficial", user.getOfficialMember());
+        session.setAttribute("userOfficial", user.getOfficialMember());*/
+    }
+
+    public boolean isConnect(){
+
+        return true;
     }
 }

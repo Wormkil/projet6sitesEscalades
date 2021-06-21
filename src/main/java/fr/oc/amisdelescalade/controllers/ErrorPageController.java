@@ -9,25 +9,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 @Controller
-public class HomepageController {
+public class ErrorPageController {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
 
-    private String currentPage = "index";
 
     @Autowired
     private SessionService sesService;
 
-    @GetMapping("/")
+    @GetMapping("/page-erreur-deja-connecte")
     public String index(HttpServletRequest request) {
-        HttpSession session = sesService.OpenOrGetSession(request);
-        sesService.saveLastPage(session, currentPage);
-
-        //log.info(sesService.getUserFromSession(session).toString());
-
-        return currentPage;
+        return "errorPage";
     }
 }

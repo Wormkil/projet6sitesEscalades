@@ -4,6 +4,7 @@ import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.ClimbSites;
 import fr.oc.amisdelescalade.model.Comment;
 import fr.oc.amisdelescalade.service.ClimbSitesService;
+import fr.oc.amisdelescalade.service.SessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,12 @@ public class ClimginSiteController {
 
     @Autowired
     private ClimbSitesService csService;
+    @Autowired
+    private SessionService sessionService;
 
     @RequestMapping("/modifié-site-escalade{csId}")
     public String changeClimbingSite(Model model, HttpServletRequest request, @ModelAttribute Comment com, @RequestParam(value = "csId", required = false) Long csId) {
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sessionService.OpenOrGetSession(request);
         ClimbSites cs;
         if (csId == 0) {
             cs = new ClimbSites();
@@ -126,7 +129,7 @@ public class ClimginSiteController {
                                          @RequestParam(value = "bestsaison", required = false) String bestsaison,
                                          @RequestParam(value = "orientation", required = false) String orientation) {
 
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sessionService.OpenOrGetSession(request);
         if (cs.getId() != 0L) {
             cs.setId(Long.parseLong(session.getAttribute("currentCsId").toString()));
         }

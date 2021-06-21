@@ -2,6 +2,7 @@ package fr.oc.amisdelescalade.controllers;
 
 import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.service.AccountService;
+import fr.oc.amisdelescalade.service.SessionService;
 import fr.oc.amisdelescalade.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +25,18 @@ public class LoginController {
     private AccountService accService;
     @Autowired
     private UserService uService;
+    @Autowired
+    private SessionService sesService;
 
     @GetMapping("/login")
     public String loginForm(HttpServletRequest request) {
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
-        if (session.getAttribute("user") != null) return "login";
-        else {
-            session.setAttribute("user", null);
+        HttpSession session = sesService.OpenOrGetSession(request);
+
+        if (sesService.getUserFromSession(session) == null) {
             return "login";
         }
+        else return "errorPage";
+
     }
 
     @PostMapping("/login")
@@ -54,7 +58,7 @@ public class LoginController {
         Map<String,String> mapError = accService.canConnect(pEmail, pPassword);
         if (mapError.isEmpty()) {
             accService.connectUser(request, uService.getUserByEmail(pEmail).get());
-            return "index";
+            return sesService.getLastPage(session);
         }
         else {
             if (mapError.containsKey("errorPass")) {
@@ -67,12 +71,11 @@ public class LoginController {
             }
             return "login";
         }
-
     }
 
     @GetMapping("/logOut")
     public String logOut( HttpServletRequest request) {
-        HttpSession session = Projet6Application.sessionManager.OpenOrGetSession(request);
+        HttpSession session = sesService.OpenOrGetSession(request);
         session.setAttribute( "user", null);
 
         return "index";
