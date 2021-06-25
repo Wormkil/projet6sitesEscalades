@@ -36,6 +36,7 @@ public class SessionService {
         var sessionUser = session.getAttribute("user");
         if(sessionUser == null) return null;
         else {
+            log.info(sessionUser.toString());
             return (User)sessionUser;
         }
     }
@@ -51,5 +52,44 @@ public class SessionService {
             log.info(s.toString());
             return s.toString();
         }
+    }
+
+    public Boolean isGuestInSessionUnknown(HttpSession session){
+        if (getUserFromSession(session) == null) return true;
+        else return false;
+    }
+    public Boolean isGuestInSessionConnect(HttpSession session){
+        if (getUserFromSession(session) == null) return false;
+        else return true;
+    }
+    public Boolean isGuestInSessionOfficial(HttpSession session){
+        var user = getUserFromSession(session);
+        if ( user == null) return false;
+        else if (Boolean.parseBoolean(user.getOfficialMember())) return true;
+        else return false;
+    }
+
+    public boolean checkUserCanDoThisRequest(HttpServletRequest request, String whatUserShouldBe) {
+        HttpSession currentSession = OpenOrGetSession(request);
+
+        switch (whatUserShouldBe){
+            case "unknown":
+                if (isGuestInSessionUnknown(currentSession)) return true;
+                break;
+
+            case "connect":
+                if (isGuestInSessionConnect(currentSession)) return true;
+                break;
+
+            case "official":
+                if (isGuestInSessionOfficial(currentSession)) return true;
+                break;
+        }
+        return false;
+    }
+
+    public String redirectToErrorPage(HttpServletRequest request){
+        HttpSession currentSession = OpenOrGetSession(request);
+        return "errorPage";
     }
 }

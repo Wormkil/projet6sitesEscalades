@@ -234,6 +234,7 @@ public class InitBDService {
         topo.setDescription("Je suis la description de la courgette, je suis verte, longue ou rounde et plein de nutriments ! Vive les courgette ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
         topo.setLocalisation("Haute-Normandie");
         topo.setAuthorId("1");
+        topo.setReleaseDate("24-06-2021");
         topo.setAvailable("true");
         log.info(topo.toString());
         topoService.saveTopo(topo);
@@ -243,6 +244,7 @@ public class InitBDService {
         topo.setDescription("Je suis la description de la bannane, je suis jaune, souvent longue et plein de nutriments ! Vive les Bananne ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
         topo.setLocalisation("Limousins");
         topo.setAuthorId("1");
+        topo.setReleaseDate("24-06-2021");
         topo.setAvailable("false");
         log.info(topo.toString());
         topoService.saveTopo(topo);
@@ -252,6 +254,7 @@ public class InitBDService {
         topo.setDescription("Je suis la description de la tomate, je suis rouge, longue ou rounde et plein de nutriments ! Vive les tomate ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
         topo.setLocalisation("Seine et marne");
         topo.setAuthorId("1");
+        topo.setReleaseDate("24-06-2021");
         topo.setAvailable("true");
         log.info(topo.toString());
         topoService.saveTopo(topo);
@@ -261,6 +264,7 @@ public class InitBDService {
         topo.setDescription("Je suis la description de la cerise, je suis rouge, longue ou rounde et plein de nutriments ! Vive les tomate ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
         topo.setLocalisation("Isère");
         topo.setAuthorId("2");
+        topo.setReleaseDate("24-06-2021");
         topo.setAvailable("true");
         log.info(topo.toString());
         topoService.saveTopo(topo);
