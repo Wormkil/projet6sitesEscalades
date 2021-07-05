@@ -2,15 +2,18 @@ package fr.oc.amisdelescalade.repository;
 
 import fr.oc.amisdelescalade.model.Topo;
 import fr.oc.amisdelescalade.model.User;
+import org.hibernate.NonUniqueResultException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 public interface TopoOwnRepository {
     List<Topo> findByAuthorId(String email);
+    boolean existsByName(String name);
 }
 
 
@@ -31,5 +34,24 @@ public interface TopoOwnRepository {
             query.setParameter(1, authorId); //Si bug essayé 0 x) TROP MARRANT
 
             return query.getResultList();
+        }
+
+        @Override
+        public boolean existsByName(String name) {
+            var query = entityManager.createNativeQuery("""
+                SELECT *
+                FROM TOPOS 
+                WHERE name = ?
+            """, User.class);
+            query.setParameter(1, name);
+            try {
+                query.getSingleResult();
+            } catch (NoResultException e) {
+                return false;
+            } catch (NonUniqueResultException e) {
+                return false;
+            } finally {
+                return true;
+            }
         }
 }

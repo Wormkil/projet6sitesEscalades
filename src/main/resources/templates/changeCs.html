@@ -24,6 +24,7 @@
       <!-- Section pour avoir le nom, la région et le pays du site -->
       <section class="bg-white rounded shadow p-2">
         <div class="grid grid-cols-3 items-center gap-2 mb-2">
+          <input class="hidden" th:id="id" th:name="id" th:value="${cs.id}">
           <h1 class="col-span-1 font-bold text-lg text-center">Nom du lieu</h1>
           <label class="sr-only" th:for="name"></label>
           <input autocomplete="name" class="appearance-none col-span-2

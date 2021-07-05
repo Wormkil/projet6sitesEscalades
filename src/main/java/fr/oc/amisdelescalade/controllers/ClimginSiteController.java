@@ -3,6 +3,7 @@ package fr.oc.amisdelescalade.controllers;
 import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.ClimbSites;
 import fr.oc.amisdelescalade.model.Comment;
+import fr.oc.amisdelescalade.model.User;
 import fr.oc.amisdelescalade.service.ClimbSitesService;
 import fr.oc.amisdelescalade.service.SessionService;
 import org.slf4j.Logger;
@@ -130,6 +131,9 @@ public class ClimginSiteController {
                                          @RequestParam(value = "orientation", required = false) String orientation) {
 
         HttpSession session = sessionService.OpenOrGetSession(request);
+        User u = sessionService.getUserFromSession(session);
+
+        /*
         if (cs.getId() != 0L) {
             cs.setId(Long.parseLong(session.getAttribute("currentCsId").toString()));
         }
@@ -137,6 +141,9 @@ public class ClimginSiteController {
             //Si on est en train de créer un nouveau site, on affecte au site l'id de l'utilisateur courant
             cs.setAuthorId(session.getAttribute("userId").toString());
         }
+        */
+        if (cs.getId() == 0L) cs.setAuthorId(Long.toString(u.getId()));
+
         cs.setProfile(profile);
         cs.setPlugType(plugtype);
         cs.setStoneType(stonetype);
@@ -146,6 +153,7 @@ public class ClimginSiteController {
         cs.setPathImages("../images/"+cs.getName()+"/");
         if (toggle == null) cs.setOfficial("false"); else cs.setOfficial("true");
 
+        log.info("savedCs : "+cs);
         csService.saveCS(cs);
 
         return "index";

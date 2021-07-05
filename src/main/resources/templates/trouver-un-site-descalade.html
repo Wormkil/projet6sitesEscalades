@@ -60,7 +60,7 @@
                       <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"
                             stroke-width="2"></path>
                     </svg>
-                    <p class="" th:text="${cs.region+', '+acs.country}"></p>
+                    <p class="" th:text="${cs.region+', '+cs.country}"></p>
                   </div>
                 </div>
                 <div class="my-4 ">
@@ -74,11 +74,12 @@
                     <p th:text="${'Orientation(s) : '+cs.orientations}"></p>
                     <p class="font-bold text-red-600 text-lg" th:if="${cs.official == 'true'}">Officiel Amis de L'Escalade</p>
                   </div>
-                  <form action="/site-escalade" method="post">
-                    <button
-                            aria-label="like" class="ml-2 mb-2 md:mb-0 bg-red-600 hover:bg-red-700 p-4 shadow-sm tracking-wider text-white rounded-full" name="cs_id" th:value="${cs.id}"
-                            type="submit">En savoir plus...</button>
-                  </form>
+                  <a th:href="@{/site-escalade(csId=${cs.id},page=1)}">
+                    <button  class="ml-2 mb-2 md:mb-0 bg-red-600 hover:bg-red-700 p-4 shadow-sm tracking-wider text-white
+                                    rounded-full">En savoir plus...
+                    </button>
+                  </a>
+
 
                 </div>
               </div>
@@ -86,6 +87,33 @@
           </div>
         </div>
       </section>
+
+      <div class="mt-4 mr-2 flex flex-row justify-end gap-1 items-center" >
+        <th:block th:each="pageCs, iStat: ${listPage}" th:if="${pageCs != 0}">
+          <div th:if="${iStat.first}">
+            <a class="text-blue-500" th:href="@{/trouver-un-site-descalade(page=${currentPage-1})}" th:if="${currentPage > 1}">
+              <svg class="bi bi-caret-left-fill" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+              </svg>
+            </a>
+          </div>
+
+          <div th:if="${currentPage != pageCs}">
+            <a class="text-blue-500" th:href="@{/trouver-un-site-descalade(page=${pageCs})}"> [[${pageCs}]]</a><br/>
+          </div>
+          <div th:unless="${currentPage != pageCs}">
+            <a class="text-blue-500 font-semibold underline" th:href="@{/trouver-un-site-descalade(page=${pageCs})}"> [[${pageCs}]]</a><br/>
+          </div>
+
+          <div th:if="${iStat.last}">
+            <a class="text-blue-500" th:href="@{/trouver-un-site-descalade(page=${currentPage+1})}" th:if="${pageCs != currentPage}">
+              <svg class="bi bi-caret-right-fill" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+              </svg>
+            </a>
+          </div>
+        </th:block>
+      </div>
     </div>
   </main>
 

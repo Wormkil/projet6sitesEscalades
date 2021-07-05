@@ -13,7 +13,7 @@ public class Topo {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
-    @Column(unique = true)
+    //@Column(unique = true)
     private String name; // Le nom du topo
     @Size(max = 1200)
     private String description; //Une description du topo

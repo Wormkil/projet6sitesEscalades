@@ -15,6 +15,7 @@
   <div th:insert="fragments/header :: header"></div>
 
   <!-- Barre de recherche -->
+  <!--
   <section class="fixed w-screen">
     <div class="flex flex-row mx-8 py-2 my-2 bg-purple-100 rounded-md ">
       <input autocomplete="off" class="py-2 pl-4 px-2 mr-2 text-sm text-black bg-purple-100 rounded-md flex-grow
@@ -35,7 +36,7 @@
       </button>
     </div>
   </section>
-
+-->
   <section class="block lg:hidden flex justify-center mt-20 mb-6">
     <div class="bg-white rounded shadow-lg w-4/5 h-full p-2 flex">
       <img alt="Photo du secteur" th:src="${pathImages+'/sector.jpg'}">
@@ -115,11 +116,11 @@
   </div>
 
   <!-- Section des commentaires -->
-  <section class="flex justify-center mb-6">
+  <section class="flex flex-col justify-center mb-6">
     <div class="rounded-b-lg mt-4 ">
       <!-- Bouton Connecter vous OU Commentez + testarea -->
       <div class="flex justify-center" th:if="${#session.getAttribute('user') != null}">
-        <form class="flex w-screen my-4 flex-col items-center justify-center" method="post" modelAttribute="com" th:action="@{/site-escalade/commentaire-ajouté}" th:object="${com}">
+        <form class="flex w-screen my-4 flex-col items-center justify-center" method="post" modelAttribute="com" th:action="@{/site-escalade(csId=${cs.id},page=${currentPage})}" th:object="${com}">
           <label class="sr-only" th:for="content">content</label>
           <textarea class="w-4/5 shadow-inner p-4 border-0 mb-4 rounded-lg focus:shadow-outline text-lg"
                     placeholder="Laissez un commentaires sur ce sites d'escalades pour la communauté"
@@ -136,31 +137,66 @@
 
       <!-- Boucle d'affichage des commentaires -->
       <div class="pt-4 flex flex-col place-items-center items-center justify-center">
-        <div class="w-4/5 bg-white rounded-lg p-3 flex flex-col place-items-center items-center justify-center md:items-start shadow-lg mb-4 relative"
-             th:each="com, iStat : ${coms}" th:if="${iStat.index <= 9}">
-          <div class="flex flex-row justify-center mr-2">
-            <img alt="avatar" class="rounded-full w-10 h-10 mr-4 shadow-lg mb-4" height="48" src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" width="48">
-            <div>
-              <h3 class="text-purple-600 font-semibold text-lg text-center md:text-left " th:text="${'@'+comsUsers.get(iStat.index).userName}"></h3>
-              <p class="text-gray-600 text-xs text-center md:text-left" th:text="${com.creationDate}"></p>
+        <div class="w-4/5 bg-white rounded-lg p-3 flex flex-col place-items-center items-center justify-center md:items-start shadow-lg mb-4"
+             th:each="com, iStat : ${coms}">
+          <div class="grid grid-cols-12 w-full">
+            <img alt="avatar" class="col-span-2 sm:col-span-1 sm:justify-self-end rounded-full w-10 h-10 shadow-lg my-2" height="48" src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" width="48">
+            <div class="col-span-6 ml-2">
+              <h3 class="text-purple-600 font-semibold text-lg text-left " th:text="${'@'+comsUsers.get(iStat.index).userName}"></h3>
+              <p class="text-gray-600 text-xs text-left" th:text="${com.creationDate}"></p>
+            </div>
+            <div class="col-span-1 sm:col-span-3"></div>
+            <div class="col-span-1 justify-self-end"  th:if="${canChange == 'true'}">
+              <a th:href="@{~/modifié-un-commentaire(id=${com.id})}" title="Modifier le commentaire">
+                <img alt="Logo modifier" class="mt-1" height="16" src="images/logos/logo_modifier.svg" width="16"/>
+              </a>
+            </div>
+            <div class="col-span-1 sm:hidden"></div>
+            <div class="col-span-1 justify-self-end" th:if="${canChange == 'true'}">
+              <a onclick="return confirm('Voulez vous vraiment supprimer ce commentaire ?')" th:href="@{~/site-escalade-commentaire-supprimé(id=${com.id})}" title="Supprimer le commentaire">
+                <img alt="Logo supprimer" class="" height="16" src="images/logos/logo_delete.svg" width="16"/>
+              </a>
             </div>
           </div>
-          <p class="text-gray-600 text-lg text-center md:text-left " style="width: 90%" th:text="${com.content}"></p>
-          <div class="flex flex-row gap-4 absolute top-0 right-0 mt-3 mr-4"
-               th:if="${#session.getAttribute('userOfficial') == 'true'}">
-            <a th:href="@{~/modifié-un-commentaire(id=${com.id})}" title="Modifier le commentaire">
-              <img alt="Logo modifier" class="place-self-end justify-self-end self-start mt-1" height="16" src="images/logos/logo_modifier.svg" width="16"/>
-            </a>
-            <a onclick="return confirm('Voulez vous vraiment supprimer ce commentaire ?')" th:href="@{~/site-escalade-commentaire-supprimé(id=${com.id})}" title="Supprimer le commentaire">
-              <img alt="Logo supprimer" class="place-self-end justify-self-end self-start" height="16" src="images/logos/logo_delete.svg" width="16"/>
-            </a>
+          <div class="grid grid-cols-12 w-full">
+            <div class="hidden sm:block sm:col-span-1"></div>
+            <p class="col-span-12 sm:col-span-10 text-gray-600 text-lg text-center md:text-left " style="width: 90%" th:text="${com.content}"></p>
+            <div class="hidden sm:block sm:col-span-1"></div>
           </div>
+
+
         </div>
 
 
       </div>
     </div>
 
+    <div class="mt-4 mr-2 flex flex-row justify-end gap-1 items-center" >
+      <th:block th:each="pageCom, iStat: ${listPage}" th:if="${pageCom != 0}">
+        <div th:if="${iStat.first}">
+          <a class="text-blue-500" th:href="@{/site-escalade(page=${currentPage-1})}" th:if="${currentPage > 1}">
+            <svg class="bi bi-caret-left-fill" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+              <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+            </svg>
+          </a>
+        </div>
+
+        <div th:if="${currentPage != pageCom}">
+          <a class="text-blue-500" th:href="@{/site-escalade(page=${pageCom})}"> [[${pageCom}]]</a><br/>
+        </div>
+        <div th:unless="${currentPage != pageCom}">
+          <a class="text-blue-500 font-semibold underline" th:href="@{/site-escalade(page=${pageCom})}"> [[${pageCom}]]</a><br/>
+        </div>
+
+        <div th:if="${iStat.last}">
+          <a class="text-blue-500" th:href="@{/site-escalade(page=${currentPage+1})}" th:if="${pageCom != currentPage}">
+            <svg class="bi bi-caret-right-fill" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+              <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+            </svg>
+          </a>
+        </div>
+      </th:block>
+    </div>
 
   </section>
 

@@ -263,11 +263,53 @@ public class InitBDService {
         topo.setName("La cerise");
         topo.setDescription("Je suis la description de la cerise, je suis rouge, longue ou rounde et plein de nutriments ! Vive les tomate ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
         topo.setLocalisation("Isère");
-        topo.setAuthorId("2");
+        topo.setAuthorId("1");
         topo.setReleaseDate("24-06-2021");
         topo.setAvailable("true");
         log.info(topo.toString());
         topoService.saveTopo(topo);
+
+        topo.setId(5);
+        topo.setName("La courgette");
+        topo.setDescription("Je suis la description de la courgette, je suis verte, longue ou rounde et plein de nutriments ! Vive les courgette ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
+        topo.setLocalisation("Haute-Normandie");
+        topo.setAuthorId("1");
+        topo.setReleaseDate("24-06-2021");
+        topo.setAvailable("true");
+        log.info(topo.toString());
+        topoService.saveTopo(topo);
+
+
+        var cpt = 8;
+        while(cpt < 66){
+            topo.setId(cpt);
+            topoService.saveTopo(topo);
+            cpt++;
+        }
+        log.info("Beaucoup de topo crée");
+
+        topo.setId(6);
+        topo.setName("L'avant dernier topo");
+        topo.setDescription("Je suis la description de la courgette, je suis verte, longue ou rounde et plein de nutriments ! Vive les courgette ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
+        topo.setLocalisation("Haute-Normandie");
+        topo.setAuthorId("1");
+        topo.setReleaseDate("24-06-2021");
+        topo.setAvailable("true");
+        log.info(topo.toString());
+        topoService.saveTopo(topo);
+
+        topo.setId(7);
+        topo.setName("Le dernier topo");
+        topo.setDescription("Je suis la description de la courgette, je suis verte, longue ou rounde et plein de nutriments ! Vive les courgette ! Farcies, tarte ou à la poele il y'en en à pour tous les goûts");
+        topo.setLocalisation("Haute-Normandie");
+        topo.setAuthorId("1");
+        topo.setReleaseDate("24-06-2021");
+        topo.setAvailable("true");
+        log.info(topo.toString());
+        topoService.saveTopo(topo);
+
+
+
     }
 
     private void fillSomeClimbingSites() {
@@ -340,6 +382,16 @@ public class InitBDService {
         cs.setAuthorId("3");
         log.info(cs.toString());
         climbSitesService.saveCS(cs);
+
+        var cpt = 4;
+        while (cpt < 50){
+            cs.setId(cpt);
+            cs.setName(String.valueOf(cpt));
+            cs.setAuthorId("1");
+            climbSitesService.saveCS(cs);
+            cpt++;
+        }
+        log.info("Beaucoup de CS ajouté");
 
        /* ClimbSites cs = new ClimbSites();
         cs.setId(1);
