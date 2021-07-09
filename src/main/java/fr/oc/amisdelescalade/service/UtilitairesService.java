@@ -30,11 +30,12 @@ public class UtilitairesService {
         return listPage;
     }
 
-    public Iterable<?> truncateIterableByParameters(Map<String, Integer> parameters, Iterable<?> iterable){
+  /* public <A> Iterable<A> truncateIterableByParameters(Map<String, Integer> parameters, Iterable<A> iterable){
         var nbComsToTruncate = (parameters.get("currentPage")-1) * parameters.get("maxElementByPage");
+        ((List<?>) iterable).stream().limit(parameters.get("maxElementByPage")).toList();
         if (parameters.get("currentPage") > 1) iterable = ((List<?>) iterable).stream().skip(nbComsToTruncate).limit(parameters.get("maxElementByPage")).toList();
         else iterable = ((List<?>) iterable).stream().limit(parameters.get("maxElementByPage")).toList();
         return iterable;
-    }
+    }*/
 
 }

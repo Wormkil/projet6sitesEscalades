@@ -15,9 +15,7 @@
         <div th:insert="fragments/header :: header"></div>
     </section>
 
-
     <main>
-
         <form class="bg-white shadow-lg rounded-3xl m-2 p-0.5"
               method="post" modelAttribute="user" th:action="@{/mon-compte-informations-sauvegardé}" th:object="${user}">
             <section class="m-2 grid grid-cols-2 gap-2 items-center rounded-3xl shadow-inner bg-gray-100">

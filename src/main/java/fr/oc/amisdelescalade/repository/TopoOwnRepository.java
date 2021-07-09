@@ -14,8 +14,7 @@ import java.util.List;
 public interface TopoOwnRepository {
     List<Topo> findByAuthorId(String email);
     boolean existsByName(String name);
-}
-
+    List<Topo> findByAvailable(String available);
 
     @Repository
     @Transactional(readOnly = true)
@@ -54,4 +53,17 @@ public interface TopoOwnRepository {
                 return true;
             }
         }
+        @Override
+        public List<Topo> findByAvailable(String available) {
+            var query = entityManager.createNativeQuery("""
+                SELECT *
+                FROM TOPOS 
+                WHERE available = ?
+            """, User.class);
+            query.setParameter(1, available);
+
+            return query.getResultList();
+        }
+    }
 }
+

@@ -9,43 +9,101 @@
 
 </head>
 <body>
-<header class="fixed top-0 mb-4" th:fragment="header">
-    <!-- Barre de navigation -->
-    <div class="items-center justify-between flex bg-green-600 bg-opacity-95 px-8 sm:px-12 py-4 w-screen ">
-        <!-- Brand -->
-        <div class="hover:border hover:border-black hover:rounded">
-            <a class="items-center flex text-base sm:text-2xl md:text-4xl text-grey-800 font-bold" href="/">
-                <img alt="logo-brand" class="flex-1 w-0.5 md:w-1 " src="../images/logos/montagne_logo.png">
-                <span class="flex-1 pl-4">AMIS DE L'ESCALADE</span>
+<header class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <nav class="flex items-center justify-around sm:justify-between flex-wrap bg-green-700 p-1 fixed top-0 w-full">
+        <div class="flex items-center flex-shrink-0 text-white">
+            <a class="text-white flex flex-cols items-center font-bold no-underline hover:underline" href="/">
+                <img alt="logo-brand" class="w-12" src="../images/logos/montagne_logo_blanc.png">
+                <h1 class="text-2xl hidden sm:block">Les Amis de l'Escalades</h1>
+                <h1 class="text-xl sm:hidden">Amis de l'Escalades</h1>
             </a>
         </div>
 
-        <button class="inline-block lg:hidden h-16 text-black px-1">
-            <svg height="40" viewBox="0 0 100 80" width="40">
-                <rect height="18" rx="10" width="100"></rect>
-                <rect height="18" rx="10" width="100" y="35"></rect>
-                <rect height="18" rx="10" width="100"y="70"></rect>
-            </svg>
-        </button>
+        <div class="block lg:hidden">
+            <button class="flex items-center px-3 py-2 border border-2 rounded text-white border-white hover:text-black hover:border-black" id="nav-toggle">
+                <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+            </button>
+        </div>
 
-        <!-- Menu -->
-        <div class="hidden lg:block">
-            <ul class="flex text-black items-center font-semibold text-2xl no-underline " id="mobilemenu">
-                <li class="ml-2 px-2 py-1 hover:underline"><a href="/trouver-un-site-descalade">Trouver un sites d'Escalades</a></li>
-                <div th:if="${#session.getAttribute('user') == null}">
-                    <li class="ml-5 px-2 py-1 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2
-          focus:ring-offset-2 focus:ring-indigo-500 rounded-md text-white">
-                        <a href="/login">Connection</a></li>
-                </div>
-                <div th:unless="${#session.getAttribute('user') == null}">
-                    <li class="ml-5 px-2 py-1 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2
-          focus:ring-offset-2 focus:ring-indigo-500 rounded-md text-white">
-                        <a href="/logOut">Déconnection</a></li>
-                </div>
+        <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block" id="nav-content">
+            <ul class="list-reset lg:flex justify-end flex-1 items-center">
+                <li class="">
+                    <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/trouver-un-site-descalade}">Site d'Escalades</a>
+                </li>
+                <li class="">
+                    <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/Topos(page=1)}">Topos</a>
+                </li>
+                <li class="" th:if="${#session.getAttribute('user') != null}">
+                <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/mon-compte}">Compte Personnel</a>
+                </li>
+                <li class="" th:if="${#session.getAttribute('user') == null}">
+                <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/login}">Connection</a>
+                </li>
+                <li class="" th:unless="${#session.getAttribute('user') == null}">
+                    <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/logOut}">Déconnection</a>
+                </li>
+
             </ul>
         </div>
+    </nav>
+
+    <!--Container-->
+    <div class="container shadow-lg mx-auto bg-gray-100 mt-20 md:mt-18">
+
     </div>
-    <hr style="height:4px">
+
+    <script>
+		//Javascript to toggle the menu
+		document.getElementById('nav-toggle').onclick = function(){
+			document.getElementById("nav-content").classList.toggle("hidden");
+		}
+	</script>
+        <!--
+        <header class="fixed top-0 mb-4" th:fragment="header">
+
+
+
+
+        <div class="items-center justify-between flex bg-green-600 bg-opacity-95 px-8 sm:px-12 py-4 w-screen ">
+
+            <div class="hover:border hover:border-black hover:rounded">
+                <a class="items-center flex text-base sm:text-2xl md:text-4xl text-grey-800 font-bold" href="/">
+                    <img alt="logo-brand" class="flex-1 w-0.5 md:w-1 " src="../images/logos/montagne_logo_blanc.png">
+                    <span class="flex-1 pl-4">AMIS DE L'ESCALADE</span>
+                </a>
+            </div>
+
+            <button class="inline-block lg:hidden h-16 text-black px-1">
+                <svg height="40" viewBox="0 0 100 80" width="40">
+                    <rect height="18" rx="10" width="100"></rect>
+                    <rect height="18" rx="10" width="100" y="35"></rect>
+                    <rect height="18" rx="10" width="100"y="70"></rect>
+                </svg>
+            </button>
+
+
+            <div class="hidden lg:block">
+                <ul class="flex text-black items-center font-semibold text-2xl no-underline " id="mobilemenu">
+                    <li class="ml-2 px-2 py-1 hover:underline"><a href="/trouver-un-site-descalade">Trouver un sites d'Escalades</a></li>
+                    <li class="ml-2 px-2 py-1 hover:underline"><a th:href="@{/Topos(page=1)}">Topos</a></li>
+                    <li class="ml-2 px-2 py-1 hover:underline"><a th:href="@{/Topos(page=1)}">Espace Personnel</a></li>
+
+                    <div th:if="${#session.getAttribute('user') == null}">
+                        <li class="ml-5 px-2 py-1 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2
+              focus:ring-offset-2 focus:ring-indigo-500 rounded-md text-white">
+                            <a href="/login">Connection</a></li>
+                    </div>
+                    <div th:unless="${#session.getAttribute('user') == null}">
+                        <li class="ml-5 px-2 py-1 bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2
+              focus:ring-offset-2 focus:ring-indigo-500 rounded-md text-white">
+                            <a href="/logOut">Déconnection</a></li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <hr style="height:4px">
+
+        </header>    -->
 </header>
 </body>
 </html>
