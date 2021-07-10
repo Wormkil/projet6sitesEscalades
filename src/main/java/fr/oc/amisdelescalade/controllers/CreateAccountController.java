@@ -2,6 +2,7 @@ package fr.oc.amisdelescalade.controllers;
 
 
 import fr.oc.amisdelescalade.Projet6Application;
+import fr.oc.amisdelescalade.model.SessionWithUser;
 import fr.oc.amisdelescalade.model.User;
 import fr.oc.amisdelescalade.service.AccountService;
 import fr.oc.amisdelescalade.service.SessionService;
@@ -15,28 +16,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
 public class CreateAccountController {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
-
+    private final String currentUrl = "creer-un-compte";
 
     @Autowired
     private AccountService accService;
     @Autowired
     private SessionService sesService;
 
-    @GetMapping("/createAccount")
+    @GetMapping("/creer-un-compte")
     public String createAccountForm(HttpServletRequest request) {
-        HttpSession session = sesService.OpenOrGetSession(request);
-        if (session.getAttribute("user") != null) return "createAccount";
-        else {
-            session.setAttribute("user", null);
-            return "createAccount";
-        }
+        SessionWithUser su = sesService.getRequestStarter(request, currentUrl);
+        return currentUrl;
     }
 
     //Est-ce il a le droit de faire la requete (par exemple il est bien connecté)

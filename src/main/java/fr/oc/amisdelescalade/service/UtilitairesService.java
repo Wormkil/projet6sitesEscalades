@@ -29,13 +29,29 @@ public class UtilitairesService {
         else listPage.add(0);
         return listPage;
     }
+    public List<Integer> getListPage(int currentPage, int elementNumber, int maxElementByPage){
+        List<Integer> listPage = new ArrayList<>();
+        if (elementNumber > maxElementByPage) {
+            var nbPages = (elementNumber / maxElementByPage) + 1;
+            if (nbPages < 11 || currentPage <= maxElementByPage) for(int i = 1; i <= nbPages; i++) listPage.add(i);
+            else if (nbPages >= 11 && currentPage <= nbPages - maxElementByPage)
+                for(int i = currentPage-maxElementByPage-1; i <= currentPage+maxElementByPage; i++) listPage.add(i);
+            else if(currentPage > nbPages - maxElementByPage){
+                var tmp = 10 - (nbPages - currentPage) - 1;
+                for(int i = currentPage-tmp; i <= (currentPage-tmp)+9; i++) listPage.add(i);
+            }
+        }
+        else listPage.add(0);
+        return listPage;
+    }
 
-  /* public <A> Iterable<A> truncateIterableByParameters(Map<String, Integer> parameters, Iterable<A> iterable){
-        var nbComsToTruncate = (parameters.get("currentPage")-1) * parameters.get("maxElementByPage");
-        ((List<?>) iterable).stream().limit(parameters.get("maxElementByPage")).toList();
-        if (parameters.get("currentPage") > 1) iterable = ((List<?>) iterable).stream().skip(nbComsToTruncate).limit(parameters.get("maxElementByPage")).toList();
-        else iterable = ((List<?>) iterable).stream().limit(parameters.get("maxElementByPage")).toList();
-        return iterable;
-    }*/
+    public <A> Iterable<A> truncateIterableByParameters(int currentPage, int maxElementByPage, Iterable<A> iterable) {
+        var nbComsToTruncate = (currentPage - 1) * maxElementByPage;
+        var limited = ((List<A>) iterable).stream().limit(maxElementByPage);
+        if (currentPage > 1)
+            return limited.skip(nbComsToTruncate).toList();
+        else
+            return limited.toList();
+    }
 
 }

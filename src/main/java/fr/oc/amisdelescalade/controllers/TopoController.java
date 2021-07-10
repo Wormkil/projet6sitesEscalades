@@ -2,7 +2,6 @@ package fr.oc.amisdelescalade.controllers;
 
 import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.Topo;
-import fr.oc.amisdelescalade.model.User;
 import fr.oc.amisdelescalade.service.SessionService;
 import fr.oc.amisdelescalade.service.TopoService;
 import fr.oc.amisdelescalade.service.UserService;
@@ -16,14 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class TopoController {
+
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
+    private final String currentUrl = "topos";
     private final int maxElementByPage = 10;
 
     @Autowired
@@ -33,43 +31,54 @@ public class TopoController {
     @Autowired
     private TopoService topoService;
     @Autowired
-    private UtilitairesService utilitairesService;
+    private UtilitairesService utils;
 
+    @GetMapping("/topos{page}")
+    public String getAllTopos(HttpServletRequest request, Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
 
-    @GetMapping("/Topos{page}")
-    public String get(HttpServletRequest request, Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        sesService.getRequestStarter(request, currentUrl);
 
+        Iterable<Topo> allTopoAvailable = topoService.getTopoRepository().findAll();
+        var numberTopo = ((Collection<?>) allTopoAvailable).size();
 
-        //******************************** Récupération des informations du visiteur ************
+        if (sesService.pageAskedIsCorrect(page, numberTopo / maxElementByPage)) return sesService.redirectToErrorPage(request);
 
-
-        //*************************** Verification Droits d'accès Utilisateur *******************
-
-
-
-
-        //******************************** Service normal ***************************************
-        HttpSession session = sesService.OpenOrGetSession(request);
-        User u = sesService.getUserFromSession(session);
-        model.addAttribute("guestIsConnect", "false");
-        if (u != null) {
-            model.addAttribute("guestIsConnect", "true");
-        }
-
-        Iterable<Topo> allTopo = topoService.getTopoRepository().findByAvailable("true");
-        var numberTopo = ((Collection<?>) allTopo).size();
-
-        Map<String, Integer> parameters = Map.of("currentPage", page, "elementNumber", numberTopo, "maxElementByPage", maxElementByPage);
-        List<Integer> listPage = utilitairesService.getListPage(parameters);
-
-        var nbTopoToTruncate = (page-1) * maxElementByPage;
-        if (page > 1) allTopo = ((List<Topo>) allTopo).stream().skip(nbTopoToTruncate).limit(maxElementByPage).toList();
-        else allTopo = ((List<Topo>) allTopo).stream().limit(maxElementByPage).toList();
-
-        model.addAttribute("allTopo", allTopo);
-        model.addAttribute("listPage", listPage);
+        model.addAttribute("allTopo", utils.truncateIterableByParameters(page, maxElementByPage, allTopoAvailable));
+        model.addAttribute("listPage", utils.getListPage(page, numberTopo, maxElementByPage));
         model.addAttribute("currentPage", page);
 
-        return "topos";
+        return currentUrl;
+    }
+    @GetMapping("/topos-disponible{page}")
+    public String getToposAvailable(HttpServletRequest request, Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+
+        sesService.getRequestStarter(request, currentUrl);
+
+        Iterable<Topo> allTopoAvailable = topoService.getTopoRepository().findByAvailable("true");
+        var numberTopo = ((Collection<?>) allTopoAvailable).size();
+
+        if (sesService.pageAskedIsCorrect(page, numberTopo / maxElementByPage)) return sesService.redirectToErrorPage(request);
+
+        model.addAttribute("allTopo", utils.truncateIterableByParameters(page, maxElementByPage, allTopoAvailable));
+        model.addAttribute("listPage", utils.getListPage(page, numberTopo, maxElementByPage));
+        model.addAttribute("currentPage", page);
+
+        return currentUrl;
+    }
+    @GetMapping("/topos-indisponible{page}")
+    public String getToposNotAvailable(HttpServletRequest request, Model model, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+
+        sesService.getRequestStarter(request, currentUrl);
+
+        Iterable<Topo> allTopoAvailable = topoService.getTopoRepository().findByAvailable("false");
+        var numberTopo = ((Collection<?>) allTopoAvailable).size();
+
+        if (sesService.pageAskedIsCorrect(page, numberTopo / maxElementByPage)) return sesService.redirectToErrorPage(request);
+
+        model.addAttribute("allTopo", utils.truncateIterableByParameters(page, maxElementByPage, allTopoAvailable));
+        model.addAttribute("listPage", utils.getListPage(page, numberTopo, maxElementByPage));
+        model.addAttribute("currentPage", page);
+
+        return currentUrl;
     }
 }

@@ -1,6 +1,7 @@
 package fr.oc.amisdelescalade.service;
 
 import fr.oc.amisdelescalade.Projet6Application;
+import fr.oc.amisdelescalade.model.SessionWithUser;
 import fr.oc.amisdelescalade.model.User;
 import lombok.Data;
 import org.slf4j.Logger;
@@ -22,7 +23,6 @@ public class SessionService {
             log.info("Nouvelle session créé");
             return request.getSession();
         }else {
-            log.info("Ancienne session récupéreé");
             return session;
         }
     }
@@ -36,17 +36,16 @@ public class SessionService {
         var sessionUser = session.getAttribute("user");
         if(sessionUser == null) return null;
         else {
-            log.info(sessionUser.toString());
             return (User)sessionUser;
         }
     }
 
     public void saveLastPage(HttpSession session, String currentPage){
-        session.setAttribute("currentLastPage", currentPage);
+        if (!currentPage.equals("connection") && !currentPage.equals("creer-un-compte")) session.setAttribute("lastPage", currentPage);
     }
 
     public String getLastPage(HttpSession session){
-        var s = session.getAttribute("currentLastPage");
+        var s = session.getAttribute("lastPage");
         if (s == null) return "index";
         else {
             log.info(s.toString());
@@ -92,4 +91,20 @@ public class SessionService {
         HttpSession currentSession = OpenOrGetSession(request);
         return "errorPage";
     }
+
+    // Create or get session from request
+    // Save current page to session attribute 'lastPage'
+    // Get user or null from session attribute 'user'
+    // Return a object made of s and u
+    public SessionWithUser getRequestStarter(HttpServletRequest request, String currentPage){
+        HttpSession s = OpenOrGetSession(request);
+        saveLastPage(s, currentPage);
+        User u = getUserFromSession(s);
+        return  new SessionWithUser(s,u);
+    }
+
+    public boolean pageAskedIsCorrect(int pageAsked, int numberOfPages){
+        return ((pageAsked > numberOfPages + 1 && pageAsked != 1) || pageAsked <= 0);
+    }
+
 }

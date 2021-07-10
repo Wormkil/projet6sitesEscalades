@@ -10,7 +10,7 @@
 </head>
 <body>
 <header class="bg-gray-100 font-sans leading-normal tracking-normal">
-    <nav class="flex items-center justify-around sm:justify-between flex-wrap bg-green-700 p-1 fixed top-0 w-full">
+    <nav class="flex items-center justify-around sm:justify-between flex-wrap bg-green-700 p-1">
 
         <div class="flex items-center flex-shrink-0 text-white">
             <a class="text-white flex flex-cols items-center font-bold no-underline hover:underline gap-2" href="/">
@@ -26,25 +26,29 @@
             </button>
         </div>
 
-        <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block" id="nav-content">
+        <nav2 class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block" id="nav-content">
             <ul class="list-reset lg:flex justify-end flex-1 items-center">
                 <li class="">
                     <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/trouver-un-site-descalade}">Site d'Escalades</a>
                 </li>
-                <li class="">
-                    <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/Topos(page=1)}">Topos</a>
+                <li class="deroulant"><a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/topos(page=1)}">Topos</a>
+                    <ul class="sous">
+                        <li><a th:href="@{/topos(page=1)}">Tous</a></li>
+                        <li><a th:href="@{/topos-disponible(page=1)}">Disponible</a></li>
+                        <li><a th:href="@{/topos-indisponible(page=1)}">Indisponible</a></li>
+                    </ul>
                 </li>
                 <li class="" th:if="${#session.getAttribute('user') != null}">
                 <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/mon-compte}">Compte Personnel</a>
                 </li>
                 <li class="" th:if="${#session.getAttribute('user') == null}">
-                <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/login}">Connection</a>
+                <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/connection}">Connection</a>
                 </li>
                 <li class="" th:unless="${#session.getAttribute('user') == null}">
                     <a class="inline-block text-white hover:text-black py-2 px-4" th:href="@{/logOut}">Déconnection</a>
                 </li>
             </ul>
-        </div>
+        </nav2>
 
     </nav>
 
@@ -53,6 +57,35 @@
 
     </div>
 
+    <style>
+    .sous{
+        display: none;
+        box-shadow: 0px 1px 2px #CCC;
+        background-color: white;
+        position: absolute;
+        width: 100%;
+        z-index: 1000;
+    }
+    nav2 > ul li:hover .sous{
+        display: block;
+    }
+    .sous li{
+        float: none;
+        width: 100%;
+        text-align: left;
+    }
+    .sous a{
+        padding: 10px;
+        border-bottom: none;
+    }
+    .sous a:hover{
+        border-bottom: none;
+        background-color: RGBa(200,200,200,0.1);
+    }
+    .deroulant > a::after{
+        content:" ▼";
+        font-size: 12px;
+}   </style>
     <script>
 		//Javascript to toggle the menu
 		document.getElementById('nav-toggle').onclick = function(){

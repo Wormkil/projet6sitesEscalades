@@ -3,6 +3,7 @@ package fr.oc.amisdelescalade.controllers;
 import fr.oc.amisdelescalade.Projet6Application;
 import fr.oc.amisdelescalade.model.ClimbSites;
 import fr.oc.amisdelescalade.model.Comment;
+import fr.oc.amisdelescalade.model.SessionWithUser;
 import fr.oc.amisdelescalade.model.User;
 import fr.oc.amisdelescalade.service.*;
 import org.slf4j.Logger;
@@ -22,9 +23,10 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class SitesEscaladesController {
+public class ClimbingSiteController {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
+    private final String currentUrl = "site-escalade";
     private final int maxElementByPage = 5;
 
     @Autowired
@@ -39,51 +41,31 @@ public class SitesEscaladesController {
     private UtilitairesService utils;
 
     @GetMapping("/site-escalade{csId, page}")
-    public String index(Model model, HttpServletRequest request, @ModelAttribute Comment com,
+    public String index(Model model, HttpServletRequest request,
                         @RequestParam(value = "csId", required = false, defaultValue = "1") Long csId,
                         @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
+        SessionWithUser su = sesService.getRequestStarter(request, currentUrl);
 
-
-        //HttpSession session = sesService.OpenOrGetSession(request);
-
-        //Connect automatiquement un utilisateur officiel quand on arrive sur cette page
-        User u = userService.getUserById(1L).get();
-        model.addAttribute("user", u);
-        HttpSession session = sesService.OpenOrGetSession(request);
-        session.setAttribute("user", u);
+        if (csService.getCSById(csId).isEmpty()) return sesService.redirectToErrorPage(request);
 
         ClimbSites cs = csService.getCSById(csId).get();
         Iterable<Comment> coms = comService.findCommentByCsId(cs.getId());
         var numberComs = ((Collection<?>) coms).size();
-        if ((page > (numberComs / maxElementByPage ) + 1 && page != 1) || page <= 0) {
-            return sesService.redirectToErrorPage(request);
-        }
+        coms = utils.truncateIterableByParameters(page, maxElementByPage, coms);
 
-        Map<String, Integer> parameters = Map.of("currentPage", page, "elementNumber", numberComs, "maxElementByPage", maxElementByPage);
-        List<Integer> listPage = utils.getListPage(parameters);
-
-        //coms = utils.truncateIterableByParameters(parameters, coms);
-        var nbComsToTruncate = (page-1) * maxElementByPage;
-        if (page > 1) coms = ((List<Comment>) coms).stream().skip(nbComsToTruncate).limit(maxElementByPage).toList();
-        else coms = ((List<Comment>) coms).stream().limit(maxElementByPage).toList();
-
-        List<User> usersName = comService.getUserOfComment(coms);
-
-        model.addAttribute("canChange", "false");
-        u = sesService.getUserFromSession(session);
-        if (u != null) {
-            if ((sesService.isGuestInSessionOfficial(session)) || (Long.toString(u.getId()).equals(cs.getAuthorId()))) {
-                model.addAttribute("canChange", "true");
-            }
-        }
+        if (sesService.pageAskedIsCorrect(page, numberComs / maxElementByPage)) return sesService.redirectToErrorPage(request);
 
         model.addAttribute("cs", cs);
         model.addAttribute("coms", coms);
-        model.addAttribute("listPage", listPage);
         model.addAttribute("currentPage", page);
-        model.addAttribute("comsUsers", usersName);
+        model.addAttribute("listPage", utils.getListPage(page, numberComs, maxElementByPage));
+        model.addAttribute("comsUsers", comService.getUserOfComment(coms));
+        model.addAttribute("editRight", "false");
+        if (su.getU() != null && ((sesService.isGuestInSessionOfficial(su.getS())) || (Long.toString(su.getU().getId()).equals(cs.getAuthorId())))) {
+            model.addAttribute("editRight", "true");
+        }
 
-        return "site-escalade";
+        return currentUrl;
     }
 
     @PostMapping("/site-escalade{csId, page}")

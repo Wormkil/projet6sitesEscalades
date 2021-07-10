@@ -4,19 +4,17 @@
   <meta charset="UTF-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <link href="/css/tailwind.css" rel="stylesheet">
-  <title>Amis de l'Escalade</title>
+  <title>Amis de l'Escalade - Connection</title>
 
 </head>
 
-<body>
-  <!-- Inclusion du header -->
-  <div th:insert="fragments/header :: header"></div>
-
-  <div class="min-h-screen flex items-center justify-center bg-gray-100 pt-16 md:pt-36 px-4 sm:px-6 lg:px-8">
+<body class="">
+  <section class="fixed top-0 w-full" th:insert="fragments/header :: header"></section>
+  <main class="flex items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8 h-screen">
     <!-- Petite section intro/description montagne_logo_blanc.png-->
-    <div class="max-w-md w-full space-y-8">
+    <div class="max-w-md w-full space-y-8 mb-6">
       <div>
-        <img alt="logo_brand" class="mx-auto h-12 w-auto" src="../images/logos/montagne_logo.png">
+        <img alt="logo_brand" class="mx-auto h-12 w-auto" src="../images/logos/montagne_logo_noir.png">
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Connectez vous avec votre compte
         </h2>
@@ -94,23 +92,6 @@
           </div>
 
         </div>
-        <!-- CheckBox-Se souvenir de moi + Lien vers mot de passe oublié -->
-        <!--
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <input class="h-4 w-4 text-indigo-600
-            focus:ring-indigo-500 border-gray-300 rounded" id="remember_me" name="remember_me" type="checkbox">
-            <label class="ml-2 block text-sm text-gray-900" for="remember_me">
-              Se souvenir de moi
-            </label>
-          </div>
-          <div class="text-sm">
-            <a class="font-medium text-indigo-600 hover:text-indigo-500" href="#">
-              Mot de passe oublié ?
-            </a>
-          </div>
-        </div>
-        -->
         <!-- Bouton de submit du formulaire de login -->
         <div>
           <button class="group relative w-full flex justify-center py-2 px-4 border border-transparent
@@ -129,16 +110,13 @@
           </button>
         </div>
         <div class="text-center mt-2">
-          <a class="font-medium text-indigo-600 hover:text-indigo-500" href="/createAccount">
+          <a class="font-medium text-indigo-600 hover:text-indigo-500" href="/creer-un-compte">
             Vous n'avez pas de compte ? Créez en un !
           </a>
         </div>
       </form>
     </div>
-  </div>
-
-  <!-- Inclusion du footer -->
-  <div th:insert="fragments/footer :: footer"></div>
-
+  </main>
+  <section th:insert="fragments/footer :: footer"></section>
 </body>
 </html>

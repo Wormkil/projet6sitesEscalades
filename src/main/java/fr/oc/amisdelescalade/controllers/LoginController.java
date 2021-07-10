@@ -20,6 +20,7 @@ import java.util.Map;
 public class LoginController {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
+    private final String currentUrl = "connection";
 
     @Autowired
     private AccountService accService;
@@ -28,15 +29,10 @@ public class LoginController {
     @Autowired
     private SessionService sesService;
 
-    @GetMapping("/login")
+    @GetMapping("/connection")
     public String loginForm(HttpServletRequest request) {
-        HttpSession session = sesService.OpenOrGetSession(request);
-
-        if (sesService.getUserFromSession(session) == null) {
-            return "login";
-        }
-        else return "errorPage";
-
+        sesService.getRequestStarter(request, currentUrl);
+        return currentUrl;
     }
 
     @PostMapping("/login")
@@ -58,7 +54,7 @@ public class LoginController {
         Map<String,String> mapError = accService.canConnect(pEmail, pPassword);
         if (mapError.isEmpty()) {
             accService.connectUser(request, uService.getUserByEmail(pEmail).get());
-            return sesService.getLastPage(session);
+            return "redirect:"+sesService.getLastPage(session);
         }
         else {
             if (mapError.containsKey("errorPass")) {
