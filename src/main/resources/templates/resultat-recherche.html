@@ -24,16 +24,15 @@
     <div class="bg-red-600 rounded-t-3xl mb-2 ">
       <h1 class="font-bold text-white text-2xl ml-2">Site d'Escalades</h1>
     </div>
-    <div class="flex justify-center md:justify-end">
-      <a th:href="@{/recherche-site-escalade}">
-        <h3 class="font-semibold bg-red-600 hover:bg-red-700 p-2 rounded-lg text-white text-lg flex flex-row">
-          Recherche Avancée<img alt="logo_search" class="ml-2 mt-1" src="../images/logos/logo_search.svg">
-        </h3>
-      </a>
-    </div>
-
     <!-- Barre de filtrage -->
     <section class="">
+      <div class="flex justify-center md:justify-end">
+        <a th:href="@{/recherche-site-escalade}">
+          <h3 class="font-semibold bg-red-600 hover:bg-red-700 p-2 rounded-lg text-white text-lg flex flex-row">
+            Recherche Avancée<img alt="logo_search" class="ml-2 mt-1" src="../images/logos/logo_search.svg">
+          </h3>
+        </a>
+      </div>
       <div class="flex flex-row mx-8 py-2 my-2 bg-purple-100 rounded-md ">
         <input autocomplete="off" class="py-2 pl-4 px-2 mr-2 text-sm text-black bg-purple-100 rounded-md flex-grow
                       focus:outline-none focus:ring-4 focus:ring-purple-500 "
@@ -41,14 +40,13 @@
                placeholder="Filtrer les sites en écrivant une région, un pays, un nom, un nombre de voie(s), une hauteur maximale, une orientation etc..." type="search">
       </div>
     </section>
-
     <div class="content">
-      <section class="mb-8 gap-8"
-           th:each="cs, iStat : ${css}">
+      <div th:if="${#lists.isEmpty(css)}"><h3>Aucun site d'escalade dans notre base de donnée ne correspond à votre recherche.</h3></div>
+      <section class="mb-8 gap-8" th:each="cs, iStat : ${css}">
         <div class="flex flex-col card">
           <div class="bg-gray-100 shadow-md rounded-3xl p-4">
             <div class="flex-none lg:flex">
-              <div class=" h-full w-full lg:h-48 lg:w-48   lg:mb-0 mb-3">
+              <div class=" h-full w-full lg:h-48 lg:w-48 lg:mb-0 mb-3">
                 <img alt="Photo du secteur"
                      class="w-full object-scale-down lg:object-cover lg:h-48 rounded-2xl" th:src="${cs.pathImages+'/sector.jpg'}">
               </div>
@@ -84,45 +82,14 @@
                                     rounded-full">En savoir plus...
                     </button>
                   </a>
-
-
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      <div class="mt-4 mr-2 flex flex-row justify-end gap-1 items-center" >
-        <th:block th:each="pageCs, iStat: ${listPage}" th:if="${pageCs != 0}">
-          <div th:if="${iStat.first}">
-            <a class="text-blue-500" th:href="@{/trouver-un-site-descalade(page=${currentPage-1})}" th:if="${currentPage > 1}">
-              <svg class="bi bi-caret-left-fill" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
-              </svg>
-            </a>
-          </div>
-
-          <div th:if="${currentPage != pageCs}">
-            <a class="text-blue-500" th:href="@{/trouver-un-site-descalade(page=${pageCs})}"> [[${pageCs}]]</a><br/>
-          </div>
-          <div th:unless="${currentPage != pageCs}">
-            <a class="text-blue-500 font-semibold underline" th:href="@{/trouver-un-site-descalade(page=${pageCs})}"> [[${pageCs}]]</a><br/>
-          </div>
-
-          <div th:if="${iStat.last}">
-            <a class="text-blue-500" th:href="@{/trouver-un-site-descalade(page=${currentPage+1})}" th:if="${pageCs != currentPage}">
-              <svg class="bi bi-caret-right-fill" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
-              </svg>
-            </a>
-          </div>
-        </th:block>
-      </div>
     </div>
   </main>
-
-
 <div class="mt-4" th:insert="fragments/footer :: footer"></div>
 </body>
 
@@ -139,5 +106,4 @@
       });
    });
 </script>
-
 </html>

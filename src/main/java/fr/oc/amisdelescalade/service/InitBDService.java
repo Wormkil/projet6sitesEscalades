@@ -314,8 +314,8 @@ public class InitBDService {
         cs.setBestSeason("Automne, Printemps");
         cs.setOrientations("S");
         cs.setCotationsRange("du 3b au 7b");
-        cs.setNbRoute("entre 25 et 30");
-        cs.setEquipment("Terrain d'aventure, sportif");
+        cs.setNbRoute("+10");
+        cs.setEquipment("Terrain d'aventure, Sportif");
         cs.setMaxHeight("25m");
         cs.setStoneType("Calcaire");
         cs.setProfile("Dévers, Dalle");
@@ -323,7 +323,7 @@ public class InitBDService {
         cs.setInfoSup("Sites internet : http://Https://www.orelle.net/fiche-escalade-627635 ou https://static.apidae-tourisme.com/filestore/objets-touristiques/documents/89/68/1721433.pdf");
         cs.setPathImages("../images/Orelle/");
         cs.setUrlggmaps("https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d2928.5113945590356!2d6.570911052309172!3d45.21025449183142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e2!4m0!4m3!3m2!1d45.210454899999995!2d6.5726641!5e1!3m2!1sen!2sfr!4v1623059645192!5m2!1sen!2sfr");
-        cs.setOfficial("false");
+        cs.setOfficial("true");
         cs.setAuthorId("2");
         climbSitesService.saveCS(cs);
 
@@ -341,7 +341,7 @@ public class InitBDService {
         cs.setMaxHeight("7m");
         cs.setStoneType("Calcaire");
         cs.setProfile("Vertical, Dalle");
-        cs.setPlugType("Grosses prises, réglettes, àplats");
+        cs.setPlugType("Réglettes, Plats");
         cs.setInfoSup("Site(s) internet : http://www.ffme.fr/site/falaise-fiche/313.html");
         cs.setPathImages("../images/Thore/");
         cs.setUrlggmaps("https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d6133.491013215771!2d0.9598856298332028!3d47.77506548130712!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e2!4m0!4m3!3m2!1d47.7757444!2d0.9632643999999999!5e1!3m2!1sen!2sfr!4v1623060010818!5m2!1sen!2sfr");
@@ -357,5 +357,7 @@ public class InitBDService {
             climbSitesService.saveCS(cs);
             cpt++;
         }
+        cpt--;
+        log.info("cpt = "+cpt);
     }
 }

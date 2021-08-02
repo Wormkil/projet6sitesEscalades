@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 
 @Controller
-public class FindClimbingSite {
+public class DisplayClimbingSite {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
     private final String currentUrl = "trouver-un-site-descalade";
@@ -30,7 +30,7 @@ public class FindClimbingSite {
     @Autowired
     private UtilitairesService utils;
 
-    @GetMapping("/trouver-un-site-descalade{page}")
+    @GetMapping("/site-descalade{page}")
     public String get(Model model, HttpServletRequest request, @RequestParam(value = "page", required = false, defaultValue = "1") int page) {
         sesService.getRequestStarter(request, currentUrl);
 

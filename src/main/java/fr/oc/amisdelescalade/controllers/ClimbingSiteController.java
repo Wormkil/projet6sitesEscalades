@@ -165,5 +165,6 @@ public class ClimbingSiteController {
 
         return "site-escalade";
     }
+
 }
 

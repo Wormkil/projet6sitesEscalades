@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <link href="/css/tailwind.css" rel="stylesheet">
+  <title>Amis de l'Escalade - Recherche Site Escalade</title>
+
+</head>
+
+<body class="bg-gray-100">
+  <section  class="fixed top-0 w-full"><div th:insert="fragments/header :: header"></div></section>
+  <main class="bg-gray-100">
+    <div class="mx-2 md:mx-24 lg:mx-48 flex flex-col">
+      <div class="bg-red-600 rounded-t-3xl mt-16">
+        <h1 class="font-bold text-white text-2xl ml-2">Recherche Avancée</h1>
+      </div>
+      <h3 class="bg-white pt-2 px-2">
+        Trouvez un site d'escalade en renseignant un ou plusieurs champs ci-dessous.<br>
+        Si vous laissez un champs vide, il ne sera pas pris en compte dans la liste proposée.<br>
+      </h3>
+      <form method="post" th:action="@{/recherche-site-escalade}" th:object="${climbsites}">
+        <section class="bg-white rounded px-2 pb-2">
+          <h1 class="font-bold text-lg text-left">Lieu</h1>
+          <input autocomplete="name" class="self-start border-2 rounded-lg p-2 w-full"
+                 maxlength = "40" pattern="^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸåÅæÆœŒçÇðÐøØß '\()-]+$" placeholder="Le nom du lieu du site"
+                 th:name="name" title="Lettres de A à Z (a à z) avec ou sans accent, les chiffres, les espaces, apostrophes et les tirets courts."
+                 type="text">
+          <h1 class=" font-bold text-lg text-left">Région</h1>
+          <input autocomplete="region" class="self-start border-2 rounded-lg p-2 w-full"
+                 maxlength = "40" pattern="^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸåÅæÆœŒçÇðÐøØß '\-]+$" placeholder="Le nom de la région du site"
+                 th:name="region" title="Lettres de A à Z (a à z) avec ou sans accent, les chiffres, les espaces, apostrophes et les tirets courts."
+                 type="text">
+          <h1 class="font-bold text-lg text-left">Pays</h1>
+          <input autocomplete="country" class="self-start border-2 rounded-lg p-2 w-full"
+                 maxlength = "40" pattern="^[a-zA-Z0-9àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸåÅæÆœŒçÇðÐøØß '\-]+$" placeholder="Le nom du pays du site"
+                 th:name="country" title="Lettres de A à Z (a à z) avec ou sans accent, les chiffres, les espaces, apostrophes et les tirets courts."
+                 type="text">
+          <h1 class="font-bold text-lg text-left">Nombre de Voies</h1>
+          <select class="self-start border-2 rounded-lg p-2 w-full bg-white" th:name="nbRoute">
+            <option selected value="">Peu importe</option>
+            <option value="-10">10 ou -</option>
+            <option value="+10">10 ou +</option>
+            <option value="+30">30 ou +</option>
+            <option value="+50">50 ou +</option>
+            <option value="+100">100 ou +</option>
+            <option value="+300">300 ou +</option>
+          </select>
+          <h1 class="font-bold text-lg text-left">Hauteur Max</h1>
+          <input autocomplete="name" class="self-start border-2 rounded-lg p-2 w-full"
+                 maxlength = "40" pattern="^[0-9]+$" placeholder="Hauteur Max du site"
+                 th:name="maxHeight" type="text">
+          <h1 class="font-bold text-lg text-left">Cotation</h1>
+          <input autocomplete="cotationsRange" class="self-start border-2 rounded-lg p-2 w-full"
+                 maxlength = "8" pattern="^[a-zA-Z0-9]+$" placeholder="Cotations présente dans le site"
+                 th:name="cotationsRange" title="Exemple : a1 " type="text">
+          <h1 class="font-bold text-lg text-left">Site Officiel Amis de L'Escalade ?</h1>
+          <div class="flex flex-row gap-2">
+            <div><label th:for="${official}"><input th:name="official" th:value="true" type="radio">Oui</label></div>
+            <div><label th:for="${official}"><input th:name="official" th:value="false" type="radio">Non</label></div>
+            <div><label th:for="${official}"><input checked th:name="official" th:value="all" type="radio">Peu importe</label></div>
+          </div>
+          <h1 class="font-bold text-lg text-left">Profile(s) des voies</h1>
+          <div class="flex flex-row mb-2 gap-1">
+            <div><label class="mr-2" th:for="${profile}"><input th:name="profile" th:value="Dévers" type="checkbox">Dévers</label></div>
+            <div><label class="mr-2" th:for="${profile}"><input th:name="profile" th:value="Vertical" type="checkbox">Vertical</label></div>
+            <div><label th:for="${profile}"><input th:name="profile" th:value="Dalle" type="checkbox">Dalle</label></div>
+          </div>
+          <h1 class="font-bold text-lg text-left">Équipement(s) des voies</h1>
+          <div class="flex flex-row mb-2 flex-wrap gap-1">
+            <div><label class="mr-2" th:for="${equipment}"><input th:name="equipment" th:value="Sportif" type="checkbox">Sportif</label></div>
+            <div><label class="mr-2" th:for="${equipment}"><input th:name="equipment" th:value="Engagé" type="checkbox">Engagé</label></div>
+            <div><label th:for="${equipment}"><input th:name="equipment" th:value="Terrain" type="checkbox">Terrain d'aventure</label></div>
+          </div>
+          <h1 class="font-bold text-lg text-left">Type(s) de roche des voies</h1>
+          <div class="flex flex-row mb-2 flex-wrap gap-1">
+            <div><label class="mr-2" th:for="${stoneType}"><input th:name="stoneType" th:value="Grès" type="checkbox">Grès</label></div>
+            <div><label class="mr-2" th:for="${stoneType}"><input th:name="stoneType" th:value="Granite" type="checkbox">Granite</label></div>
+            <div><label class="mr-2" th:for="${stoneType}"><input th:name="stoneType" th:value="Craie" type="checkbox">Craie</label></div>
+            <div><label class="mr-2" th:for="${stoneType}"><input th:name="stoneType" th:value="Gneiss" type="checkbox">Gneiss</label></div>
+            <div><label class="mr-2" th:for="${stoneType}"><input th:name="stoneType" th:value="Ardoise" type="checkbox">Ardoise</label></div>
+            <div><label th:for="${stoneType}"><input th:name="stoneType" th:value="Calcaire" type="checkbox">Calcaire</label></div>
+          </div>
+          <h1 class="font-bold text-lg text-left">Type(s) de prises des voies</h1>
+          <div class="flex flex-row mb-2 flex-wrap gap-1">
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Bac" type="checkbox">Bac</label></div>
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Mini-bac" type="checkbox">Mini-bac</label></div>
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Poignées" type="checkbox">Poignées</label></div>
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Réglettes" type="checkbox">Réglettes</label></div>
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Trous" type="checkbox">Trous</label></div>
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Plats" type="checkbox">Plats</label></div>
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Bossettes" type="checkbox">Bossettes</label></div>
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Pinces" type="checkbox">Pinces</label></div>
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Colonnes" type="checkbox">Colonnes</label></div>
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Boules" type="checkbox">Boules</label></div>
+            <div><label class="mr-2" th:for="${plugType}"><input th:name="plugType" th:value="Volumes" type="checkbox">Volumes</label></div>
+            <div><label th:for="${plugType}"><input th:name="plugType" th:value="Fissures" type="checkbox">Fissures</label></div>
+          </div>
+          <h1 class="font-bold text-lg text-left">Meilleur(s) Saison(s)</h1>
+          <div class="flex flex-row mb-2 flex-wrap gap-1">
+            <div><label class="mr-2" th:for="${bestSeason}"><input th:name="bestSeason" th:value="Automne" type="checkbox">Automne</label></div>
+            <div><label class="mr-2" th:for="${bestSeason}"><input th:name="bestSeason" th:value="Hiver" type="checkbox">Hiver</label></div>
+            <div><label class="mr-2" th:for="${bestSeason}"><input th:name="bestSeason" th:value="Été" type="checkbox">Été</label></div>
+            <div><label th:for="${bestSeason}"><input th:name="bestSeason" th:value="Printemps" type="checkbox">Printemps</label></div>
+          </div>
+          <h1 class="font-bold text-lg text-left">Orientation(s)</h1>
+          <div class="flex flex-row mb-2 flex-wrap gap-1">
+            <div><label class="mr-2" th:for="${orientations}"><input th:name="orientations" th:value="Sud" type="checkbox">Sud</label></div>
+            <div><label class="mr-2" th:for="${orientations}"><input th:name="orientations" th:value="Est" type="checkbox">Est</label></div>
+            <div><label class="mr-2" th:for="${orientations}"><input th:name="orientations" th:value="Nord" type="checkbox">Nord</label></div>
+            <div><label th:for="${orientations}"><input th:name="orientations" th:value="Ouest" type="checkbox">Ouest</label></div>
+          </div>
+        </section>
+        <section class="flex justify-end">
+          <button class="group relative w-2/4 flex justify-center py-2 px-4 border border-transparent
+              text-sm font-medium rounded-b-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2
+              focus:ring-offset-2 focus:ring-indigo-500 mb-10" type="submit">Lancez la Recherche</button>
+        </section>
+      </form>
+    </div>
+  </main>
+  <section><div th:insert="fragments/footer :: footer"></div></section>
+</body>
+</html>

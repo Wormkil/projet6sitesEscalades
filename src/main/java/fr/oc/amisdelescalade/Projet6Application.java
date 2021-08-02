@@ -18,14 +18,13 @@ public class Projet6Application implements CommandLineRunner {
 	private InitBDService idbs;
 
 	public static void main(String[] args) {
-		log.info("Lancement du main de Projet6application");
 		SpringApplication.run(Projet6Application.class, args);
 	}
 
 	@Override
 	public void run(String...args) {
-		log.info("Lancement de Projet6application.run");
 		idbs.initBD();
+		log.info("Vous pouvez intéragir avec le site");
 	}
 
 
