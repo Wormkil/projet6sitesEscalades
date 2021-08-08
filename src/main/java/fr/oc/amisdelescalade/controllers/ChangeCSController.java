@@ -19,8 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class ClimginSiteController {
-
+public class ChangeCSController {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
 
@@ -133,15 +132,7 @@ public class ClimginSiteController {
         HttpSession session = sessionService.OpenOrGetSession(request);
         User u = sessionService.getUserFromSession(session);
 
-        /*
-        if (cs.getId() != 0L) {
-            cs.setId(Long.parseLong(session.getAttribute("currentCsId").toString()));
-        }
-        else {
-            //Si on est en train de créer un nouveau site, on affecte au site l'id de l'utilisateur courant
-            cs.setAuthorId(session.getAttribute("userId").toString());
-        }
-        */
+
         if (cs.getId() == 0L) cs.setAuthorId(Long.toString(u.getId()));
 
         cs.setProfile(profile);

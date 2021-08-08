@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class ClimbingSiteController {
+public class DisplayCSController {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
     private final String currentUrl = "site-escalade";
@@ -67,6 +67,7 @@ public class ClimbingSiteController {
 
         return currentUrl;
     }
+
 
     @PostMapping("/site-escalade{csId, page}")
     public String addComment(Model model, HttpServletRequest request, @ModelAttribute Comment com,

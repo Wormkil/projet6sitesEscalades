@@ -10,27 +10,57 @@
 
 <body class="bg-gray-100">
 <div class="fixed top-0 w-full" th:insert="fragments/header :: header"></div>
+<div class="hidden sm:block sm:flex justify-end mt-14">
   <!-- Bouton ajouté un site si l'utilisateur est connecté -->
-  <section class="mt-10 md:mt-20 md:mr-4 flex justify-center md:justify-end" th:if="${#session.getAttribute('user') != null}">
+  <div class="mx-4 w-max" th:if="${#session.getAttribute('user') != null}">
     <a th:href="@{/modifié-site-escalade(csId=0)}">
-      <button class="p-2 border border-transparent
-            text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2
-            focus:ring-offset-2 focus:ring-indigo-500 mt-10 md:mt-0" >Partager un nouveau site d'escalades
-      </button>
+      <h3 class="font-semibold bg-red-600 hover:bg-red-700 p-2 rounded-lg text-white text-lg flex flex-row shadow-md">
+        Partager un Nouveau Site<img alt="logo_plus-square" class="ml-2 mt-1" src="../images/logos/logo_plus-square.svg">
+      </h3>
     </a>
-  </section>
+  </div>
+  <div class="mx-4 w-max">
+    <a th:href="@{/recherche-site-escalade}">
+      <h3 class="font-semibold bg-red-600 hover:bg-red-700 p-2 rounded-lg text-white text-lg flex flex-row shadow-md">
+        Recherche Avancée<img alt="logo_search" class="ml-2 mt-1" src="../images/logos/logo_search.svg">
+      </h3>
+    </a>
+  </div>
+</div>
+<div class="flex justify-end mt-14 block sm:hidden">
+  <!-- Bouton ajouté un site si l'utilisateur est connecté -->
+  <div class="mr-4" th:if="${#session.getAttribute('user') != null}">
+    <a th:href="@{/modifié-site-escalade(csId=0)}">
+      <h3 class="font-semibold bg-red-600 hover:bg-red-700 p-2 rounded-lg text-white text-lg flex flex-row shadow-md"
+      title="Partagez un Nouveau Site D'Escalade">
+        <img alt="logo_plus-square" class="" src="../images/logos/logo_plus-square.svg">
+      </h3>
+    </a>
+  </div>
+  <div class="mr-4" th:if="${#session.getAttribute('user') != null}">
+    <a th:href="@{/recherche-site-escalade}">
+      <h3 class="font-semibold bg-red-600 hover:bg-red-700 p-2 rounded-lg text-white text-lg flex flex-row shadow-md"
+          title="Cherchez un site d'Escalade à l’aide de plusieurs critères comme le lieu, la cotation, le type de roche etc...">
+        <img alt="logo_search" class="" src="../images/logos/logo_search.svg">
+      </h3>
+    </a>
+  </div>
+  <div class="mx-4" th:unless="${#session.getAttribute('user') != null}">
+    <a th:href="@{/recherche-site-escalade}">
+      <h3 class="font-semibold bg-red-600 hover:bg-red-700 p-2 rounded-lg text-white text-lg flex flex-row shadow-md"
+          title="Cherchez un site d'Escalade à l’aide de plusieurs critères comme le lieu, la cotation, le type de roche etc...">
+        Recherche Avancée<img alt="logo_search" class="ml-2 mt-1" src="../images/logos/logo_search.svg">
+      </h3>
+    </a>
+  </div>
+</div>
 
-  <main class="mt-16 m-2 bg-white rounded-3xl">
-    <div class="bg-red-600 rounded-t-3xl mb-2 ">
+
+  <main class="m-2 bg-white rounded-3xl">
+    <div class="bg-green-600 rounded-t-3xl mb-2 ">
       <h1 class="font-bold text-white text-2xl ml-2">Site d'Escalades</h1>
     </div>
-    <div class="flex justify-center md:justify-end">
-      <a th:href="@{/recherche-site-escalade}">
-        <h3 class="font-semibold bg-red-600 hover:bg-red-700 p-2 rounded-lg text-white text-lg flex flex-row">
-          Recherche Avancée<img alt="logo_search" class="ml-2 mt-1" src="../images/logos/logo_search.svg">
-        </h3>
-      </a>
-    </div>
+
 
     <!-- Barre de filtrage -->
     <section class="">
@@ -81,11 +111,9 @@
                   </div>
                   <a th:href="@{/site-escalade(csId=${cs.id},page=1)}">
                     <button  class="ml-2 mb-2 md:mb-0 bg-red-600 hover:bg-red-700 p-4 shadow-sm tracking-wider text-white
-                                    rounded-full">En savoir plus...
+                                    rounded-lg">En savoir plus...
                     </button>
                   </a>
-
-
                 </div>
               </div>
             </div>

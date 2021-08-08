@@ -46,12 +46,6 @@ public class UtilitairesService {
     }
 
     public <A> Iterable<A> truncateIterableByParameters(int currentPage, int maxElementByPage, Iterable<A> iterable) {
-        var nbComsToTruncate = (currentPage - 1) * maxElementByPage;
-        var limited = ((List<A>) iterable).stream().limit(maxElementByPage);
-        if (currentPage > 1)
-            return limited.skip(nbComsToTruncate).toList();
-        else
-            return limited.toList();
+        return ((List<A>) iterable).stream().skip((long) (currentPage - 1) * maxElementByPage).limit(maxElementByPage).toList();
     }
-
 }
