@@ -21,5 +21,8 @@ public class Topo {
     private String releaseDate; //La date de parution du topo
     private String authorId; //L'id de l'auteur du topo
     private String available; //Le statut disponible ou non du topo
+    private String beingReserved; //Le statut être réservée ou non du topo
+    private String reserved; //Le statut réservée ou non du topo
+    private String ownerId; //Le statut réservée ou non du topo
 
 }

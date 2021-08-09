@@ -18,7 +18,7 @@
           <h1 class="font-bold text-white text-2xl ml-2">Topos</h1>
         </div>
         <div class="flex justify-end mr-2" th:if="${#session.getAttribute('user') != null}">
-          <a onclick="return alert('Pour faire une demande de réservation cliqué sur le nom du Topo que vous souhaitez réserver.')" th:href="@{~/Topos}"
+          <a onclick="return alert('Pour faire une demande de réservation cliqué sur le nom du Topo que vous souhaitez réserver.')" th:href="@{~/topos}"
              title="Aide">
             <img alt="Logo Help" class="" height="16" src="images/logos/logo_question-circle.svg" width="16"/>
           </a>
@@ -34,7 +34,8 @@
           <div class="table-row-group mb-1"  th:each="unTopo, iStat : ${allTopo}">
             <div class="table-row bg-purple-50" th:if="${iStat.index % 2 == 0}">
               <div class="table-cell border-b">
-                <a th:href="@{/Topos(page=${unTopo.id})}" th:if="${#session.getAttribute('user') != null}"><span class="font-semibold capitalize underline text-blue-500 text-lg" th:text="${unTopo.name}"></span></a>
+                <a onclick="return confirm('Voulez vous reserver ce topos ?')" th:href="@{~/topos-réservé(idTopo=${unTopo.id})}"
+                   th:if="${#session.getAttribute('user') != null}" title="Aide"><span class="font-semibold capitalize underline text-blue-500 text-lg" th:text="${unTopo.name}"></span></a>
                 <span class="font-semibold capitalize text-lg" th:if="${#session.getAttribute('user') == null}" th:text="${unTopo.name}"></span></a>
                                       <span class="italic text-sm" th:text="'le '+${unTopo.releaseDate}"></span></br>
                                       <span class="text-base" th:text="'En '"></span>

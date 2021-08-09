@@ -38,7 +38,7 @@ public class TopoController {
 
         sesService.getRequestStarter(request, currentUrl);
 
-        Iterable<Topo> allTopoAvailable = topoService.getTopoRepository().findAll();
+        Iterable<Topo> allTopoAvailable = topoService.getTopoRepository().findByAvailable("true");
         var numberTopo = ((Collection<?>) allTopoAvailable).size();
 
         if (sesService.pageAskedIsCorrect(page, numberTopo / maxElementByPage)) return sesService.redirectToErrorPage(request);
@@ -78,6 +78,31 @@ public class TopoController {
         model.addAttribute("allTopo", utils.truncateIterableByParameters(page, maxElementByPage, allTopoAvailable));
         model.addAttribute("listPage", utils.getListPage(page, numberTopo, maxElementByPage));
         model.addAttribute("currentPage", page);
+
+        return currentUrl;
+    }
+
+    @GetMapping("/topos-réservé{idTopo}")
+    public String reservingTopo( Model model, HttpServletRequest request, @RequestParam(value = "idTopo", required = true, defaultValue = "0") int idTopo){
+        var s = sesService.getRequestStarter(request, currentUrl);
+
+        if(topoService.getTopoById((long)idTopo).isPresent()) {
+            var topo = topoService.getTopoById((long) idTopo).get();
+            topo.setAvailable("false");
+            topo.setBeingReserved("true");
+            topo.setOwnerId(s.getU().getId()+"");
+            topoService.saveTopo(topo);
+            log.info("topo save = "+topo.toString());
+        }
+
+        Iterable<Topo> allTopoAvailable = topoService.getTopoRepository().findByAvailable("true");
+        var numberTopo = ((Collection<?>) allTopoAvailable).size();
+
+        if (sesService.pageAskedIsCorrect(1, numberTopo / maxElementByPage)) return sesService.redirectToErrorPage(request);
+
+        model.addAttribute("allTopo", utils.truncateIterableByParameters(1, maxElementByPage, allTopoAvailable));
+        model.addAttribute("listPage", utils.getListPage(1, numberTopo, maxElementByPage));
+        model.addAttribute("currentPage", 1);
 
         return currentUrl;
     }

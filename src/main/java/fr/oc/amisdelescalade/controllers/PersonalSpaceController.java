@@ -28,6 +28,7 @@ public class PersonalSpaceController {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
     private final int maxElementByPage = 5;
+    private final String currentUrl = "personalSpace";
 
     @Autowired
     private SessionService sesService;
@@ -110,7 +111,11 @@ public class PersonalSpaceController {
             model.addAttribute("savedTopo", "error");
         } else {
             if (topo.getAvailable().equals("null")) topo.setAvailable("false");
-            else topo.setAvailable("true");
+            else {
+                topo.setAvailable("true");
+                topo.setReserved("false");
+                topo.setBeingReserved("false");
+            }
             topoService.saveTopo(topo);
             model.addAttribute("savedTopo", "good");
         }
@@ -134,43 +139,38 @@ public class PersonalSpaceController {
         return "personalSpace";
     }
 
+    @GetMapping("/mon-compte-demande-accepte{idTopo, page}")
+    public String reservingTopo( Model model, HttpServletRequest request,
+                                 @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                 @RequestParam(value = "idTopo", required = true, defaultValue = "0") int idTopo) {
+        var s = sesService.getRequestStarter(request, currentUrl);
 
-
-    /* Deprecate
-    @PostMapping("/mon-compte-informations-sauvegardé")
-    public String post(HttpServletRequest request, Model model,
-                       @ModelAttribute User user
-    ) {
-        //******************************** Récupération des informations du visiteur ************
-        //Connect automatiquement un utilisateur officiel quand on arrive sur cette page
+////////////
         User u = userService.getUserById(1L).get();
         model.addAttribute("user", u);
-        HttpSession session = sesService.OpenOrGetSession(request);
-        session.setAttribute("user", u);
-        //User u = sesService.getUserFromSession(session);<-- Remplace la connection automatique ci-dessus
-
-        //******************************** Verification *****************************************
-        //On vérifie qu'il y ait bien un utilisateur connecté sinon on redirige vers une page d'erreur
-        if(u == null) return sesService.redirectToErrorPage(request);
-
-        //On vérifie que l'utilisateur est bien un 'official' sinon on redirige vers une page d'érreur
-        if (!sesService.checkUserCanDoThisRequest(request, "official"))
-            return sesService.redirectToErrorPage(request);
-
-        //*                               * Service normal *                                     *
-        log.info("user : "+user.toString());
+////////////
 
 
-        //Fonctionnement normal : récupère tous les topos de l'utilisateur et les envoi au model attribute
-        Iterable<Topo> tmptopos = topoService.getToposByAuthorId(Long.toString(u.getId()));
-        var nbTopo = ((Collection<?>) tmptopos).size()/5;
-        List<Integer> listPage = new ArrayList();
-        for(int i = 1; i<=nbTopo; i++) {
-            listPage.add(i);
+        if(topoService.getTopoById((long)idTopo).isPresent()) {
+            var topo = topoService.getTopoById((long) idTopo).get();
+            topo.setAvailable("false");
+            topo.setBeingReserved("true");
+            topo.setReserved("true");
+            topo.setOwnerId(s.getU().getId()+"");
+            topoService.saveTopo(topo);
+            log.info("topo save = "+topo.toString());
         }
-        model.addAttribute("listPage", listPage);
-        model.addAttribute("topos", tmptopos);
 
-        return "personalSpace";
-    }*/
+        Iterable<Topo> allTopoAvailable = topoService.getToposByAuthorId(Long.toString(u.getId()));
+        var numberTopo = ((Collection<?>) allTopoAvailable).size();
+
+        if (sesService.pageAskedIsCorrect(1, numberTopo / maxElementByPage)) return sesService.redirectToErrorPage(request);
+
+        model.addAttribute("listPage", utils.getListPage(1, numberTopo, maxElementByPage));
+        model.addAttribute("topos", utils.truncateIterableByParameters(1, maxElementByPage, allTopoAvailable));
+        model.addAttribute("currentPage", page);
+
+        return currentUrl;
+    }
+
 }
