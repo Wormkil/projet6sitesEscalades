@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class ClimbSitesService {
 
     private static final Logger log = LoggerFactory.getLogger(Projet6Application.class);
+    private static final List<String> csDifficulties = List.of("1a", "7d"); //TODO middle
 
     @Autowired
     private CSRepository cSRepository;
@@ -69,8 +71,16 @@ public class ClimbSitesService {
         return isSearched;
     }
 
-    public boolean isInCotationRange(String cotation, String cotationRange){
-        return createCotationRange(cotationRange.substring(3, cotationRange.length() - 6), cotationRange.substring(9, cotationRange.length())).contains(cotation);
+    public boolean isInCotationRange(String cotation, String cotationRange) {
+        final var startDifficulty = cotationRange.substring(3, cotationRange.length() - 6);
+        final var endDifficulty = cotationRange.substring(9);
+        final var indexOfStart = csDifficulties.indexOf(startDifficulty);
+        final var indexOfEnd = csDifficulties.indexOf(endDifficulty);
+
+        final var difficultyRange = csDifficulties.subList(indexOfStart, indexOfEnd);
+        return difficultyRange.contains(cotation);
+
+        //return createCotationRange(cotationRange.substring(3, cotationRange.length() - 6), cotationRange.substring(9, cotationRange.length())).contains(cotation);
     }
 
     public String createCotationRange(String cotaMin, String cotaMax){

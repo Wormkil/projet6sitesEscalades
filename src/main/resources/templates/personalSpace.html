@@ -11,7 +11,7 @@
 <body class="bg-gray-100">
 <div class="bg-gray-100">
     <!-- Insertion du header -->
-    <section class="mb-28 sm:mb-44"> <!-- Quick fix pour la NavBar Fixé -->
+    <section class="mb-4"> <!-- Quick fix pour la NavBar Fixé -->
         <div th:insert="fragments/header :: header"></div>
     </section>
 
@@ -22,7 +22,7 @@
                 <input class="hidden" th:id="id" th:name="id" th:value="${user.id}">
                 <input class="hidden" th:id="officialMember" th:name="officialMember" th:value="${user.officialMember}">
                 <input class="hidden" th:id="passwordConfirm" th:name="passwordConfirm" th:value="${user.passwordConfirm}">
-                <h1 class="text-2xl font-bold text-white col-span-2 bg-blue-600 shadow-md rounded-t-3xl p-2">Vos informations de connexion :</h1>
+                <h1 class="text-2xl font-bold text-white col-span-2 bg-green-600 shadow-md rounded-t-3xl p-2">Vos informations de connexion :</h1>
                 <h3 class="text-lg font-semibold text-right">Adresse Email :</h3>
                 <input class="text-lg font-semibold bg-gray-200 rounded-md p-2 truncate" readonly
                     th:id="email" th:name="email" th:value="${user.email}">
@@ -32,7 +32,7 @@
             </section>
 
             <section class="m-2 grid grid-cols-2 gap-2 items-center rounded-3xl shadow-inner bg-gray-100">
-                <h1 class="text-2xl font-bold col-span-2 text-white shadow-md rounded-t-3xl bg-purple-600 p-2">Vos informations personnelles :</h1>
+                <h1 class="text-2xl font-bold col-span-2 text-white shadow-md rounded-t-3xl bg-green-600 p-2">Vos informations personnelles :</h1>
                 <h3 class="text-lg font-semibold text-right">Pseudo ou Nom d'utilisateur :</h3>
                 <input class="text-lg font-semibold bg-gray-200 rounded-md p-2" readonly
                     th:id="userName" th:name="userName" th:value="${user.userName}">
@@ -65,7 +65,7 @@
 
             <div class="m-2 gap-2 items-center rounded-3xl shadow-inner bg-white">
                 <div class="grid grid-cols-6 gap-x-4 gap-y-1 mb-2">
-                    <h1 class="text-2xl font-bold col-span-6 text-white shadow-md rounded-t-3xl bg-pink-600 p-2">Vos Topos :</h1>
+                    <h1 class="text-2xl font-bold col-span-6 text-white shadow-md rounded-t-3xl bg-green-600 p-2">Vos Topos :</h1>
                 </div>
 
                 <div th:if="${savedTopo == 'good'}">
@@ -104,7 +104,7 @@
                 </div>
 
                 <div th:each="unTopo, iStat : ${topos}">
-                    <form class="bg-gray-200 rounded-3xl shadow-lg mb-4" method="post"
+                    <form class="bg-gray-100 rounded-3xl shadow-lg mb-4" method="post"
                             modelAttribute="topo" th:action="@{/mon-compte(page=${currentPage})}" th:if="${unTopo.beingReserved == 'false'}" th:object="${topo}">
                         <div class="grid grid-cols-4 md:grid-cols-8 gap-1 mb-2 items-start">
                             <input class="hidden" th:id="id" th:name="id" th:value="${unTopo.id}">
@@ -135,14 +135,14 @@
                             <h3 class="col-span-3 md:col-span-7 font-semibold self-center text-left">Disponibilité du topo</h3>
 
                             <div class="hidden lg:block col-span-2"></div>
-                            <input class="font-bold bg-gray-100 rounded-md p-2 text-center self-start truncate col-span-4 md:col-span-8 lg:col-span-4 text-lg capitalize underline"
+                            <input class="font-bold bg-gray-200 rounded-md p-2 text-center self-start truncate col-span-4 md:col-span-8 lg:col-span-4 text-lg capitalize underline"
                                    th:id="name" th:name="name" th:value="${unTopo.name}" type="text"/>
                             <div class="hidden lg:block col-span-2"></div>
 
-                            <input class="font-semibold bg-gray-100 rounded-md p-2 text-center truncate col-span-4 md:col-span-8"
+                            <input class="font-semibold bg-gray-200 rounded-md p-2 text-center truncate col-span-4 md:col-span-8"
                                    th:id="description" th:name="description" th:value="${unTopo.description}" type="text"/>
                             <div class="hidden lg:block col-span-2"></div>
-                            <input class="font-semibold bg-gray-100 rounded-md p-2 text-center self-start truncate col-span-3 md:col-span-7 lg:col-span-4 text-md italic"
+                            <input class="font-semibold bg-gray-200 rounded-md p-2 text-center self-start truncate col-span-3 md:col-span-7 lg:col-span-4 text-md italic"
                                    th:id="localisation" th:name="localisation" th:value="${unTopo.localisation}" type="text"/>
                             <div class="hidden lg:block col-span-1"></div>
                             <button class="col-span-1 flex justify-center self-end shadow-md
@@ -172,12 +172,12 @@
                             background-color: #059669;
                           }
                       </style>
-                            <div class="col-span-1 flex items-center justify-center shadow-md h-full w-full
-                                            rounded-br-3xl rounded-tl-3xl bg-red-600">
+                            <a class="col-span-1 flex items-center justify-center shadow-md h-full w-full
+                                            rounded-tl-3xl rounded-br-3xl bg-red-600" th:href="@{~/mon-compte-demande-refuse(idTopo=${unTopo.id},page=1)}"><div>
                                 <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
                                     <h3 class="font-bold text-xl text-white">NON</h3>
                                 </div>
-                            </div>
+                            </div></a>
                             <h3 class="col-span-2 md:col-span-6 font-bold text-lg text-self-center text-center">Acceptez-vous la demande de reservation ?</h3>
                             <a class="col-span-1 flex items-center justify-center shadow-md h-full w-full
                                             rounded-tr-3xl rounded-bl-3xl bg-green-600" th:href="@{~/mon-compte-demande-accepte(idTopo=${unTopo.id},page=1)}"><div>
@@ -187,15 +187,15 @@
                             </div></a>
 
                             <div class="hidden lg:block col-span-2"></div>
-                            <input class="font-bold bg-gray-100 rounded-md p-2 text-center self-start truncate col-span-4 md:col-span-8 lg:col-span-4 text-lg capitalize underline"
+                            <input class="font-bold bg-gray-200 rounded-md p-2 text-center self-start truncate col-span-4 md:col-span-8 lg:col-span-4 text-lg capitalize underline"
                                    readonly th:id="name" th:name="name" th:value="${unTopo.name}" type="text"/>
                             <div class="hidden lg:block col-span-2"></div>
 
-                            <input class="font-semibold bg-gray-100 rounded-md p-2 text-center truncate col-span-4 md:col-span-8"
+                            <input class="font-semibold bg-gray-200 rounded-md p-2 text-center truncate col-span-4 md:col-span-8"
                                    readonly th:id="description" th:name="description" th:value="${unTopo.description}" type="text"/>
 
                             <div class="hidden lg:block col-span-2"></div>
-                            <input class="font-semibold bg-gray-100 rounded-md p-2 text-center self-start truncate col-span-4 md:col-span-8 lg:col-span-4 text-md italic"
+                            <input class="font-semibold bg-gray-200 rounded-md p-2 text-center self-start truncate col-span-4 md:col-span-8 lg:col-span-4 text-md italic"
                                    readonly th:id="localisation" th:name="localisation" th:value="${unTopo.localisation}" type="text"/>
                             <div class="hidden lg:block col-span-1"></div>
 
@@ -232,14 +232,14 @@
                             <h3 class="col-span-3 md:col-span-7 font-semibold self-center text-left">Disponibilité du topo</h3>
 
                             <div class="hidden lg:block col-span-2"></div>
-                            <input class="font-bold bg-gray-100 rounded-md p-2 text-center self-start truncate col-span-4 md:col-span-8 lg:col-span-4 text-lg capitalize underline"
+                            <input class="font-bold bg-gray-200 rounded-md p-2 text-center self-start truncate col-span-4 md:col-span-8 lg:col-span-4 text-lg capitalize underline"
                                    readonly th:id="name" th:name="name" th:value="${unTopo.name}" type="text"/>
                             <div class="hidden lg:block col-span-2"></div>
 
-                            <input class="font-semibold bg-gray-100 rounded-md p-2 text-center truncate col-span-4 md:col-span-8"
+                            <input class="font-semibold bg-gray-200 rounded-md p-2 text-center truncate col-span-4 md:col-span-8"
                                    readonly th:id="description" th:name="description" th:value="${unTopo.description}" type="text"/>
                             <div class="hidden lg:block col-span-2"></div>
-                            <input class="font-semibold bg-gray-100 rounded-md p-2 text-center self-start truncate col-span-3 md:col-span-7 lg:col-span-4 text-md italic"
+                            <input class="font-semibold bg-gray-200 rounded-md p-2 text-center self-start truncate col-span-3 md:col-span-7 lg:col-span-4 text-md italic"
                                    readonly th:id="localisation" th:name="localisation" th:value="${unTopo.localisation}" type="text"/>
                             <div class="hidden lg:block col-span-1"></div>
                             <button class="col-span-1 flex justify-center self-end shadow-md
